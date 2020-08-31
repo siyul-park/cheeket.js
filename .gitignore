@@ -117,3 +117,5 @@ dist
 
 # intelliJ
 .idea/
+
+package-lock.json
