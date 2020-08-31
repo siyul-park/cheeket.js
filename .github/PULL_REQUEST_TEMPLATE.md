@@ -1,12 +1,3 @@
----
-name: 기능 개선 및 추가
-about: Suggest an idea for this project
-title: ''
-labels: enhancement
-assignees: ''
-
----
-
 ## 관련 이슈
 
 ## 현재 상황
