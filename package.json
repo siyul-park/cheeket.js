@@ -4,9 +4,11 @@
   "scripts": {
     "lerna:bootstrap": "lerna bootstrap",
     "lerna:import": "lerna import",
-    "lerna:create": "lerna create"
+    "lerna:create": "lerna create",
+    "gulp": "gulp"
   },
   "devDependencies": {
+    "gulp": "^4.0.2",
     "lerna": "^3.22.1"
   }
 }
