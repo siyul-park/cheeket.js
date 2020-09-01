@@ -18,10 +18,5 @@
     "gulp": "^4.0.2",
     "lerna": "^3.22.1",
     "typescript": "^4.0.2"
-  },
-  "dependencies": {
-    "console-test": "file:packages/console-test",
-    "print-a": "file:packages/print-a",
-    "print-b": "file:packages/print-b"
   }
 }
