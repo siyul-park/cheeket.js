@@ -42,6 +42,9 @@ sh "${scriptPath}/set-up-cross-env.sh" "${packagePath}"
 # gulp 세팅
 sh "${scriptPath}/set-up-gulp.sh" "${rootPath}" "${packagePath}"
 
+# lint 세팅
+sh "${scriptPath}/set-up-lint.sh" "${rootPath}" "${packagePath}"
+
 # package.json 수정
 sh "${scriptPath}/add-default-script-in-package.sh" "${templatePath}/default" "${packagePath}" "${scriptPath}"
 

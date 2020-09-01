@@ -1,11 +1,5 @@
 const fs = require('fs');
-
-function required(value) {
-  if (value == null) {
-    process.exit(1);
-  }
-  return value;
-}
+const required = require('./required')
 
 const sourcePackagePath = required(process.argv[2]);
 const sourcePackageJson = require(sourcePackagePath);

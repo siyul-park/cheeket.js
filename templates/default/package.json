@@ -7,7 +7,8 @@
     "clean": "rm -rf ./dist",
     "compile": "tsc",
     "test": "",
-    "lint": "",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   }
 }
