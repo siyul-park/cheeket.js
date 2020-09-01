@@ -36,6 +36,12 @@ echo "✅ Finish"
 # Typescript 세팅
 sh "${scriptPath}/set-up-typescript.sh" "${rootPath}" "${packagePath}"
 
+# cross env 세팅
+sh "${scriptPath}/set-up-cross-env.sh" "${packagePath}"
+
+# gulp 세팅
+sh "${scriptPath}/set-up-gulp.sh" "${rootPath}" "${packagePath}"
+
 # package.json 수정
 sh "${scriptPath}/add-default-script-in-package.sh" "${templatePath}/default" "${packagePath}" "${scriptPath}"
 
