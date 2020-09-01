@@ -15,7 +15,7 @@ packageName=$2
 
 rootPath=$(pwd)
 scriptPath="${rootPath}/scripts"
-templatePath="${rootPath}/templates"
+templatePath="${rootPath}/templates/default"
 
 echo "🚀 Start to creat new package ${packageName} in ${packageLocation}..."
 
@@ -45,14 +45,16 @@ sh "${scriptPath}/set-up-gulp.sh" "${rootPath}" "${packagePath}"
 # lint 세팅
 sh "${scriptPath}/set-up-lint.sh" "${rootPath}" "${packagePath}"
 
+# jest 세팅
+sh "${scriptPath}/set-up-jest.sh" "${rootPath}" "${packagePath}"
+
 # package.json 수정
-sh "${scriptPath}/add-default-script-in-package.sh" "${templatePath}/default" "${packagePath}" "${scriptPath}"
+sh "${scriptPath}/add-default-script-in-package.sh" "${templatePath}" "${packagePath}" "${scriptPath}"
 
 # 기본 파일 세팅
 echo "⚙️ set up default file"
 
-mkdir lib
-touch lib/index.ts
+cp -r "${templatePath}/lib" "${packagePath}"
 
 echo "✅ Finish"
 

@@ -8,7 +8,7 @@ const tsProject = ts.createProject(
 gulp.task('default', () => {
   return tsProject.src()
     .pipe(tsProject())
-    .pipe(gulp.dest("dist")
+    .pipe(gulp.dest('dist')
     );
 });
 
