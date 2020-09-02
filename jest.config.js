@@ -7,9 +7,7 @@ const projects = lerna.packages
     acc.push(...cur);
     return acc;
   }, [])
-  .map((project) => `<rootDir>/${project}`)
-
-console.log(projects)
+  .map((project) => `<rootDir>/${project}`);
 
 module.exports = {
   projects: projects

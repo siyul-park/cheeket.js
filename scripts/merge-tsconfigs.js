@@ -1,5 +1,5 @@
 const fs = require('fs');
-const required = require('./required')
+const required = require('./required');
 
 const rootPath = required(process.argv[2]);
 const packagePath = required(process.argv[3]);

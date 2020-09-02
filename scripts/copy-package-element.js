@@ -1,5 +1,5 @@
 const fs = require('fs');
-const required = require('./required')
+const required = require('./required');
 
 const sourcePackagePath = required(process.argv[2]);
 const sourcePackageJson = require(sourcePackagePath);
