@@ -1,4 +1,5 @@
 script
 node_modules
 dist
-gulpfile.js
+*.js
+*.json
