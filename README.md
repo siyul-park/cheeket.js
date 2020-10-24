@@ -1,4 +1,4 @@
-# Pinci.js
+# pici.js
 Simple DI Library  
   
 ```typescript
