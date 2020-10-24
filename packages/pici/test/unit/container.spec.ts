@@ -74,7 +74,7 @@ test("life cycle", async () => {
   expect(weapon1).not.toBe(weapon3);
 });
 
-test("sub container", async () => {
+test("sub container public", async () => {
   const container = new Container();
   container.bind(Types.Warrior).to(ninjaProvider);
 
@@ -92,4 +92,18 @@ test("sub container", async () => {
 
   expect(warrior.fight()).toEqual(weapon.hit());
   expect(warrior.sneak()).toEqual(throwableWeapon.throw());
+});
+
+test("sub container private", async () => {
+  const container = new Container();
+  container.bind(Types.Warrior).to(ninjaProvider);
+
+  const weaponContainer = new Container();
+  weaponContainer.bind(Types.Weapon).to(katanaProvider).asPrivate();
+  weaponContainer.bind(Types.ThrowableWeapon).to(shurikenProvider).asPrivate();
+
+  container.imports(weaponContainer);
+
+  const warrior = await container.get<Warrior>(Types.Warrior);
+  expect(warrior).toBeUndefined();
 });

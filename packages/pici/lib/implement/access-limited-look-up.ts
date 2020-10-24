@@ -2,6 +2,7 @@ import LookUp from "../interface/look-up";
 import Storage from "../interface/storage";
 import ServiceIdentifier from "../interface/service-identifier";
 import AccessLimiter from "../interface/access-limiter";
+import FetchError from "./fetch-error";
 
 class AccessLimitedLookUp implements LookUp {
   private readonly lookup: LookUp;
@@ -22,7 +23,7 @@ class AccessLimitedLookUp implements LookUp {
   async fetch<T>(id: ServiceIdentifier<T>): Promise<T> {
     const value = await this.get(id);
     if (value === undefined) {
-      throw new Error(`${id.toString()} is not found`);
+      throw new FetchError(`${id.toString()} is not found`);
     }
 
     return value;
@@ -31,9 +32,15 @@ class AccessLimitedLookUp implements LookUp {
   async get<T>(id: ServiceIdentifier<T>): Promise<T | undefined> {
     const binding = this.storage.get(id, this.accessLimiter);
     if (binding !== undefined) {
-      const value = await binding.resolve(this.lookup);
-      if (value !== undefined) {
-        return value;
+      try {
+        const value = await binding.resolve(this.lookup);
+        if (value !== undefined) {
+          return value;
+        }
+      } catch (e) {
+        if (!(e instanceof FetchError)) {
+          throw e;
+        }
       }
     }
 

@@ -9,6 +9,7 @@ interface Container extends LookUp {
   resolveAll(): Promise<void>;
 
   imports<T>(...containers: Container[]): void;
+  unImports<T>(...containers: Container[]): void;
 }
 
 export default Container;

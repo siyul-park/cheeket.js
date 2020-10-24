@@ -63,8 +63,12 @@ class Container implements ContainerInterface {
     );
   }
 
-  imports<T>(...containers: Container[]): void {
+  imports<T>(...containers: ContainerInterface[]): void {
     containers.forEach((container) => this.children.add(container));
+  }
+
+  unImports<T>(...containers: ContainerInterface[]): void {
+    containers.forEach((container) => this.children.delete(container));
   }
 }
 
