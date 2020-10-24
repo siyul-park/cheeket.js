@@ -9,6 +9,7 @@ class AccessLimitedLookUp implements LookUp {
   constructor(
     private readonly storage: Storage,
     private readonly accessLimiter: AccessLimiter,
+    private readonly children: Set<LookUp>,
     lookup?: LookUp
   ) {
     if (lookup === undefined) {
@@ -18,13 +19,39 @@ class AccessLimitedLookUp implements LookUp {
     }
   }
 
-  async get<T>(id: ServiceIdentifier<T>): Promise<T | undefined> {
-    const binding = this.storage.get(id, this.accessLimiter);
-    if (binding === undefined) {
-      return undefined;
+  async fetch<T>(id: ServiceIdentifier<T>): Promise<T> {
+    const value = await this.get(id);
+    if (value === undefined) {
+      throw new Error(`${id.toString()} is not found`);
     }
 
-    return binding.resolve(this.lookup);
+    return value;
+  }
+
+  async get<T>(id: ServiceIdentifier<T>): Promise<T | undefined> {
+    const binding = this.storage.get(id, this.accessLimiter);
+    if (binding !== undefined) {
+      const value = await binding.resolve(this.lookup);
+      if (value !== undefined) {
+        return value;
+      }
+    }
+
+    return this.getByChildren(id);
+  }
+
+  private async getByChildren<T>(
+    id: ServiceIdentifier<T>
+  ): Promise<T | undefined> {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const child of this.children) {
+      // eslint-disable-next-line no-await-in-loop
+      const childValue = await child.get(id);
+      if (childValue !== undefined) {
+        return childValue;
+      }
+    }
+    return undefined;
   }
 }
 

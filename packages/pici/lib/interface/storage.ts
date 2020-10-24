@@ -10,6 +10,8 @@ interface Storage {
     accessLimiter: AccessLimiter
   ): Binding<T> | undefined;
 
+  getAll(): Binding<unknown>[];
+
   remove<T>(id: ServiceIdentifier<T>): void;
 }
 

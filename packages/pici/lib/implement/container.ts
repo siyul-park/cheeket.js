@@ -16,12 +16,14 @@ class Container implements ContainerInterface {
 
   private readonly privateLookup = new AccessLimitedLookUp(
     this.storage,
-    AccessLimiter.Private
+    AccessLimiter.Private,
+    this.children
   );
 
   private readonly publicLookup = new AccessLimitedLookUp(
     this.storage,
     AccessLimiter.Public,
+    this.children,
     this.privateLookup
   );
 
@@ -40,29 +42,29 @@ class Container implements ContainerInterface {
     this.storage.remove(id);
   }
 
-  async get<T>(id: ServiceIdentifier<T>): Promise<T | undefined> {
-    const value = this.publicLookup.get(id);
-    if (value !== undefined) {
-      return value;
-    }
-
-    // eslint-disable-next-line no-restricted-syntax
-    for (const child of this.children) {
-      // eslint-disable-next-line no-await-in-loop
-      const childValue = await child.get(id);
-      if (childValue !== undefined) {
-        return childValue;
-      }
-    }
-    return undefined;
+  async fetch<T>(id: ServiceIdentifier<T>): Promise<T> {
+    return this.publicLookup.fetch(id);
   }
 
-  addChild<T>(container: ContainerInterface): void {
-    if (this.children.has(container)) {
-      return;
-    }
+  async get<T>(id: ServiceIdentifier<T>): Promise<T | undefined> {
+    return this.publicLookup.get(id);
+  }
 
-    this.children.add(container);
+  async resolveAll(): Promise<void> {
+    const bindings = this.storage.getAll();
+    await Promise.all(
+      bindings
+        .filter((binding) => binding.lifecycle === Lifecycle.Singleton)
+        .map((binding) => binding.resolve(this.privateLookup))
+    );
+
+    await Promise.all(
+      Array.from(this.children.values()).map((child) => child.resolveAll())
+    );
+  }
+
+  imports<T>(...containers: Container[]): void {
+    containers.forEach((container) => this.children.add(container));
   }
 }
 

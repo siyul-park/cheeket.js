@@ -29,6 +29,10 @@ class Storage implements StorageInterface {
     return binding as Binding<T>;
   }
 
+  getAll(): Binding<unknown>[] {
+    return Array.from(this.bindings.values());
+  }
+
   remove<T>(id: ServiceIdentifier<T>): void {
     this.bindings.delete(id);
   }

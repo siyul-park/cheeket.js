@@ -26,16 +26,21 @@ class Binding<T> implements BindingInterface<T> {
   }
 
   async resolve(lookUp: LookUpInterface): Promise<T> {
-    if (this.value !== undefined) {
-      return this.value;
-    }
     if (this.valueProvider === undefined) {
       throw new Error("ValueProvider is not undefined");
     }
 
-    const value = await this.valueProvider(lookUp);
-    this.value = value;
-    return value;
+    if (this.lifecycle === Lifecycle.Singleton) {
+      if (this.value !== undefined) {
+        return this.value;
+      }
+
+      const value = await this.valueProvider(lookUp);
+      this.value = value;
+      return value;
+    }
+
+    return this.valueProvider(lookUp);
   }
 }
 
