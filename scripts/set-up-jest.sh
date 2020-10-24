@@ -20,7 +20,7 @@ cd "${packagePath}" || exit
 # jest 다운로드
 echo "⚙️ Install jest"
 
-npm i jest ts-jest --save-dev
+npm i jest ts-jest @types/jest --save-dev
 
 echo "✅ Finish"
 
