@@ -8,12 +8,9 @@ interface Storage {
   get<T>(
     id: ServiceIdentifier<T>,
     accessLimiter: AccessLimiter
-  ): Promise<Binding<T> | undefined>;
+  ): Binding<T> | undefined;
 
-  getValue<T>(
-    id: ServiceIdentifier<T>,
-    accessLimiter: AccessLimiter
-  ): Promise<T | undefined>;
+  remove<T>(id: ServiceIdentifier<T>): void;
 }
 
 export default Storage;

@@ -6,7 +6,7 @@ interface Container extends LookUp {
   bind<T>(id: ServiceIdentifier<T>): BindingToSyntax<T>;
   unbind<T>(id: ServiceIdentifier<T>): void;
 
-  registerChild<T>(container: Container): void;
+  addChild<T>(container: Container): void;
 }
 
 export default Container;
