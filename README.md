@@ -1,4 +1,4 @@
-# pici.js
+# cheeket.js
 Simple DI Library  
   
 ```typescript
