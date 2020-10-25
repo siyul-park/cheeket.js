@@ -100,8 +100,14 @@ test("sub container private", async () => {
   container.bind(Types.Warrior).to(asSingleton(ninjaProvider));
 
   const weaponContainer = new Container();
-  weaponContainer.bind(Types.Weapon).to(asSingleton(katanaProvider)).inPrivate();
-  weaponContainer.bind(Types.ThrowableWeapon).to(asSingleton(shurikenProvider)).inPrivate();
+  weaponContainer
+    .bind(Types.Weapon)
+    .to(asSingleton(katanaProvider))
+    .inPrivate();
+  weaponContainer
+    .bind(Types.ThrowableWeapon)
+    .to(asSingleton(shurikenProvider))
+    .inPrivate();
 
   container.imports(weaponContainer);
 
