@@ -30,7 +30,7 @@
     "typescript": "^4.0.3"
   },
   "peerDependencies": {
-    "cheeket": "^1.0.0-alpha.3",
+    "cheeket": "^1.x",
     "reflect-metadata": "^0.1"
   }
 }
