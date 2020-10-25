@@ -1,5 +1,5 @@
-# cheeket.js
-Simple DI Library  
+# Cheeket
+A very lightweight dependency injection container for TypeScript/JavaScript for constructor injection as functional.
   
 ```typescript
 interface Weapon {
@@ -46,10 +46,10 @@ const katanaProvider = () => new Katana();
 
 const shurikenProvider = () => new Shuriken();
 
-const ninjaProvider = async (lookUp: LookUpInterface) => {
+const ninjaProvider = async (lookUp: LookUp) => {
   return new Ninja(
-    await lookUp.fetch<Weapon>(Types.Weapon),
-    await lookUp.fetch<ThrowableWeapon>(Types.ThrowableWeapon)
+    await lookUp.resolveOrThrow<Weapon>(Types.Weapon),
+    await lookUp.resolveOrThrow<ThrowableWeapon>(Types.ThrowableWeapon)
   );
 };
 
