@@ -1,4 +1,4 @@
-import LookUp from "../look-up/look-up";
+import LookUp from "../look-up/look-up.interface";
 
 type ValueProvider<T> = (lookUp: LookUp) => Promise<T> | T;
 

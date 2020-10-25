@@ -3,7 +3,6 @@ import Binding from "./binding";
 import BindingToSyntax from "./binding-to-syntax";
 import Identifier from "../identifier/identifier";
 import Storage from "../storage/storage";
-import Lifecycle from "../contrant/lifecycle";
 import AccessLimiter from "../contrant/access-limiter";
 
 class Binder implements BinderInterface {
@@ -12,7 +11,6 @@ class Binder implements BinderInterface {
   bind<T>(id: Identifier<T>): BindingToSyntax<T> {
     const binding = new Binding<T>({
       id,
-      lifecycle: Lifecycle.Singleton,
       accessLimiter: AccessLimiter.Public,
     });
     this.storage.add(binding);
