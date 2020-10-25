@@ -49,7 +49,7 @@ const katanaProvider = () => new Katana();
 
 const shurikenProvider = () => new Shuriken();
 
-const ninjaProvider = async (lookUp: LookUp) => {
+const ninjaProvider = async (lookUp: Finder) => {
   return new Ninja(
     await lookUp.resolveOrThrow<Weapon>(Types.Weapon),
     await lookUp.resolveOrThrow<ThrowableWeapon>(Types.ThrowableWeapon)
@@ -57,19 +57,16 @@ const ninjaProvider = async (lookUp: LookUp) => {
 };
 
 const container = new Container();
-container.bind(Types.Warrior).to(asSingleton(ninjaProvider));
 
-const weaponContainer = new Container();
-weaponContainer.bind(Types.Weapon).to(asSingleton(katanaProvider));
-weaponContainer.bind(Types.ThrowableWeapon).to(asSingleton(shurikenProvider));
-
-container.imports(weaponContainer);
+container.bind(Types.Weapon, asSingleton(katanaProvider));
+container.bind(Types.ThrowableWeapon, asSingleton(shurikenProvider));
+container.bind(Types.Warrior, asSingleton(ninjaProvider));
 
 const warrior = await container.resolveOrThrow<Warrior>(Types.Warrior);
-const throwableWeapon = await weaponContainer.resolveOrThrow<ThrowableWeapon>(
+const throwableWeapon = await container.resolveOrThrow<ThrowableWeapon>(
   Types.ThrowableWeapon
 );
-const weapon = await weaponContainer.resolveOrThrow<Weapon>(Types.Weapon);
+const weapon = await container.resolveOrThrow<Weapon>(Types.Weapon);
 
 expect(warrior.fight()).toEqual(weapon.hit());
 expect(warrior.sneak()).toEqual(throwableWeapon.throw());

@@ -1,11 +1,9 @@
 import Identifier from "../identifier/identifier";
-import AccessLimiter from "../access-limiter/access-limiter";
-import ValueProvider from "../provider/value-provider";
+import Provider from "../provider/provider";
 
 interface BindingInfo<T> {
   id: Identifier<T>;
-  accessLimiter: AccessLimiter;
-  valueProvider?: ValueProvider<T>;
+  provider: Provider<T>;
 }
 
 export default BindingInfo;
