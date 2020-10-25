@@ -1,4 +1,4 @@
-import Container from "../../lib/implement/container";
+import Container from "../../lib/container/container";
 import Types from "../mock/types";
 import Katana from "../mock/katana";
 import Shuriken from "../mock/shuriken";
@@ -6,7 +6,7 @@ import Ninja from "../mock/ninja";
 import Weapon from "../mock/weapon";
 import ThrowableWeapon from "../mock/throwable-weapon";
 import Warrior from "../mock/warrior";
-import LookUp from "../../lib/interface/look-up";
+import LookUp from "../../lib/look-up/look-up";
 
 const katanaProvider = () => new Katana();
 
@@ -39,8 +39,8 @@ test("default", async () => {
 test("access limiter", async () => {
   const container = new Container();
 
-  container.bind(Types.Weapon).to(katanaProvider).asPrivate();
-  container.bind(Types.ThrowableWeapon).to(shurikenProvider).asPrivate();
+  container.bind(Types.Weapon).to(katanaProvider).inPrivate();
+  container.bind(Types.ThrowableWeapon).to(shurikenProvider).inPrivate();
   container.bind(Types.Warrior).to(ninjaProvider);
 
   expect(await container.get<Warrior>(Types.Warrior)).not.toBeUndefined();
@@ -53,8 +53,8 @@ test("access limiter", async () => {
 test("life cycle", async () => {
   const container = new Container();
 
-  container.bind(Types.Weapon).to(katanaProvider).inRequest();
-  container.bind(Types.ThrowableWeapon).to(shurikenProvider).inRequest();
+  container.bind(Types.Weapon).to(katanaProvider).forRequest();
+  container.bind(Types.ThrowableWeapon).to(shurikenProvider).forRequest();
   container.bind(Types.Warrior).to(ninjaProvider);
 
   const warrior1 = await container.fetch<Warrior>(Types.Warrior);
@@ -99,8 +99,8 @@ test("sub container private", async () => {
   container.bind(Types.Warrior).to(ninjaProvider);
 
   const weaponContainer = new Container();
-  weaponContainer.bind(Types.Weapon).to(katanaProvider).asPrivate();
-  weaponContainer.bind(Types.ThrowableWeapon).to(shurikenProvider).asPrivate();
+  weaponContainer.bind(Types.Weapon).to(katanaProvider).inPrivate();
+  weaponContainer.bind(Types.ThrowableWeapon).to(shurikenProvider).inPrivate();
 
   container.imports(weaponContainer);
 
