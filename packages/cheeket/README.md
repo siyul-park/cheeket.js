@@ -55,15 +55,15 @@ const ninjaProvider = async (lookUp: LookUpInterface) => {
 
 const container = new Container();
 
-container.bind(Types.Weapon).to(katanaProvider);
+container.bind(Types.Weapon).to(asSingleton(katanaProvider));
 container.bind(Types.ThrowableWeapon).to(asSingleton(shurikenProvider));
 container.bind(Types.Warrior).to(asSingleton(ninjaProvider));
 
-const warrior = await container.fetch<Warrior>(Types.Warrior);
-const throwableWeapon = await container.fetch<ThrowableWeapon>(
+const warrior = await container.resolveOrThrow<Warrior>(Types.Warrior);
+const throwableWeapon = await container.resolveOrThrow<ThrowableWeapon>(
   Types.ThrowableWeapon
 );
-const weapon = await container.fetch<Weapon>(Types.Weapon);
+const weapon = await container.resolveOrThrow<Weapon>(Types.Weapon);
 
 expect(warrior.fight()).toEqual(weapon.hit());
 expect(warrior.sneak()).toEqual(throwableWeapon.throw());
