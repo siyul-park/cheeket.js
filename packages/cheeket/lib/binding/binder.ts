@@ -3,7 +3,7 @@ import Binding from "./binding";
 import BindingToSyntax from "./binding-to-syntax";
 import Identifier from "../identifier/identifier";
 import Storage from "../storage/storage";
-import AccessLimiter from "../contrant/access-limiter";
+import AccessLimiter from "../access-limiter/access-limiter";
 
 class Binder implements BinderInterface {
   constructor(private readonly storage: Storage) {}

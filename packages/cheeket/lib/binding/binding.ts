@@ -1,6 +1,6 @@
 import LookUp from "../look-up/look-up.interface";
 import Identifier from "../identifier/identifier";
-import AccessLimiter from "../contrant/access-limiter";
+import AccessLimiter from "../access-limiter/access-limiter";
 import ValueProvider from "../provider/value-provider";
 import BindingInfo from "./binding-info";
 
