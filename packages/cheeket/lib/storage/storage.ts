@@ -37,8 +37,8 @@ class Storage implements StorageReader {
     this.bindings.delete(id);
   }
 
-  concat(other: Storage): void {
-    this.subStorageReaders.add(other.getPublicReader());
+  concat(other: StorageReader): void {
+    this.subStorageReaders.add(other);
   }
 }
 

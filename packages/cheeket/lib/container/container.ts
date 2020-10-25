@@ -35,7 +35,9 @@ class Container implements LookUpInterface, BinderInterface {
   }
 
   imports<T>(...containers: Container[]): void {
-    containers.forEach((container) => this.#storage.concat(container.#storage));
+    containers.forEach((container) =>
+      this.#storage.concat(container.#storage.getPublicReader())
+    );
   }
 }
 
