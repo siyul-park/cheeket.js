@@ -63,7 +63,7 @@ test("import", async () => {
   const exported = container.export(Types.Warrior);
 
   const imported = new Container();
-  imported.imports(exported);
+  imported.import(exported);
 
   expect(await imported.get<Warrior>(Types.Warrior)).not.toBeUndefined();
   expect(

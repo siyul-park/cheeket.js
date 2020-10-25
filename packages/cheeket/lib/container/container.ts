@@ -22,7 +22,7 @@ class Container implements Binder, LookUp {
     this.binder.unbind(id);
   }
 
-  async resolve<T>(id: Identifier<T>, optional?: boolean): Promise<T> {
+  async resolve<T>(id: Identifier<T>): Promise<T> {
     return this.finder.resolve(id);
   }
 
@@ -30,7 +30,7 @@ class Container implements Binder, LookUp {
     return this.finder.get(id);
   }
 
-  imports<T>(...lookUps: LookUp[]): void {
+  import<T>(...lookUps: LookUp[]): void {
     lookUps.forEach((lookUp) => this.finder.import(lookUp));
   }
 
