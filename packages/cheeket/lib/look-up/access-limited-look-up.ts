@@ -11,7 +11,6 @@ class AccessLimitedLookUp implements LookUp {
   constructor(
     private readonly storage: Storage,
     private readonly accessLimiter: AccessLimiter,
-    private readonly children: Set<LookUp>,
     binderLookup?: LookUp
   ) {
     if (binderLookup === undefined) {
@@ -31,14 +30,6 @@ class AccessLimitedLookUp implements LookUp {
   }
 
   async resolve<T>(id: Identifier<T>): Promise<T | undefined> {
-    const value = await this.getByCurrent(id);
-    if (value !== undefined) {
-      return value;
-    }
-    return this.getByChildren(id);
-  }
-
-  private async getByCurrent<T>(id: Identifier<T>): Promise<T | undefined> {
     const binding = this.storage.get(id);
     if (
       binding === undefined ||
@@ -58,18 +49,6 @@ class AccessLimitedLookUp implements LookUp {
       }
     }
 
-    return undefined;
-  }
-
-  private async getByChildren<T>(id: Identifier<T>): Promise<T | undefined> {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const child of this.children) {
-      // eslint-disable-next-line no-await-in-loop
-      const childValue = await child.resolve(id);
-      if (childValue !== undefined) {
-        return childValue;
-      }
-    }
     return undefined;
   }
 }

@@ -8,24 +8,20 @@ import LookUpInterface from "../look-up/look-up.interface";
 import AccessLimitedLookUp from "../look-up/access-limited-look-up";
 
 class Container implements LookUpInterface, BinderInterface {
-  private readonly storage = new Storage();
-
-  private readonly children = new Set<Container>();
+  readonly #storage = new Storage();
 
   private readonly privateLookup = new AccessLimitedLookUp(
-    this.storage,
-    AccessLimiter.Private,
-    this.children
+    this.#storage,
+    AccessLimiter.Private
   );
 
   private readonly publicLookup = new AccessLimitedLookUp(
-    this.storage,
+    this.#storage,
     AccessLimiter.Public,
-    this.children,
     this.privateLookup
   );
 
-  private readonly binder = new Binder(this.storage);
+  private readonly binder = new Binder(this.#storage);
 
   bind<T>(id: Identifier<T>): BindingToSyntax<T> {
     return this.binder.bind(id);
@@ -44,11 +40,7 @@ class Container implements LookUpInterface, BinderInterface {
   }
 
   imports<T>(...containers: Container[]): void {
-    containers.forEach((container) => this.children.add(container));
-  }
-
-  unImports<T>(...containers: Container[]): void {
-    containers.forEach((container) => this.children.delete(container));
+    containers.forEach((container) => this.#storage.concat(container.#storage));
   }
 }
 
