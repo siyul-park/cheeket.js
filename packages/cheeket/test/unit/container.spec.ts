@@ -110,6 +110,7 @@ test("sub container private", async () => {
     .inPrivate();
 
   container.imports(weaponContainer);
+  weaponContainer.imports(container);
 
   const warrior = await container.resolve<Warrior>(Types.Warrior);
   expect(warrior).toBeUndefined();
