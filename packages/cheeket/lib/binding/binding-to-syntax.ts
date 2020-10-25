@@ -1,13 +1,13 @@
 import Binding from "./binding";
-import ValueProvider from "./value-provider";
-import BindingInAndForSyntax from "./binding-in-and-for-syntax";
+import ValueProvider from "../provider/value-provider";
+import BindingInSyntax from "./binding-in-syntax";
 
 class BindingToSyntax<T> {
   constructor(private readonly binding: Binding<T>) {}
 
-  to(provider: ValueProvider<T>): BindingInAndForSyntax<T> {
+  to(provider: ValueProvider<T>): BindingInSyntax<T> {
     this.binding.valueProvider = provider;
-    return new BindingInAndForSyntax(this.binding);
+    return new BindingInSyntax(this.binding);
   }
 }
 
