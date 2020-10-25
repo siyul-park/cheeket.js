@@ -1,4 +1,4 @@
-import AccessLimiter from "../interface/access-limiter";
+import AccessLimiter from "../contrant/access-limiter";
 
 function isCanAccess(required: AccessLimiter, wanted: AccessLimiter): boolean {
   if (required === AccessLimiter.Public) {
