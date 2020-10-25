@@ -46,7 +46,7 @@ const katanaProvider = () => new Katana();
 
 const shurikenProvider = () => new Shuriken();
 
-const ninjaProvider = async (lookUp: LookUp) => {
+const ninjaProvider = async (lookUp: LookUpInterface) => {
   return new Ninja(
     await lookUp.fetch<Weapon>(Types.Weapon),
     await lookUp.fetch<ThrowableWeapon>(Types.ThrowableWeapon)

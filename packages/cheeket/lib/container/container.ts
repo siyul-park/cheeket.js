@@ -4,10 +4,10 @@ import Binder from "../binding/binder";
 import BindingToSyntax from "../binding/binding-to-syntax";
 import Storage from "../storage/storage";
 import AccessLimiter from "../contrant/access-limiter";
-import LookUp from "../look-up/look-up";
+import LookUpInterface from "../look-up/look-up.interface";
 import AccessLimitedLookUp from "../look-up/access-limited-look-up";
 
-class Container implements LookUp, BinderInterface {
+class Container implements LookUpInterface, BinderInterface {
   private readonly storage = new Storage();
 
   private readonly children = new Set<Container>();
@@ -35,12 +35,12 @@ class Container implements LookUp, BinderInterface {
     return this.binder.unbind(id);
   }
 
-  async getOrThrow<T>(id: Identifier<T>): Promise<T> {
-    return this.publicLookup.getOrThrow(id);
+  async resolveOrThrow<T>(id: Identifier<T>): Promise<T> {
+    return this.publicLookup.resolveOrThrow(id);
   }
 
-  async get<T>(id: Identifier<T>): Promise<T | undefined> {
-    return this.publicLookup.get(id);
+  async resolve<T>(id: Identifier<T>): Promise<T | undefined> {
+    return this.publicLookup.resolve(id);
   }
 
   imports<T>(...containers: Container[]): void {

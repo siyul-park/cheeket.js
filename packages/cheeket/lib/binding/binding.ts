@@ -1,4 +1,4 @@
-import LookUpInterface from "../look-up/look-up";
+import LookUp from "../look-up/look-up.interface";
 import Identifier from "../identifier/identifier";
 import AccessLimiter from "../contrant/access-limiter";
 import ValueProvider from "../provider/value-provider";
@@ -17,7 +17,7 @@ class Binding<T> {
     this.valueProvider = bindingInfo.valueProvider;
   }
 
-  async resolve(lookUp: LookUpInterface): Promise<T> {
+  async resolve(lookUp: LookUp): Promise<T> {
     if (this.valueProvider === undefined) {
       throw new Error("ValueProvider is not undefined");
     }
