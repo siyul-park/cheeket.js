@@ -1,5 +1,9 @@
 {
   "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "types": ["reflect-metadata"]
+  },
   "exclude": [
     "*/**/*.test.ts",
     "*/**/*.spec.ts",

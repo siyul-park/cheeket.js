@@ -1,11 +1,15 @@
 import Weapon from "./weapon";
 import Warrior from "./warrior";
 import ThrowableWeapon from "./throwable-weapon";
+import injectable from "../../lib/decorator/injectable";
+import inject from "../../lib/decorator/inject";
+import Types from "./types";
 
+@injectable()
 class Ninja implements Warrior {
   public constructor(
-    private katana: Weapon,
-    private shuriken: ThrowableWeapon
+    @inject(Types.Weapon) private katana: Weapon,
+    @inject(Types.ThrowableWeapon) private shuriken: ThrowableWeapon
   ) {}
 
   fight(): string {

@@ -9,10 +9,6 @@ function inject<T>(id: Identifier<T>): ParameterDecorator {
     propertyKey: string | symbol,
     parameterIndex: number
   ) => {
-    if (Reflect.hasOwnMetadata(MetadataKey.ParamTypes, target)) {
-      throw new Error(ErrorMsg.DuplicatedInjectableDecorator);
-    }
-
     const metaDataList: MetaData<number, Identifier<unknown>>[] =
       Reflect.getMetadata(MetadataKey.ParamIds, target) ?? [];
 

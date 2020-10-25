@@ -1,19 +1,17 @@
-import ValueProvider from "../../../cheeket/dist/provider/value-provider";
 import Type from "../type/type";
 import MetadataKey from "../constant/metadata-key";
 import MetaData from "../meta-data/meta-data";
 import Identifier from "../identifier/identifier";
+import Provider from "../provider/provider";
 
-function autoInjected<T>(Target: Type<T>): ValueProvider<T> {
+function autoInjected<T>(Target: Type<T>): Provider<T> {
   return async (lookUp) => {
     const types: Type<unknown>[] = Reflect.getMetadata(
-      MetadataKey.DesignParamTypes,
+      MetadataKey.ParamTypes,
       Target
     );
-    const metaDataList: MetaData<
-      number,
-      Identifier<unknown>
-    >[] = Reflect.getMetadata(MetadataKey.ParamIds, Target);
+    const metaDataList: MetaData<number, Identifier<unknown>>[] =
+      Reflect.getMetadata(MetadataKey.ParamIds, Target) ?? [];
 
     const idMap = new Map<number, Identifier<unknown>>();
     metaDataList.forEach((metaData) => idMap.set(metaData.key, metaData.value));
