@@ -56,8 +56,8 @@ const ninjaProvider = async (lookUp: LookUp) => {
 const container = new Container();
 
 container.bind(Types.Weapon).to(katanaProvider);
-container.bind(Types.ThrowableWeapon).to(shurikenProvider);
-container.bind(Types.Warrior).to(ninjaProvider);
+container.bind(Types.ThrowableWeapon).to(asSingleton(shurikenProvider));
+container.bind(Types.Warrior).to(asSingleton(ninjaProvider));
 
 const warrior = await container.fetch<Warrior>(Types.Warrior);
 const throwableWeapon = await container.fetch<ThrowableWeapon>(

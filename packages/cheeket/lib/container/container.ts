@@ -3,7 +3,6 @@ import BinderInterface from "../binding/binder.interface";
 import Binder from "../binding/binder";
 import BindingToSyntax from "../binding/binding-to-syntax";
 import Storage from "../storage/storage";
-import Lifecycle from "../contrant/lifecycle";
 import AccessLimiter from "../contrant/access-limiter";
 import LookUp from "../look-up/look-up";
 import AccessLimitedLookUp from "../look-up/access-limited-look-up";
@@ -36,25 +35,12 @@ class Container implements LookUp, BinderInterface {
     return this.binder.unbind(id);
   }
 
-  async fetch<T>(id: Identifier<T>): Promise<T> {
-    return this.publicLookup.fetch(id);
+  async getOrThrow<T>(id: Identifier<T>): Promise<T> {
+    return this.publicLookup.getOrThrow(id);
   }
 
   async get<T>(id: Identifier<T>): Promise<T | undefined> {
     return this.publicLookup.get(id);
-  }
-
-  async resolveAll(): Promise<void> {
-    const bindings = this.storage.getAll();
-    await Promise.all(
-      bindings
-        .filter((binding) => binding.lifecycle === Lifecycle.Singleton)
-        .map((binding) => binding.resolve(this.privateLookup))
-    );
-
-    await Promise.all(
-      Array.from(this.children.values()).map((child) => child.resolveAll())
-    );
   }
 
   imports<T>(...containers: Container[]): void {

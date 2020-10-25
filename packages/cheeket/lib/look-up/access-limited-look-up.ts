@@ -21,7 +21,7 @@ class AccessLimitedLookUp implements LookUp {
     }
   }
 
-  async fetch<T>(id: Identifier<T>): Promise<T> {
+  async getOrThrow<T>(id: Identifier<T>): Promise<T> {
     const value = await this.get(id);
     if (value === undefined) {
       throw new FetchError(`${id.toString()} is not found`);
