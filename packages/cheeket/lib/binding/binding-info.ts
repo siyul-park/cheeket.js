@@ -1,5 +1,5 @@
 import Identifier from "../identifier/identifier";
-import AccessLimiter from "../contrant/access-limiter";
+import AccessLimiter from "../access-limiter/access-limiter";
 import ValueProvider from "../provider/value-provider";
 
 interface BindingInfo<T> {

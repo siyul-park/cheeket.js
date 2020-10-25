@@ -3,21 +3,16 @@ import BinderInterface from "../binding/binder.interface";
 import Binder from "../binding/binder";
 import BindingToSyntax from "../binding/binding-to-syntax";
 import Storage from "../storage/storage";
-import AccessLimiter from "../contrant/access-limiter";
 import LookUpInterface from "../look-up/look-up.interface";
-import AccessLimitedLookUp from "../look-up/access-limited-look-up";
+import LookUp from "../look-up/look-up";
 
 class Container implements LookUpInterface, BinderInterface {
   readonly #storage = new Storage();
 
-  private readonly privateLookup = new AccessLimitedLookUp(
-    this.#storage,
-    AccessLimiter.Private
-  );
+  private readonly privateLookup = new LookUp(this.#storage);
 
-  private readonly publicLookup = new AccessLimitedLookUp(
-    this.#storage,
-    AccessLimiter.Public,
+  private readonly publicLookup = new LookUp(
+    this.#storage.getPublicReader(),
     this.privateLookup
   );
 
@@ -40,7 +35,9 @@ class Container implements LookUpInterface, BinderInterface {
   }
 
   imports<T>(...containers: Container[]): void {
-    containers.forEach((container) => this.#storage.concat(container.#storage));
+    containers.forEach((container) =>
+      this.#storage.import(container.#storage.getPublicReader())
+    );
   }
 }
 

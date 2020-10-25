@@ -1,4 +1,4 @@
-import AccessLimiter from "../contrant/access-limiter";
+import AccessLimiter from "../access-limiter/access-limiter";
 import Binding from "./binding";
 
 class BindingInSyntax<T> {

@@ -1,16 +1,13 @@
-import LookUp from "./look-up.interface";
+import LookUpInterface from "./look-up.interface";
 import Identifier from "../identifier/identifier";
-import AccessLimiter from "../contrant/access-limiter";
 import FetchError from "./fetch-error";
-import Storage from "../storage/storage";
-import isCanAccess from "./is-can-access";
+import StorageReader from "../storage/storage-reader";
 
-class AccessLimitedLookUp implements LookUp {
+class LookUp implements LookUpInterface {
   private readonly binderLookup: LookUp;
 
   constructor(
-    private readonly storage: Storage,
-    private readonly accessLimiter: AccessLimiter,
+    private readonly storageReader: StorageReader,
     binderLookup?: LookUp
   ) {
     if (binderLookup === undefined) {
@@ -30,11 +27,8 @@ class AccessLimitedLookUp implements LookUp {
   }
 
   async resolve<T>(id: Identifier<T>): Promise<T | undefined> {
-    const binding = this.storage.get(id);
-    if (
-      binding === undefined ||
-      !isCanAccess(binding.accessLimiter, this.accessLimiter)
-    ) {
+    const binding = this.storageReader.get(id);
+    if (binding === undefined) {
       return undefined;
     }
 
@@ -53,4 +47,4 @@ class AccessLimitedLookUp implements LookUp {
   }
 }
 
-export default AccessLimitedLookUp;
+export default LookUp;
