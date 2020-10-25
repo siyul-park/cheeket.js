@@ -1,28 +1,20 @@
-import LookUp from "../look-up/look-up.interface";
+import LookUp from "../look-up/look-up";
 import Identifier from "../identifier/identifier";
-import AccessLimiter from "../access-limiter/access-limiter";
-import ValueProvider from "../provider/value-provider";
+import Provider from "../provider/provider";
 import BindingInfo from "./binding-info";
 
 class Binding<T> {
   id: Identifier<T>;
 
-  accessLimiter: AccessLimiter;
-
-  valueProvider?: ValueProvider<T>;
+  provider: Provider<T>;
 
   constructor(bindingInfo: BindingInfo<T>) {
     this.id = bindingInfo.id;
-    this.accessLimiter = bindingInfo.accessLimiter;
-    this.valueProvider = bindingInfo.valueProvider;
+    this.provider = bindingInfo.provider;
   }
 
   async resolve(lookUp: LookUp): Promise<T> {
-    if (this.valueProvider === undefined) {
-      throw new Error("ValueProvider is not undefined");
-    }
-
-    return this.valueProvider(lookUp);
+    return this.provider(lookUp);
   }
 }
 
