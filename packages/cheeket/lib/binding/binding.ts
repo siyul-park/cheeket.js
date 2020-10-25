@@ -1,13 +1,12 @@
-import BindingInterface from "../interface/binding";
-import LookUpInterface from "../interface/look-up";
-import Lifecycle from "../interface/lifecycle";
-import ServiceIdentifier from "../interface/service-identifier";
-import AccessLimiter from "../interface/access-limiter";
-import ValueProvider from "../interface/value-provider";
-import BindingInfo from "../interface/binding-info";
+import LookUpInterface from "../look-up/look-up";
+import Lifecycle from "../contrant/lifecycle";
+import Identifier from "../identifier/identifier";
+import AccessLimiter from "../contrant/access-limiter";
+import ValueProvider from "./value-provider";
+import BindingInfo from "./binding-info";
 
-class Binding<T> implements BindingInterface<T> {
-  id: ServiceIdentifier<T>;
+class Binding<T> {
+  id: Identifier<T>;
 
   lifecycle: Lifecycle;
 

@@ -1,10 +1,5 @@
-export { default as Container } from "./implement/container";
-export {
-  default as BindingInAndAsSyntax,
-  BindingAsSyntax,
-  BindingInSyntax,
-} from "./interface/binding-in-and-as-syntax";
-export { default as BindingToSyntax } from "./interface/binding-to-syntax";
-export { default as AccessLimiter } from "./interface/access-limiter";
-export { default as Lifecycle } from "./interface/lifecycle";
-export { default as LookUp } from "./interface/look-up";
+export { default as Container } from "./container/container";
+export * from "./binding/binding-in-and-for-syntax";
+export { default as AccessLimiter } from "./contrant/access-limiter";
+export { default as Lifecycle } from "./contrant/lifecycle";
+export { default as LookUp } from "./look-up/look-up";
