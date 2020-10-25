@@ -1,8 +1,7 @@
+import { Identifier, Provider } from "cheeket";
 import Type from "../type/type";
 import MetadataKey from "../constant/metadata-key";
 import MetaData from "../meta-data/meta-data";
-import Identifier from "../identifier/identifier";
-import Provider from "../provider/provider";
 
 function autoInjected<T>(Target: Type<T>): Provider<T> {
   return async (lookUp) => {

@@ -1,6 +1,5 @@
+import { Identifier } from "cheeket";
 import MetadataKey from "../constant/metadata-key";
-import ErrorMsg from "../constant/error-msg";
-import Identifier from "../identifier/identifier";
 import MetaData from "../meta-data/meta-data";
 
 function inject<T>(id: Identifier<T>): ParameterDecorator {

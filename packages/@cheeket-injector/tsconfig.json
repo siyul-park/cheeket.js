@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "types": ["reflect-metadata", "jest"]
+    "types": ["jest", "reflect-metadata"]
   },
   "include": [
     "lib/**/*"
