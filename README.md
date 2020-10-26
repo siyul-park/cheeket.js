@@ -66,7 +66,7 @@ const warrior = await container.resolve<Warrior>(Types.Warrior);
 const throwableWeapon = await container.resolve<ThrowableWeapon>(
   Types.ThrowableWeapon
 );
-const weapon = await container.resolveOrThrow<Weapon>(Types.Weapon);
+const weapon = await container.resolve<Weapon>(Types.Weapon);
 
 expect(warrior.fight()).toEqual(weapon.hit());
 expect(warrior.sneak()).toEqual(throwableWeapon.throw());
