@@ -1,7 +1,7 @@
 # Cheeket Injector
 ![](https://img.shields.io/npm/dm/@cheeket/injector.png?style=flat-square)
 
-a decorator-based injector plugin for of [cheeket](https://www.npmjs.com/package/cheeket)
+a decorator-based injector plugin for [cheeket](https://www.npmjs.com/package/cheeket)
   
 ```typescript
 interface Weapon {
