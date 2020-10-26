@@ -51,8 +51,8 @@ const shurikenProvider = () => new Shuriken();
 
 const ninjaProvider = async (lookUp: Finder) => {
   return new Ninja(
-    await lookUp.resolveOrThrow<Weapon>(Types.Weapon),
-    await lookUp.resolveOrThrow<ThrowableWeapon>(Types.ThrowableWeapon)
+    await lookUp.resolve<Weapon>(Types.Weapon),
+    await lookUp.resolve<ThrowableWeapon>(Types.ThrowableWeapon)
   );
 };
 
@@ -62,8 +62,8 @@ container.bind(Types.Weapon, asSingleton(katanaProvider));
 container.bind(Types.ThrowableWeapon, asSingleton(shurikenProvider));
 container.bind(Types.Warrior, asSingleton(ninjaProvider));
 
-const warrior = await container.resolveOrThrow<Warrior>(Types.Warrior);
-const throwableWeapon = await container.resolveOrThrow<ThrowableWeapon>(
+const warrior = await container.resolve<Warrior>(Types.Warrior);
+const throwableWeapon = await container.resolve<ThrowableWeapon>(
   Types.ThrowableWeapon
 );
 const weapon = await container.resolveOrThrow<Weapon>(Types.Weapon);
