@@ -1,41 +1,32 @@
-import Identifier from "../identifier/identifier";
-import LookUp from "../look-up/look-up";
-import BinderImpl from "../binding/binder-impl";
-import Storage from "../storage/storage";
-import Finder from "../look-up/finder";
-import Provider from "../provider/provider";
-import LookUpProjector from "../look-up/look-up-projector";
-import Binder from "../binding/binder";
+import interfaces from "../interfaces/interfaces";
+import Context from "../context/context";
+import BindingDictionary from "../binding/binding-dictionary";
+import Request from "../context/request";
+import Module from "../module/module";
 
-class Container implements Binder, LookUp {
-  private readonly storage = new Storage();
+class Container implements interfaces.Container {
+  readonly #modules = new Set<interfaces.Module>();
 
-  private readonly finder = new Finder(this.storage);
+  readonly #bindingDictionary: interfaces.BindingDictionary = new BindingDictionary();
 
-  private readonly binder = new BinderImpl(this.storage);
-
-  bind<T>(id: Identifier<T>, provider: Provider<T>): void {
-    this.binder.bind(id, provider);
+  bind<T>(token: interfaces.Token<T>, provider: interfaces.Provider<T>): void {
+    this.#bindingDictionary.set(token, provider);
   }
 
-  unbind<T>(id: Identifier<T>): void {
-    this.binder.unbind(id);
+  resolve<T>(token: interfaces.Token<T>): Promise<T> {
+    return new Context(
+      this.#bindingDictionary,
+      this.#modules,
+      new Request(token)
+    ).resolve(token);
   }
 
-  async resolve<T>(id: Identifier<T>): Promise<T> {
-    return this.finder.resolve(id);
+  import(module: interfaces.Module): void {
+    this.#modules.add(module);
   }
 
-  async get<T>(id: Identifier<T>): Promise<T | undefined> {
-    return this.finder.get(id);
-  }
-
-  import<T>(...lookUps: LookUp[]): void {
-    lookUps.forEach((lookUp) => this.finder.import(lookUp));
-  }
-
-  export(...ids: Identifier<unknown>[]): LookUp {
-    return new LookUpProjector(this, new Set<Identifier<unknown>>(ids));
+  export(tokens: interfaces.Token<unknown>[]): interfaces.Module {
+    return new Module(new Set(tokens), this.#bindingDictionary, this.#modules);
   }
 }
 

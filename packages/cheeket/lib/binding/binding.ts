@@ -1,21 +1,10 @@
-import LookUp from "../look-up/look-up";
-import Identifier from "../identifier/identifier";
-import Provider from "../provider/provider";
-import BindingInfo from "./binding-info";
+import interfaces from "../interfaces/interfaces";
 
-class Binding<T> {
-  id: Identifier<T>;
-
-  provider: Provider<T>;
-
-  constructor(bindingInfo: BindingInfo<T>) {
-    this.id = bindingInfo.id;
-    this.provider = bindingInfo.provider;
-  }
-
-  async resolve(lookUp: LookUp): Promise<T> {
-    return this.provider(lookUp);
-  }
+class Binding<T> implements interfaces.Binding<T> {
+  constructor(
+    public token: interfaces.Token<T>,
+    public provider: interfaces.Provider<T>
+  ) {}
 }
 
 export default Binding;

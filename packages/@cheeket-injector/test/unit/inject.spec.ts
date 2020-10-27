@@ -1,8 +1,7 @@
 import "reflect-metadata";
 
-import { Container } from "cheeket";
+import { asSingleton, Container } from "cheeket";
 import Types from "../mock/types";
-import { asSingleton } from "../../../cheeket/lib";
 import autoInjected from "../../lib/injector/auto-injected";
 import Katana from "../mock/katana";
 import Weapon from "../mock/weapon";
