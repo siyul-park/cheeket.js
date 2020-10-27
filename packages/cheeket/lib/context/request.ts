@@ -3,7 +3,12 @@ import interfaces from "../interfaces/interfaces";
 class Request<T> implements interfaces.Request<T> {
   id = Symbol("");
 
-  constructor(public token: interfaces.Token<T>) {}
+  children = new Set<interfaces.Request<unknown>>();
+
+  constructor(
+    public token: interfaces.Token<T>,
+    public parent?: Request<unknown>
+  ) {}
 }
 
 export default Request;

@@ -15,12 +15,13 @@ namespace interfaces {
   export interface Request<T> {
     id: symbol;
     token: Token<T>;
+    parent?: Request<unknown>;
+    children: Set<Request<unknown>>;
   }
 
   export interface Context extends Resolver {
     id: symbol;
-    parent?: Context;
-    request: Request<unknown>;
+    request?: Request<unknown>;
   }
 
   export type Provider<T> = (context: Context) => T | Promise<T>;
@@ -39,15 +40,7 @@ namespace interfaces {
     get<T>(token: Token<T>): Provider<T> | undefined;
   }
 
-  export interface Module {
-    get<T>(token: Token<T>, parent: Context): Promise<T | undefined>;
-    isAccessible<T>(token: interfaces.Token<T>): boolean;
-  }
-
-  export interface Container extends Resolver, Binder {
-    import(module: Module): void;
-    export(tokens: Token<unknown>[]): Module;
-  }
+  export interface Container extends Resolver, Binder {}
 }
 
 export default interfaces;

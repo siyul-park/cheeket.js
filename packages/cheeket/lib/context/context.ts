@@ -5,34 +5,30 @@ import CantResolveError from "../error/cant-resolve-error";
 class Context implements interfaces.Context {
   readonly #bindingDictionary: interfaces.BindingDictionary;
 
-  readonly #modules: Set<interfaces.Module>;
-
   readonly id = Symbol("");
 
-  constructor(
-    bindingDictionary: interfaces.BindingDictionary,
-    modules: Set<interfaces.Module>,
-    public request: interfaces.Request<unknown>,
-    public parent?: interfaces.Context
-  ) {
+  public request?: interfaces.Request<unknown> = undefined;
+
+  constructor(bindingDictionary: interfaces.BindingDictionary) {
     this.#bindingDictionary = bindingDictionary;
-    this.#modules = modules;
   }
 
   async resolve<T>(token: interfaces.Token<T>): Promise<T> {
     const provider = this.#bindingDictionary.get(token);
     if (provider !== undefined) {
-      this.request = new Request(token);
-      return provider(this);
-    }
+      const request = new Request(token);
 
-    // eslint-disable-next-line no-restricted-syntax
-    for (const module of this.#modules) {
-      // eslint-disable-next-line no-await-in-loop
-      const value = await module.get(token, this);
-      if (value !== undefined) {
-        return value;
-      }
+      request.parent = this.request;
+      this.request?.children.add(request);
+
+      const parent = this.request;
+      this.request = request;
+
+      const value = await provider(this);
+
+      this.request = parent;
+
+      return value;
     }
 
     throw new CantResolveError(token, this);
