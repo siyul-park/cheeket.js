@@ -21,7 +21,7 @@ namespace interfaces {
 
   export interface Context extends Resolver {
     id: symbol;
-    request?: Request<unknown>;
+    request: Request<unknown>;
   }
 
   export type Provider<T> = (context: Context) => T | Promise<T>;

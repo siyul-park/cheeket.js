@@ -5,11 +5,11 @@ import CantResolveError from "../error/cant-resolve-error";
 class Context implements interfaces.Context {
   readonly #bindingDictionary: interfaces.BindingDictionary;
 
-  readonly id = Symbol("");
-
-  public request?: interfaces.Request<unknown> = undefined;
-
-  constructor(bindingDictionary: interfaces.BindingDictionary) {
+  constructor(
+    readonly id: symbol,
+    bindingDictionary: interfaces.BindingDictionary,
+    public request: interfaces.Request<unknown>
+  ) {
     this.#bindingDictionary = bindingDictionary;
   }
 
@@ -19,16 +19,9 @@ class Context implements interfaces.Context {
       const request = new Request(token);
 
       request.parent = this.request;
-      this.request?.children.add(request);
+      this.request.children.add(request);
 
-      const parent = this.request;
-      this.request = request;
-
-      const value = await provider(this);
-
-      this.request = parent;
-
-      return value;
+      return provider(new Context(this.id, this.#bindingDictionary, request));
     }
 
     throw new CantResolveError(token, this);

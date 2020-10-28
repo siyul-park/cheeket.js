@@ -8,13 +8,9 @@ import ThrowableWeapon from "../mock/throwable-weapon";
 import Warrior from "../mock/warrior";
 import interfaces from "../../lib/interfaces/interfaces";
 
-const katanaProvider = (context: interfaces.Context) => {
-  return new Katana();
-};
+const katanaProvider = () => new Katana();
 
-const shurikenProvider = (context: interfaces.Context) => {
-  return new Shuriken();
-};
+const shurikenProvider = () => new Shuriken();
 
 const ninjaProvider = async (context: interfaces.Context) => {
   return new Ninja(
