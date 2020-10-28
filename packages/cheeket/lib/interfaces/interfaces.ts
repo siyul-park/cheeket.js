@@ -30,11 +30,6 @@ namespace interfaces {
     bind<T>(token: Token<T>, provider: Provider<T>): void;
   }
 
-  export interface Binding<T> {
-    token: Token<T>;
-    provider: Provider<T>;
-  }
-
   export interface BindingDictionary {
     set<T>(token: Token<T>, provider: Provider<T>): void;
     get<T>(token: Token<T>): Provider<T> | undefined;
