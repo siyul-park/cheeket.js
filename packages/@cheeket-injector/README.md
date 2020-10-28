@@ -1,7 +1,7 @@
 # Cheeket Injector
 ![](https://img.shields.io/npm/dm/@cheeket/injector.png?style=flat-square)
 
-a decorator-based injector plugin for of [cheeket](https://www.npmjs.com/package/cheeket)
+a decorator-based injector plugin for [cheeket](https://www.npmjs.com/package/cheeket)
   
 ```typescript
 interface Weapon {
@@ -53,11 +53,11 @@ container.bind(Types.Weapon, asSingleton(autoInjected(Katana)));
 container.bind(Types.ThrowableWeapon, asSingleton(autoInjected(Shuriken)));
 container.bind(Types.Warrior, asSingleton(autoInjected(Ninja)));
 
-const warrior = await container.resolveOrThrow<Warrior>(Types.Warrior);
-const throwableWeapon = await container.resolveOrThrow<ThrowableWeapon>(
+const warrior = await container.resolve<Warrior>(Types.Warrior);
+const throwableWeapon = await container.resolve<ThrowableWeapon>(
   Types.ThrowableWeapon
 );
-const weapon = await container.resolveOrThrow<Weapon>(Types.Weapon);
+const weapon = await container.resolve<Weapon>(Types.Weapon);
 
 expect(warrior.fight()).toEqual(weapon.hit());
 expect(warrior.sneak()).toEqual(throwableWeapon.throw());
