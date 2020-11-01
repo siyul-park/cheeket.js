@@ -1,41 +1,25 @@
-import Identifier from "../identifier/identifier";
-import LookUp from "../look-up/look-up";
-import BinderImpl from "../binding/binder-impl";
-import Storage from "../storage/storage";
-import Finder from "../look-up/finder";
-import Provider from "../provider/provider";
-import LookUpProjector from "../look-up/look-up-projector";
-import Binder from "../binding/binder";
+import * as interfaces from "../interfaces";
+import Context from "../context/context";
+import BindingDictionary from "../binding/binding-dictionary";
+import Request from "../context/request";
+import CantResolveError from "../error/cant-resolve-error";
 
-class Container implements Binder, LookUp {
-  private readonly storage = new Storage();
+class Container implements interfaces.Container {
+  readonly #bindingDictionary: interfaces.BindingDictionary = new BindingDictionary();
 
-  private readonly finder = new Finder(this.storage);
-
-  private readonly binder = new BinderImpl(this.storage);
-
-  bind<T>(id: Identifier<T>, provider: Provider<T>): void {
-    this.binder.bind(id, provider);
+  bind<T>(token: interfaces.Token<T>, provider: interfaces.Provider<T>): void {
+    this.#bindingDictionary.set(token, provider);
   }
 
-  unbind<T>(id: Identifier<T>): void {
-    this.binder.unbind(id);
-  }
+  async resolve<T>(token: interfaces.Token<T>): Promise<T> {
+    const provider = this.#bindingDictionary.get(token);
+    if (provider !== undefined) {
+      return provider(
+        new Context(Symbol(""), this.#bindingDictionary, new Request(token))
+      );
+    }
 
-  async resolve<T>(id: Identifier<T>): Promise<T> {
-    return this.finder.resolve(id);
-  }
-
-  async get<T>(id: Identifier<T>): Promise<T | undefined> {
-    return this.finder.get(id);
-  }
-
-  import<T>(...lookUps: LookUp[]): void {
-    lookUps.forEach((lookUp) => this.finder.import(lookUp));
-  }
-
-  export(...ids: Identifier<unknown>[]): LookUp {
-    return new LookUpProjector(this, new Set<Identifier<unknown>>(ids));
+    throw new CantResolveError(token, this);
   }
 }
 
