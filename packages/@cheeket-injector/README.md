@@ -49,9 +49,9 @@ class Ninja implements Warrior {
 
 const container = new Container();
 
-container.bind(Types.Weapon, asSingleton(autoInjected(Katana)));
-container.bind(Types.ThrowableWeapon, asSingleton(autoInjected(Shuriken)));
-container.bind(Types.Warrior, asSingleton(autoInjected(Ninja)));
+container.bind(Types.Weapon, autoInjected(Katana));
+container.bind(Types.ThrowableWeapon, autoInjected(Shuriken));
+container.bind(Types.Warrior, autoInjected(Ninja));
 
 const warrior = await container.resolve<Warrior>(Types.Warrior);
 const throwableWeapon = await container.resolve<ThrowableWeapon>(
