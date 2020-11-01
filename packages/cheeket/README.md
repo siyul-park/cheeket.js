@@ -2,7 +2,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/siyual-park/cheeket.js/badge)](https://www.codefactor.io/repository/github/siyual-park/cheeket.js)
 ![](https://img.shields.io/npm/dm/cheeket.png?style=flat-square)
 
-A very lightweight dependency injection container for TypeScript/JavaScript for constructor injection as functional.
+A lightweight and extensible dependency injection container for TypeScript/JavaScript for constructor injection as functional.
   
 ```typescript
 interface Weapon {
@@ -58,9 +58,9 @@ const ninjaProvider = async (lookUp: Finder) => {
 
 const container = new Container();
 
-container.bind(Types.Weapon, asSingleton(katanaProvider));
-container.bind(Types.ThrowableWeapon, asSingleton(shurikenProvider));
-container.bind(Types.Warrior, asSingleton(ninjaProvider));
+container.bind(Types.Weapon, katanaProvider);
+container.bind(Types.ThrowableWeapon, shurikenProvider);
+container.bind(Types.Warrior, ninjaProvider);
 
 const warrior = await container.resolve<Warrior>(Types.Warrior);
 const throwableWeapon = await container.resolve<ThrowableWeapon>(
@@ -71,4 +71,8 @@ const weapon = await container.resolve<Weapon>(Types.Weapon);
 expect(warrior.fight()).toEqual(weapon.hit());
 expect(warrior.sneak()).toEqual(throwableWeapon.throw());
 ```
+  
+## Plugins
+- [@cheeket/injector](https://www.npmjs.com/package/@cheeket/injector
+): a decorator-based injector plugin
 
