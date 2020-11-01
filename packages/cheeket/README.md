@@ -72,6 +72,6 @@ expect(warrior.fight()).toEqual(weapon.hit());
 expect(warrior.sneak()).toEqual(throwableWeapon.throw());
 ```
   
-## Plugins
-  - [@cheeket/injector](https://www.npmjs.com/package/@cheeket/injector
+## Plugins  
+- [@cheeket/injector](https://www.npmjs.com/package/@cheeket/injector
 ): a decorator-based injector plugin  
