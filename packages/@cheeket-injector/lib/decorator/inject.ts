@@ -1,19 +1,21 @@
-import { Identifier } from "cheeket";
+import { interfaces } from "cheeket";
 import MetadataKey from "../constant/metadata-key";
 import MetaData from "../meta-data/meta-data";
 
-function inject<T>(id: Identifier<T>): ParameterDecorator {
+function inject<T>(token: interfaces.Token<T>): ParameterDecorator {
   return (
     target: any,
     propertyKey: string | symbol,
     parameterIndex: number
   ) => {
-    const metaDataList: MetaData<number, Identifier<unknown>>[] =
-      Reflect.getMetadata(MetadataKey.ParamIds, target) ?? [];
+    const metaDataList: MetaData<number, interfaces.Token<unknown>>[] =
+      Reflect.getMetadata(MetadataKey.ParamTokens, target) ?? [];
 
-    metaDataList.push(new MetaData<number, Identifier<T>>(parameterIndex, id));
+    metaDataList.push(
+      new MetaData<number, interfaces.Token<T>>(parameterIndex, token)
+    );
 
-    Reflect.defineMetadata(MetadataKey.ParamIds, metaDataList, target);
+    Reflect.defineMetadata(MetadataKey.ParamTokens, metaDataList, target);
 
     return target;
   };

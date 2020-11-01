@@ -1,6 +1,6 @@
 enum MetadataKey {
   ParamTypes = "cheeket:paramtypes",
-  ParamIds = "cheeket:paramIds",
+  ParamTokens = "cheeket:paramtokens",
   DesignParamTypes = "design:paramtypes",
 }
 
