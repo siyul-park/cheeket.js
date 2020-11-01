@@ -1,4 +1,5 @@
-import Container from "../../lib/container/container";
+import { Container, interfaces } from "../../lib";
+
 import Types from "../mock/types";
 import Katana from "../mock/katana";
 import Shuriken from "../mock/shuriken";
@@ -6,7 +7,6 @@ import Ninja from "../mock/ninja";
 import Weapon from "../mock/weapon";
 import ThrowableWeapon from "../mock/throwable-weapon";
 import Warrior from "../mock/warrior";
-import interfaces from "../../lib/interfaces/interfaces";
 
 const katanaProvider = () => new Katana();
 

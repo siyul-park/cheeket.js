@@ -1,4 +1,4 @@
-import interfaces from "../interfaces/interfaces";
+import * as interfaces from "../interfaces";
 
 class CantResolveError extends Error {
   constructor(token: interfaces.Token<unknown>, resolver: interfaces.Resolver) {

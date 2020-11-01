@@ -1,4 +1,4 @@
-import interfaces from "../interfaces/interfaces";
+import * as interfaces from "../interfaces";
 
 class Request<T> implements interfaces.Request<T> {
   id = Symbol("");

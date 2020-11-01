@@ -1,4 +1,4 @@
-import interfaces from "../interfaces/interfaces";
+import * as interfaces from "../interfaces";
 
 class BindingDictionary implements interfaces.BindingDictionary {
   readonly #storage = new Map<

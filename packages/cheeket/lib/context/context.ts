@@ -1,4 +1,4 @@
-import interfaces from "../interfaces/interfaces";
+import * as interfaces from "../interfaces";
 import Request from "./request";
 import CantResolveError from "../error/cant-resolve-error";
 

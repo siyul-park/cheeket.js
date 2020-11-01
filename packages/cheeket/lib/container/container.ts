@@ -1,4 +1,4 @@
-import interfaces from "../interfaces/interfaces";
+import * as interfaces from "../interfaces";
 import Context from "../context/context";
 import BindingDictionary from "../binding/binding-dictionary";
 import Request from "../context/request";
