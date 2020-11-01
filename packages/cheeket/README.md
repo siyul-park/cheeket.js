@@ -49,10 +49,10 @@ const katanaProvider = () => new Katana();
 
 const shurikenProvider = () => new Shuriken();
 
-const ninjaProvider = async (lookUp: Finder) => {
+const ninjaProvider = async (context: interfaces.Context) => {
   return new Ninja(
-    await lookUp.resolve<Weapon>(Types.Weapon),
-    await lookUp.resolve<ThrowableWeapon>(Types.ThrowableWeapon)
+    await context.resolve<Weapon>(Types.Weapon),
+    await context.resolve<ThrowableWeapon>(Types.ThrowableWeapon)
   );
 };
 
