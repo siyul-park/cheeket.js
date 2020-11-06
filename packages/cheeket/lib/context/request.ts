@@ -1,14 +1,12 @@
+import uniqid from "uniqid";
 import * as interfaces from "../interfaces";
 
 class Request<T> implements interfaces.Request<T> {
-  id = Symbol("");
+  id = Symbol(uniqid());
 
-  children = new Set<interfaces.Request<unknown>>();
+  resolved?: T = undefined;
 
-  constructor(
-    public token: interfaces.Token<T>,
-    public parent?: Request<unknown>
-  ) {}
+  constructor(public token: interfaces.Token<T>) {}
 }
 
 export default Request;
