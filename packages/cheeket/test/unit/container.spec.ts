@@ -1,4 +1,4 @@
-import { Container, interfaces } from "../../lib";
+import { Container, Event, interfaces } from "../../lib";
 
 import Types from "../mock/types";
 import Katana from "../mock/katana";
@@ -34,4 +34,38 @@ test("default", async () => {
 
   expect(warrior.fight()).toEqual(weapon.hit());
   expect(warrior.sneak()).toEqual(throwableWeapon.throw());
+});
+
+test("resolve event", async () => {
+  const container = new Container();
+
+  const contexts: interfaces.Context[] = [];
+  const listener = (context: interfaces.Context) => {
+    contexts.push(context);
+  };
+
+  container.addListener(Event.Resolve, listener);
+
+  container.bind(Types.Weapon, katanaProvider);
+  container.bind(Types.ThrowableWeapon, shurikenProvider);
+  container.bind(Types.Warrior, ninjaProvider);
+
+  await container.resolve<Warrior>(Types.Warrior);
+
+  expect(contexts.length).toEqual(3);
+
+  expect(contexts[0].parent?.id).toEqual(contexts[2].id);
+  expect(contexts[1].parent?.id).toEqual(contexts[2].id);
+
+  expect(contexts[2].children.size).toEqual(2);
+  expect(contexts[2].children.has(contexts[0])).toBeTruthy();
+  expect(contexts[2].children.has(contexts[1])).toBeTruthy();
+
+  expect(contexts[0].request.token).toEqual(Types.Weapon);
+  expect(contexts[1].request.token).toEqual(Types.ThrowableWeapon);
+  expect(contexts[2].request.token).toEqual(Types.Warrior);
+
+  expect(contexts[0].request.resolved).not.toBeUndefined();
+  expect(contexts[1].request.resolved).not.toBeUndefined();
+  expect(contexts[2].request.resolved).not.toBeUndefined();
 });
