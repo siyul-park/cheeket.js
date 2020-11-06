@@ -1,6 +1,7 @@
+import { EventEmitter2 } from "eventemitter2";
 import Resolver from "./resolver";
 import Binder from "./binder";
 
-interface Container extends Resolver, Binder {}
+interface Container extends Resolver, Binder, EventEmitter2 {}
 
 export default Container;
