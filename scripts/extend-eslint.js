@@ -10,7 +10,10 @@ const diff = path.relative(packagePath, rootPath);
 const eslintrc = {
   extends: [
     `${diff}/.eslintrc.json`
-  ]
+  ],
+  parserOptions: {
+    project: "tsconfig.eslint.json"
+  }
 };
 
 fs.writeFileSync(`${packagePath}/.eslintrc.json`, JSON.stringify(eslintrc, null, 2) + '\n');
