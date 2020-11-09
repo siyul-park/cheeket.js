@@ -1,4 +1,4 @@
-import { Container, Event, interfaces } from "../../lib";
+import { Container, EventType, interfaces } from "../../lib";
 
 import Types from "../mock/types";
 import Katana from "../mock/katana";
@@ -36,15 +36,31 @@ test("default", async () => {
   expect(warrior.sneak()).toEqual(throwableWeapon.throw());
 });
 
+test("resolve all", async () => {
+  const container = new Container();
+
+  container.bind(Types.Weapon, katanaProvider);
+  container.bind(Types.ThrowableWeapon, shurikenProvider);
+
+  container.bind(Types.Warrior, ninjaProvider);
+  container.bind(Types.Warrior, ninjaProvider);
+
+  const warriors = await container.resolveAll<Warrior>(Types.Warrior);
+
+  expect(warriors.length).toEqual(2);
+});
+
 test("resolve event", async () => {
   const container = new Container();
 
   const contexts: interfaces.Context[] = [];
-  const listener = (context: interfaces.Context) => {
+  const listener: interfaces.ResolveEventListener = (
+    context: interfaces.Context
+  ) => {
     contexts.push(context);
   };
 
-  container.addListener(Event.Resolve, listener);
+  container.addListener(EventType.Resolve, listener);
 
   container.bind(Types.Weapon, katanaProvider);
   container.bind(Types.ThrowableWeapon, shurikenProvider);

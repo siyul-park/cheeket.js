@@ -3,7 +3,7 @@ import uniqid from "uniqid";
 import * as interfaces from "../interfaces";
 import Request from "./request";
 import CantResolveError from "../error/cant-resolve-error";
-import { Event } from "../event";
+import { EventType } from "../event";
 
 class Context implements interfaces.Context {
   id = Symbol(uniqid());
@@ -31,7 +31,24 @@ class Context implements interfaces.Context {
       const value = await provider(context);
       context.request.resolved = value;
 
-      await this.#eventEmitter.emitAsync(Event.Resolve, context);
+      await this.#eventEmitter.emitAsync(EventType.Resolve, context);
+
+      return value;
+    }
+
+    throw new CantResolveError(token, this);
+  }
+
+  async resolveAll<T>(token: interfaces.Token<T>): Promise<T[]> {
+    const providers = this.#bindingDictionary.getAll(token);
+    if (providers.length > 0) {
+      const context = this.createChild(token);
+      const value = await Promise.all(
+        providers.map((provider) => provider(context))
+      );
+      context.request.resolved = value;
+
+      await this.#eventEmitter.emitAsync(EventType.Resolve, context);
 
       return value;
     }
