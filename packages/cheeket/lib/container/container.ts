@@ -33,14 +33,7 @@ class Container extends EventEmitter2 implements interfaces.Container {
   async resolve<T>(token: interfaces.Token<T>): Promise<T> {
     const provider = this.#bindingDictionary.get(token);
     if (provider !== undefined) {
-      const context = this.createContext(token);
-
-      const value = await provider(context);
-      context.request.resolved = value;
-
-      await this.emitAsync(EventType.Resolve, context);
-
-      return value;
+      return this.resolveProvider(provider, token);
     }
 
     throw new CantResolveError(token, this);
@@ -49,19 +42,25 @@ class Container extends EventEmitter2 implements interfaces.Container {
   async resolveAll<T>(token: interfaces.Token<T>): Promise<T[]> {
     const providers = this.#bindingDictionary.getAll(token);
     if (providers.length > 0) {
-      const context = this.createContext(token);
-
-      const value = await Promise.all(
-        providers.map((provider) => provider(context))
+      return Promise.all(
+        providers.map((provider) => this.resolveProvider(provider, token))
       );
-      context.request.resolved = value;
-
-      await this.emitAsync(EventType.Resolve, context);
-
-      return value;
     }
 
     throw new CantResolveError(token, this);
+  }
+
+  private async resolveProvider<T>(
+    provider: interfaces.Provider<T>,
+    token: interfaces.Token<T>
+  ): Promise<T> {
+    const context = this.createContext(token);
+    const value = await provider(context);
+    context.request.resolved = value;
+
+    await this.emitAsync(EventType.Resolve, context);
+
+    return value;
   }
 
   private createContext<T>(token: interfaces.Token<T>): interfaces.Context {
