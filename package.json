@@ -11,7 +11,7 @@
     "build": "lerna run build",
     "lint": "lerna run lint",
     "lint:fix": "lerna run lint:fix",
-    "test": "jest",
+    "test": "lerna run test",
     "clean": "lerna run clean",
     "package:publish": "lerna publish",
     "package:init": "./scripts/init-package.sh"

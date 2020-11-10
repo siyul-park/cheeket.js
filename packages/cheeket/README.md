@@ -58,9 +58,9 @@ const ninjaProvider = async (context: interfaces.Context) => {
 
 const container = new Container();
 
-container.bind(Types.Weapon, katanaProvider);
-container.bind(Types.ThrowableWeapon, shurikenProvider);
-container.bind(Types.Warrior, ninjaProvider);
+container.bind(Types.Weapon, inRequestScope(katanaProvider));
+container.bind(Types.ThrowableWeapon, inRequestScope(shurikenProvider));
+container.bind(Types.Warrior, inRequestScope(ninjaProvider));
 
 const warrior = await container.resolve<Warrior>(Types.Warrior);
 const throwableWeapon = await container.resolve<ThrowableWeapon>(
