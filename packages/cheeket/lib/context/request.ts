@@ -4,7 +4,7 @@ import * as interfaces from "../interfaces";
 class Request<T> implements interfaces.Request<T> {
   id = Symbol(uniqid());
 
-  resolved?: T | T[] = undefined;
+  resolved?: T = undefined;
 
   constructor(public token: interfaces.Token<T>) {}
 }
