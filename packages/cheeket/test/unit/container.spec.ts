@@ -1,4 +1,4 @@
-import { Container, Event, interfaces } from "../../lib";
+import { Container, EventType, inRequestScope, interfaces } from "../../lib";
 
 import Types from "../mock/types";
 import Katana from "../mock/katana";
@@ -22,9 +22,9 @@ const ninjaProvider = async (context: interfaces.Context) => {
 test("default", async () => {
   const container = new Container();
 
-  container.bind(Types.Weapon, katanaProvider);
-  container.bind(Types.ThrowableWeapon, shurikenProvider);
-  container.bind(Types.Warrior, ninjaProvider);
+  container.bind(Types.Weapon, inRequestScope(katanaProvider));
+  container.bind(Types.ThrowableWeapon, inRequestScope(shurikenProvider));
+  container.bind(Types.Warrior, inRequestScope(ninjaProvider));
 
   const warrior = await container.resolve<Warrior>(Types.Warrior);
   const throwableWeapon = await container.resolve<ThrowableWeapon>(
@@ -36,19 +36,35 @@ test("default", async () => {
   expect(warrior.sneak()).toEqual(throwableWeapon.throw());
 });
 
+test("resolve all", async () => {
+  const container = new Container();
+
+  container.bind(Types.Weapon, inRequestScope(katanaProvider));
+  container.bind(Types.ThrowableWeapon, inRequestScope(shurikenProvider));
+
+  container.bind(Types.Warrior, inRequestScope(ninjaProvider));
+  container.bind(Types.Warrior, inRequestScope(ninjaProvider));
+
+  const warriors = await container.resolveAll<Warrior>(Types.Warrior);
+
+  expect(warriors.length).toEqual(2);
+});
+
 test("resolve event", async () => {
   const container = new Container();
 
   const contexts: interfaces.Context[] = [];
-  const listener = (context: interfaces.Context) => {
+  const listener: interfaces.ResolveEventListener = (
+    context: interfaces.Context
+  ) => {
     contexts.push(context);
   };
 
-  container.addListener(Event.Resolve, listener);
+  container.addListener(EventType.Resolve, listener);
 
-  container.bind(Types.Weapon, katanaProvider);
-  container.bind(Types.ThrowableWeapon, shurikenProvider);
-  container.bind(Types.Warrior, ninjaProvider);
+  container.bind(Types.Weapon, inRequestScope(katanaProvider));
+  container.bind(Types.ThrowableWeapon, inRequestScope(shurikenProvider));
+  container.bind(Types.Warrior, inRequestScope(ninjaProvider));
 
   await container.resolve<Warrior>(Types.Warrior);
 
