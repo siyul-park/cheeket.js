@@ -1,6 +1,6 @@
 {
   "name": "cheeket",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A very lightweight dependency injection container for TypeScript/JavaScript for constructor injection as functional.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
