@@ -1,4 +1,4 @@
-import { Container, EventType, interfaces } from "../../lib";
+import { Container, EventType, inRequestScope, interfaces } from "../../lib";
 
 import Types from "../mock/types";
 import Katana from "../mock/katana";
@@ -22,9 +22,9 @@ const ninjaProvider = async (context: interfaces.Context) => {
 test("default", async () => {
   const container = new Container();
 
-  container.bind(Types.Weapon, katanaProvider);
-  container.bind(Types.ThrowableWeapon, shurikenProvider);
-  container.bind(Types.Warrior, ninjaProvider);
+  container.bind(Types.Weapon, inRequestScope(katanaProvider));
+  container.bind(Types.ThrowableWeapon, inRequestScope(shurikenProvider));
+  container.bind(Types.Warrior, inRequestScope(ninjaProvider));
 
   const warrior = await container.resolve<Warrior>(Types.Warrior);
   const throwableWeapon = await container.resolve<ThrowableWeapon>(
@@ -39,11 +39,11 @@ test("default", async () => {
 test("resolve all", async () => {
   const container = new Container();
 
-  container.bind(Types.Weapon, katanaProvider);
-  container.bind(Types.ThrowableWeapon, shurikenProvider);
+  container.bind(Types.Weapon, inRequestScope(katanaProvider));
+  container.bind(Types.ThrowableWeapon, inRequestScope(shurikenProvider));
 
-  container.bind(Types.Warrior, ninjaProvider);
-  container.bind(Types.Warrior, ninjaProvider);
+  container.bind(Types.Warrior, inRequestScope(ninjaProvider));
+  container.bind(Types.Warrior, inRequestScope(ninjaProvider));
 
   const warriors = await container.resolveAll<Warrior>(Types.Warrior);
 
@@ -62,9 +62,9 @@ test("resolve event", async () => {
 
   container.addListener(EventType.Resolve, listener);
 
-  container.bind(Types.Weapon, katanaProvider);
-  container.bind(Types.ThrowableWeapon, shurikenProvider);
-  container.bind(Types.Warrior, ninjaProvider);
+  container.bind(Types.Weapon, inRequestScope(katanaProvider));
+  container.bind(Types.ThrowableWeapon, inRequestScope(shurikenProvider));
+  container.bind(Types.Warrior, inRequestScope(ninjaProvider));
 
   await container.resolve<Warrior>(Types.Warrior);
 
@@ -84,4 +84,24 @@ test("resolve event", async () => {
   expect(contexts[0].request.resolved).not.toBeUndefined();
   expect(contexts[1].request.resolved).not.toBeUndefined();
   expect(contexts[2].request.resolved).not.toBeUndefined();
+});
+
+test("createChildContainer", async () => {
+  const container = new Container();
+
+  container.bind(Types.Weapon, inRequestScope(katanaProvider));
+  container.bind(Types.ThrowableWeapon, inRequestScope(shurikenProvider));
+
+  const childContainer = container.createChildContainer();
+
+  childContainer.bind(Types.Warrior, inRequestScope(ninjaProvider));
+
+  const warrior = await childContainer.resolve<Warrior>(Types.Warrior);
+  const throwableWeapon = await container.resolve<ThrowableWeapon>(
+    Types.ThrowableWeapon
+  );
+  const weapon = await container.resolve<Weapon>(Types.Weapon);
+
+  expect(warrior.fight()).toEqual(weapon.hit());
+  expect(warrior.sneak()).toEqual(throwableWeapon.throw());
 });
