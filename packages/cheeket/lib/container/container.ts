@@ -2,13 +2,13 @@ import { EventEmitter2 } from "eventemitter2";
 
 import * as interfaces from "../interfaces";
 import Context from "../context/context";
-import BindingDictionary from "../binding/binding-dictionary";
+import MutableBindingDictionary from "../binding/mutable-binding-dictionary";
 import Request from "../context/request";
 import CantResolveError from "../error/cant-resolve-error";
 import { EventType } from "../event";
 
 class Container extends EventEmitter2 implements interfaces.Container {
-  readonly #bindingDictionary: interfaces.BindingDictionary = new BindingDictionary();
+  readonly #bindingDictionary: interfaces.MutableBindingDictionary = new MutableBindingDictionary();
 
   bind<T>(token: interfaces.Token<T>, provider: interfaces.Provider<T>): void {
     this.#bindingDictionary.set(token, provider);
