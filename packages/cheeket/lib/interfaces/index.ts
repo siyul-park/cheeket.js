@@ -5,6 +5,7 @@ export { default as MutableBindingDictionary } from "./mutable-binding-dictionar
 export { default as Container } from "./container";
 export { default as Context } from "./context";
 export { default as Provider } from "./provider";
+export { default as ScopeProvider } from "./scope-provider";
 export { default as Request } from "./request";
 export { default as Resolver } from "./resolver";
 export { default as Token } from "./token";
