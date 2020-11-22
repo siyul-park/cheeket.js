@@ -1,6 +1,7 @@
 export { default as Abstract } from "./abstract";
 export { default as Binder } from "./binder";
 export { default as BindingDictionary } from "./binding-dictionary";
+export { default as MutableBindingDictionary } from "./mutable-binding-dictionary";
 export { default as Container } from "./container";
 export { default as Context } from "./context";
 export { default as Provider } from "./provider";
