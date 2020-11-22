@@ -7,14 +7,14 @@ import { EventType } from "../event";
 class Context implements interfaces.Context {
   id = Symbol(uniqid());
 
-  readonly #bindingDictionary: interfaces.MutableBindingDictionary;
+  readonly #bindingDictionary: interfaces.BindingDictionary;
 
   readonly #eventProducer: interfaces.EventProducer;
 
   public readonly children = new Set<interfaces.Context>();
 
   constructor(
-    bindingDictionary: interfaces.MutableBindingDictionary,
+    bindingDictionary: interfaces.BindingDictionary,
     eventProducer: interfaces.EventProducer,
     public request: interfaces.Request<unknown>,
     public parent?: interfaces.Context
