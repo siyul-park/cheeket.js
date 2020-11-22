@@ -19,7 +19,6 @@ function container(
     }
 
     const localContainer = globalContainer.createChildContainer();
-    handlers.local.init(localContainer);
 
     localContainer.bind(Token.Context, () => ctx);
     localContainer.bind(Token.Request, () => ctx.request);
@@ -30,6 +29,8 @@ function container(
     localContainer.bind(Token.Cookies, () => ctx.cookies);
     localContainer.bind(Token.Accepts, () => ctx.accept);
     localContainer.bind(Token.Respond, () => ctx.respond);
+
+    handlers.local.init(localContainer);
 
     ctx.containers = {
       local: localContainer,
