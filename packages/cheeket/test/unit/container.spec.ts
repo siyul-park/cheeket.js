@@ -85,3 +85,23 @@ test("resolve event", async () => {
   expect(contexts[1].request.resolved).not.toBeUndefined();
   expect(contexts[2].request.resolved).not.toBeUndefined();
 });
+
+test("createChildContainer", async () => {
+  const container = new Container();
+
+  container.bind(Types.Weapon, inRequestScope(katanaProvider));
+  container.bind(Types.ThrowableWeapon, inRequestScope(shurikenProvider));
+
+  const childContainer = container.createChildContainer();
+
+  childContainer.bind(Types.Warrior, inRequestScope(ninjaProvider));
+
+  const warrior = await childContainer.resolve<Warrior>(Types.Warrior);
+  const throwableWeapon = await container.resolve<ThrowableWeapon>(
+    Types.ThrowableWeapon
+  );
+  const weapon = await container.resolve<Weapon>(Types.Weapon);
+
+  expect(warrior.fight()).toEqual(weapon.hit());
+  expect(warrior.sneak()).toEqual(throwableWeapon.throw());
+});
