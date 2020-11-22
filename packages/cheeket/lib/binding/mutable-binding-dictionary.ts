@@ -1,6 +1,6 @@
 import * as interfaces from "../interfaces";
 
-class BindingDictionary implements interfaces.BindingDictionary {
+class MutableBindingDictionary implements interfaces.MutableBindingDictionary {
   readonly #storage = new Map<
     interfaces.Token<unknown>,
     interfaces.Provider<unknown>[]
@@ -34,4 +34,4 @@ class BindingDictionary implements interfaces.BindingDictionary {
   }
 }
 
-export default BindingDictionary;
+export default MutableBindingDictionary;
