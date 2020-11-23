@@ -19,10 +19,9 @@ class ChildContainer extends EventEmitter2 implements interfaces.Container {
     super();
 
     this.#parentBindingDictionaries = parentBindingDictionaries;
-    this.#combinedBindingDictionary = new CombinedBindingDictionary([
-      this.#bindingDictionary,
-      ...this.#parentBindingDictionaries,
-    ]);
+    this.#combinedBindingDictionary = new CombinedBindingDictionary(
+      this.createMergedBindingDictionaries()
+    );
   }
 
   bind<T>(token: interfaces.Token<T>, provider: interfaces.Provider<T>): void {
