@@ -1,8 +1,6 @@
-import { interfaces } from "cheeket";
+import OnCloseHandler from "./on-close-handler";
+import OnInitHandler from "./on-init-handler";
 
-interface Handler {
-  init(container: interfaces.Container): void;
-  close(container: interfaces.Container): void;
-}
+interface Handler extends OnInitHandler, OnCloseHandler {}
 
 export default Handler;

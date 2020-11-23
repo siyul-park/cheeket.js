@@ -1,18 +1,20 @@
-import Application from "koa";
+import Koa from "koa";
 import { interfaces } from "cheeket";
 import { IncomingMessage, ServerResponse } from "http";
 import * as accepts from "accepts";
 import CookiesFunction from "cookies";
 
-export const Context: interfaces.Token<Application.Context> = Symbol(
+export const Application: interfaces.Token<Koa> = Symbol("Application");
+
+export const Context: interfaces.Token<Koa.Context> = Symbol(
   "Application.Context"
 );
 
-export const Request: interfaces.Token<Application.Request> = Symbol(
+export const Request: interfaces.Token<Koa.Request> = Symbol(
   "Application.Request"
 );
 
-export const Response: interfaces.Token<Application.Response> = Symbol(
+export const Response: interfaces.Token<Koa.Response> = Symbol(
   "Application.Response"
 );
 

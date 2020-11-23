@@ -1,7 +1,8 @@
+import OnInitHandler from "./on-init-handler";
 import Handler from "./handler";
 
 interface Handlers {
-  global: Handler;
+  global: OnInitHandler;
   local: Handler;
 }
 

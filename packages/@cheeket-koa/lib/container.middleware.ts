@@ -11,16 +11,11 @@ function container(
   const globalContainer = new Container();
   handlers.global.init(globalContainer);
 
-  let applyOnClose = false;
   return async (ctx, next) => {
-    if (!applyOnClose) {
-      ctx.app.on("close", () => handlers.global.close(globalContainer));
-      applyOnClose = true;
-    }
-
     const localContainer = globalContainer.createChildContainer();
 
     localContainer.bind(Token.Context, () => ctx);
+    localContainer.bind(Token.Application, () => ctx.app);
     localContainer.bind(Token.Request, () => ctx.request);
     localContainer.bind(Token.Response, () => ctx.response);
     localContainer.bind(Token.Req, () => ctx.req);
