@@ -20,7 +20,7 @@ class CombinedBindingDictionary implements interfaces.BindingDictionary {
   getAll<T>(token: interfaces.Token<T>): interfaces.Provider<T>[] {
     const providers: interfaces.Provider<T>[] = [];
 
-    this.#bindingDictionaries.forEach((bindingDictionary) => {
+    this.#bindingDictionaries.reverse().forEach((bindingDictionary) => {
       providers.push(...bindingDictionary.getAll(token));
     });
 
