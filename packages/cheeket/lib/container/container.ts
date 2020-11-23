@@ -66,11 +66,11 @@ class Container extends EventEmitter2 implements interfaces.Container {
 
   private createContext<T>(token: interfaces.Token<T>): interfaces.Context {
     const request = new Request(token);
-    return new Context(this.#bindingDictionary, this, request);
+    return new Context([this.#bindingDictionary], this, request);
   }
 
   createChildContainer(): interfaces.Container {
-    return new ChildContainer(this.#bindingDictionary);
+    return new ChildContainer([this.#bindingDictionary]);
   }
 }
 
