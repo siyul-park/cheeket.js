@@ -1,6 +1,6 @@
 {
   "name": "@cheeket/koa",
-  "version": "1.0.0",
+  "version": "1.0.1-alpha.0",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,15 +20,15 @@
     "@types/cookies": "^0.7.5",
     "@types/koa": "^2.11.6",
     "@types/node": "^14.14.8",
-    "cheeket": "^2.3.0",
+    "cheeket": "^2.3.1",
     "cross-env": "^7.0.2",
     "eslint": "^7.13.0",
     "koa": "^2.13.0"
   },
   "peerDependencies": {
-    "cheeket": "2.x",
-    "koa": "2.x",
     "accepts": "x",
-    "cookies": "x"
+    "cheeket": "2.x",
+    "cookies": "x",
+    "koa": "2.x"
   }
 }
