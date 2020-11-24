@@ -11,18 +11,17 @@ import { EventType } from "../event";
 class ChildContainer extends EventEmitter2 implements interfaces.Container {
   readonly #bindingDictionary: interfaces.MutableBindingDictionary = new MutableBindingDictionary();
 
-  readonly #parentBindingDictionary: interfaces.BindingDictionary;
+  readonly #parentBindingDictionaries: interfaces.BindingDictionary[];
 
   readonly #combinedBindingDictionary: interfaces.BindingDictionary;
 
-  constructor(parentBindingDictionary: interfaces.BindingDictionary) {
+  constructor(parentBindingDictionaries: interfaces.BindingDictionary[]) {
     super();
 
-    this.#parentBindingDictionary = parentBindingDictionary;
-    this.#combinedBindingDictionary = new CombinedBindingDictionary([
-      this.#parentBindingDictionary,
-      this.#bindingDictionary,
-    ]);
+    this.#parentBindingDictionaries = parentBindingDictionaries;
+    this.#combinedBindingDictionary = new CombinedBindingDictionary(
+      this.createMergedBindingDictionaries()
+    );
   }
 
   bind<T>(token: interfaces.Token<T>, provider: interfaces.Provider<T>): void {
@@ -80,11 +79,15 @@ class ChildContainer extends EventEmitter2 implements interfaces.Container {
 
   private createContext<T>(token: interfaces.Token<T>): interfaces.Context {
     const request = new Request(token);
-    return new Context(this.#combinedBindingDictionary, this, request);
+    return new Context(this.createMergedBindingDictionaries(), this, request);
   }
 
   createChildContainer(): interfaces.Container {
-    return new ChildContainer(this.#combinedBindingDictionary);
+    return new ChildContainer(this.createMergedBindingDictionaries());
+  }
+
+  private createMergedBindingDictionaries(): interfaces.BindingDictionary[] {
+    return [this.#bindingDictionary, ...this.#parentBindingDictionaries];
   }
 }
 
