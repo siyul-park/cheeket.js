@@ -1,4 +1,10 @@
-import { Container, EventType, inRequestScope, interfaces } from "../../lib";
+import {
+  Container,
+  EventType,
+  inRequestScope,
+  inResolveScope,
+  interfaces,
+} from "../../lib";
 
 import Types from "../mock/types";
 import Katana from "../mock/katana";
@@ -104,4 +110,34 @@ test("createChildContainer", async () => {
 
   expect(warrior.fight()).toEqual(weapon.hit());
   expect(warrior.sneak()).toEqual(throwableWeapon.throw());
+});
+
+test("inResolveScope", async () => {
+  const container = new Container();
+
+  const weaponProvider = inResolveScope(katanaProvider);
+  const throwableWeaponProvider = inResolveScope(shurikenProvider);
+  const warriorProvider = inResolveScope(ninjaProvider);
+
+  container.bind(Types.Weapon, weaponProvider);
+  container.bind(Types.ThrowableWeapon, throwableWeaponProvider);
+  container.bind(Types.Warrior, warriorProvider);
+
+  expect(weaponProvider.size).toEqual(0);
+  expect(throwableWeaponProvider.size).toEqual(0);
+  expect(warriorProvider.size).toEqual(0);
+
+  await container.resolve<Warrior>(Types.Warrior);
+
+  expect(weaponProvider.size).toEqual(0);
+  expect(throwableWeaponProvider.size).toEqual(0);
+  expect(warriorProvider.size).toEqual(0);
+
+  await container.resolve<ThrowableWeapon>(Types.ThrowableWeapon);
+
+  expect(throwableWeaponProvider.size).toEqual(0);
+
+  await container.resolve<Weapon>(Types.Weapon);
+
+  expect(warriorProvider.size).toEqual(0);
 });

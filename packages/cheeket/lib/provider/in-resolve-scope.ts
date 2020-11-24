@@ -12,10 +12,12 @@ function findRoot(context: interfaces.Context): interfaces.Context {
 
 function inResolveScope<T>(
   provider: interfaces.Provider<T>
-): interfaces.Provider<T> {
+): interfaces.ResolveScopeProvider<T> {
   const cache = new Map<symbol, T>();
 
-  return async (context: interfaces.Context) => {
+  const scopeProvider: Partial<interfaces.Provider<T>> = async (
+    context: interfaces.Context
+  ) => {
     const root = findRoot(context);
     const existed = cache.get(root.id);
     if (existed !== undefined) {
@@ -27,15 +29,20 @@ function inResolveScope<T>(
     cache.set(root.id, value);
 
     const listener: interfaces.ResolveEventListener = (ctx) => {
-      if (ctx === root) {
+      if (ctx.id === root.id) {
         cache.delete(root.id);
+        context.container.removeListener(EventType.Resolve, listener);
       }
     };
 
-    context.container.once(EventType.Resolve, listener);
+    context.container.addListener(EventType.Resolve, listener);
 
     return value;
   };
+
+  Object.defineProperty(scopeProvider, "size", { get: () => cache.size });
+
+  return scopeProvider as interfaces.ResolveScopeProvider<T>;
 }
 
 export default inResolveScope;

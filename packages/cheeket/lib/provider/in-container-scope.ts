@@ -25,6 +25,8 @@ function inContainerScope<T>(
     cache.delete(container);
   };
 
+  Object.defineProperty(scopeProvider, "size", { get: () => cache.size });
+
   return scopeProvider as interfaces.ContainerScopeProvider<T>;
 }
 

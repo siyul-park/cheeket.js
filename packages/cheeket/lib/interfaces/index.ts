@@ -8,6 +8,7 @@ export { default as Context } from "./context";
 export { default as Provider } from "./provider";
 export { default as SingletonScopeProvider } from "./singleton-scope-provider";
 export { default as ContainerScopeProvider } from "./container-scope-provider";
+export { default as ResolveScopeProvider } from "./resolve-scope-provider";
 export { default as Request } from "./request";
 export { default as Resolver } from "./resolver";
 export { default as Token } from "./token";
