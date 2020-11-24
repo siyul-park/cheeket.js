@@ -28,6 +28,10 @@ class MutableBindingDictionary implements interfaces.MutableBindingDictionary {
     this.#storage.delete(token);
   }
 
+  clear(): void {
+    this.#storage.clear();
+  }
+
   has<T>(token: interfaces.Token<T>): boolean {
     const existed = this.#storage.get(token);
     return existed !== undefined && existed.length > 0;
