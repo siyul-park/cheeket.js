@@ -31,5 +31,6 @@
   "dependencies": {
     "eventemitter2": "^6.4.3",
     "uniqid": "^5.2.0"
-  }
+  },
+  "gitHead": "ea196b144314415e6d987ca881d7b3deb0cd84c0"
 }

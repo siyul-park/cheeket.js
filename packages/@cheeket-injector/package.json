@@ -32,5 +32,6 @@
   "peerDependencies": {
     "cheeket": "2.x",
     "reflect-metadata": "0.1"
-  }
+  },
+  "gitHead": "ea196b144314415e6d987ca881d7b3deb0cd84c0"
 }

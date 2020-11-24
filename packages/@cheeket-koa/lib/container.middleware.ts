@@ -1,18 +1,19 @@
 import Application, { DefaultState } from "koa";
-import { Container } from "cheeket";
+import { Container, interfaces } from "cheeket";
 
-import Handlers from "./handlers";
 import ContainerContext from "./container-context";
 import * as Token from "./token";
+import Initializer from "./initializer";
 
 function container(
-  handlers: Handlers
+  initializer: Initializer,
+  options?: interfaces.EventEmitterOptions
 ): Application.Middleware<DefaultState, Partial<ContainerContext>> {
-  const rootContainer = new Container();
-  handlers.root.init(rootContainer);
+  const rootContainer = new Container(options);
+  initializer.initRootContainer(rootContainer);
 
   return async (ctx, next) => {
-    const contextContainer = rootContainer.createChildContainer();
+    const contextContainer = rootContainer.createChildContainer(options);
 
     contextContainer.bind(Token.Context, () => ctx);
     contextContainer.bind(Token.Application, () => ctx.app);
@@ -25,7 +26,7 @@ function container(
     contextContainer.bind(Token.Accepts, () => ctx.accept);
     contextContainer.bind(Token.Respond, () => ctx.respond);
 
-    handlers.context.init(contextContainer);
+    initializer.initRootContainer(contextContainer);
 
     ctx.containers = {
       root: rootContainer,
@@ -36,7 +37,7 @@ function container(
     ctx.resolveAll = (token) => contextContainer.resolveAll(token);
 
     await next();
-    handlers.context.close(contextContainer);
+    await contextContainer.clear();
   };
 }
 
