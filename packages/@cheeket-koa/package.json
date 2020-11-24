@@ -1,7 +1,8 @@
 {
   "name": "@cheeket/koa",
-  "version": "1.0.0-alpha.0",
+  "version": "0.0.0",
   "description": "use cheeket in koa",
+  "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -32,5 +33,5 @@
     "cookies": "x",
     "koa": "2.x"
   },
-  "gitHead": "e0fa286381016ec6a03562cdbc790d2dcef667f8"
+  "gitHead": "715b9e353f5449d9caf406ef61e5a74678a0a2cb"
 }
