@@ -9,7 +9,7 @@ class Context implements interfaces.Context {
 
   readonly #containerContexts: interfaces.ContainerContext[];
 
-  public readonly container: interfaces.EventEmitter2;
+  public readonly container: interfaces.EventEmitter;
 
   public readonly children = new Set<interfaces.Context>();
 

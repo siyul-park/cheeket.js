@@ -1,3 +1,30 @@
+import {
+  CancelablePromise,
+  event,
+  EventAndListener,
+  eventNS,
+  GeneralEventEmitter,
+  Listener,
+  ListenerFn,
+  ListenToOptions,
+  OnOptions,
+  WaitForFilter,
+  WaitForOptions,
+} from "eventemitter2";
+
+export {
+  CancelablePromise,
+  event,
+  EventAndListener,
+  eventNS,
+  GeneralEventEmitter,
+  Listener,
+  ListenerFn,
+  ListenToOptions,
+  OnOptions,
+  WaitForFilter,
+  WaitForOptions,
+};
 export { default as Abstract } from "./abstract";
 export { default as Binder } from "./binder";
 export { default as BindingDictionary } from "./binding-dictionary";
@@ -17,4 +44,5 @@ export { default as ResolveEventListener } from "./resolve-event-listener";
 export { default as CreateEventListener } from "./create-event-listener";
 export { default as ClearEventListener } from "./clear-event-listener";
 export { default as EventToken } from "./event-token";
-export * from "eventemitter2";
+export { default as EventEmitterOptions } from "./event-emitter-options";
+export { default as EventEmitter } from "./event-emitter";

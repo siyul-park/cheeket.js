@@ -20,8 +20,11 @@ class ChildContainer extends EventEmitter2 implements interfaces.Container {
 
   readonly #combinedBindingDictionary: interfaces.BindingDictionary;
 
-  constructor(parentContainerContexts: interfaces.ContainerContext[]) {
-    super();
+  constructor(
+    parentContainerContexts: interfaces.ContainerContext[],
+    options?: interfaces.EventEmitterOptions
+  ) {
+    super(options);
 
     this.#parentContainerContexts = parentContainerContexts;
     this.#combinedBindingDictionary = new CombinedBindingDictionary([
@@ -90,8 +93,10 @@ class ChildContainer extends EventEmitter2 implements interfaces.Container {
     return new Context(this.createContainerContexts(), request);
   }
 
-  createChildContainer(): interfaces.Container {
-    return new ChildContainer(this.createContainerContexts());
+  createChildContainer(
+    options?: interfaces.EventEmitterOptions
+  ): interfaces.Container {
+    return new ChildContainer(this.createContainerContexts(), options);
   }
 
   private createContainerContexts(): interfaces.ContainerContext[] {

@@ -1,9 +1,9 @@
-import { EventEmitter2 } from "eventemitter2";
 import BindingDictionary from "./binding-dictionary";
+import EventEmitter from "./event-emitter";
 
 interface ContainerContext {
   bindingDictionary: BindingDictionary;
-  eventEmitter: EventEmitter2;
+  eventEmitter: EventEmitter;
 }
 
 export default ContainerContext;
