@@ -1,7 +1,7 @@
 {
   "name": "@cheeket/koa",
-  "version": "1.0.1-alpha.1",
-  "description": "",
+  "version": "1.0.0",
+  "description": "use cheeket in koa",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -13,8 +13,9 @@
     "lint:fix": "eslint --fix .",
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "siyual.park",
+  "license": "MIT",
+  "homepage": "https://github.com/siyual-park/cheeket.js",
   "devDependencies": {
     "@types/accepts": "^1.3.5",
     "@types/cookies": "^0.7.5",
@@ -31,5 +32,5 @@
     "cookies": "x",
     "koa": "2.x"
   },
-  "gitHead": "5ce8d148dc35d96b63227207cd49b6555bb70143"
+  "gitHead": "e0fa286381016ec6a03562cdbc790d2dcef667f8"
 }
