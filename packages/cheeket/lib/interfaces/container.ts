@@ -1,10 +1,11 @@
-import { EventEmitter2 } from "eventemitter2";
 import Resolver from "./resolver";
 import Binder from "./binder";
-import EventProducer from "./event-producer";
+import EventEmitter from "./event-emitter";
+import EventEmitterOptions from "./event-emitter-options";
 
-interface Container extends Resolver, Binder, EventEmitter2, EventProducer {
-  createChildContainer(): Container;
+interface Container extends Resolver, Binder, EventEmitter {
+  createChildContainer(options?: EventEmitterOptions): Container;
+  clear(): Promise<void>;
 }
 
 export default Container;
