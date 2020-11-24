@@ -1,9 +1,9 @@
-import OnInitHandler from "./on-init-handler";
-import Handler from "./handler";
+import RootContainerHandler from "./root-container-handler";
+import ContextContainerHandler from "./context-container-handler";
 
 interface Handlers {
-  global: OnInitHandler;
-  local: Handler;
+  root: RootContainerHandler;
+  context: ContextContainerHandler;
 }
 
 export default Handlers;

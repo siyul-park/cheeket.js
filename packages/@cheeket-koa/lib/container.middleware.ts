@@ -8,35 +8,35 @@ import * as Token from "./token";
 function container(
   handlers: Handlers
 ): Application.Middleware<DefaultState, Partial<ContainerContext>> {
-  const globalContainer = new Container();
-  handlers.global.init(globalContainer);
+  const rootContainer = new Container();
+  handlers.root.init(rootContainer);
 
   return async (ctx, next) => {
-    const localContainer = globalContainer.createChildContainer();
+    const contextContainer = rootContainer.createChildContainer();
 
-    localContainer.bind(Token.Context, () => ctx);
-    localContainer.bind(Token.Application, () => ctx.app);
-    localContainer.bind(Token.Request, () => ctx.request);
-    localContainer.bind(Token.Response, () => ctx.response);
-    localContainer.bind(Token.Req, () => ctx.req);
-    localContainer.bind(Token.Res, () => ctx.res);
-    localContainer.bind(Token.OriginalUrl, () => ctx.origin);
-    localContainer.bind(Token.Cookies, () => ctx.cookies);
-    localContainer.bind(Token.Accepts, () => ctx.accept);
-    localContainer.bind(Token.Respond, () => ctx.respond);
+    contextContainer.bind(Token.Context, () => ctx);
+    contextContainer.bind(Token.Application, () => ctx.app);
+    contextContainer.bind(Token.Request, () => ctx.request);
+    contextContainer.bind(Token.Response, () => ctx.response);
+    contextContainer.bind(Token.Req, () => ctx.req);
+    contextContainer.bind(Token.Res, () => ctx.res);
+    contextContainer.bind(Token.OriginalUrl, () => ctx.origin);
+    contextContainer.bind(Token.Cookies, () => ctx.cookies);
+    contextContainer.bind(Token.Accepts, () => ctx.accept);
+    contextContainer.bind(Token.Respond, () => ctx.respond);
 
-    handlers.local.init(localContainer);
+    handlers.context.init(contextContainer);
 
     ctx.containers = {
-      local: localContainer,
-      global: globalContainer,
+      root: rootContainer,
+      context: contextContainer,
     };
 
-    ctx.resolve = (token) => localContainer.resolve(token);
-    ctx.resolveAll = (token) => localContainer.resolveAll(token);
+    ctx.resolve = (token) => contextContainer.resolve(token);
+    ctx.resolveAll = (token) => contextContainer.resolveAll(token);
 
     await next();
-    handlers.local.close(localContainer);
+    handlers.context.close(contextContainer);
   };
 }
 
