@@ -1,7 +1,7 @@
-import Context from "./context";
+import Container from "./container";
 
 interface ClearEventListener {
-  (context: Context): void | Promise<void>;
+  (context: Container): void | Promise<void>;
 }
 
 export default ClearEventListener;

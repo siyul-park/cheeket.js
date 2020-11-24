@@ -1,6 +1,7 @@
 import {
   Container,
   EventType,
+  inContainerScope,
   inRequestScope,
   inResolveScope,
   interfaces,
@@ -139,5 +140,33 @@ test("inResolveScope", async () => {
 
   await container.resolve<Weapon>(Types.Weapon);
 
+  expect(warriorProvider.size).toEqual(0);
+});
+
+test("inContainerScope", async () => {
+  const container = new Container();
+
+  const weaponProvider = inContainerScope(katanaProvider);
+  const throwableWeaponProvider = inContainerScope(shurikenProvider);
+  const warriorProvider = inContainerScope(ninjaProvider);
+
+  container.bind(Types.Weapon, weaponProvider);
+  container.bind(Types.ThrowableWeapon, throwableWeaponProvider);
+  container.bind(Types.Warrior, warriorProvider);
+
+  expect(weaponProvider.size).toEqual(0);
+  expect(throwableWeaponProvider.size).toEqual(0);
+  expect(warriorProvider.size).toEqual(0);
+
+  await container.resolve<Warrior>(Types.Warrior);
+
+  expect(weaponProvider.size).toEqual(1);
+  expect(throwableWeaponProvider.size).toEqual(1);
+  expect(warriorProvider.size).toEqual(1);
+
+  await container.clear();
+
+  expect(weaponProvider.size).toEqual(0);
+  expect(throwableWeaponProvider.size).toEqual(0);
   expect(warriorProvider.size).toEqual(0);
 });

@@ -18,6 +18,12 @@ function inContainerScope<T>(
     await context.container.emitAsync(EventType.Create, value, context);
     cache.set(context.container, value);
 
+    const listener: interfaces.ClearEventListener = (container) => {
+      cache.delete(container);
+    };
+
+    context.container.once(EventType.Clear, listener);
+
     return value;
   };
 
