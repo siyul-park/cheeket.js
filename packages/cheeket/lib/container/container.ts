@@ -11,6 +11,11 @@ import ChildContainer from "./child-container";
 class Container extends EventEmitter2 implements interfaces.Container {
   readonly #bindingDictionary: interfaces.MutableBindingDictionary = new MutableBindingDictionary();
 
+  readonly #containerContext: interfaces.ContainerContext = {
+    bindingDictionary: this.#bindingDictionary,
+    eventEmitter: this,
+  };
+
   bind<T>(token: interfaces.Token<T>, provider: interfaces.Provider<T>): void {
     this.#bindingDictionary.set(token, provider);
   }
@@ -66,11 +71,11 @@ class Container extends EventEmitter2 implements interfaces.Container {
 
   private createContext<T>(token: interfaces.Token<T>): interfaces.Context {
     const request = new Request(token);
-    return new Context([this.#bindingDictionary], this, request);
+    return new Context([this.#containerContext], request);
   }
 
   createChildContainer(): interfaces.Container {
-    return new ChildContainer([this.#bindingDictionary]);
+    return new ChildContainer([this.#containerContext]);
   }
 }
 

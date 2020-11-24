@@ -3,15 +3,15 @@ import { EventType } from "../event";
 
 function inSingletonScope<T>(
   provider: interfaces.Provider<T>
-): interfaces.ScopeProvider<T> {
+): interfaces.SingletonScopeProvider<T> {
   let cache: T | undefined;
 
-  const scopeProvider: Partial<interfaces.ScopeProvider<T>> = async (
+  const scopeProvider: Partial<interfaces.SingletonScopeProvider<T>> = async (
     context: interfaces.Context
   ) => {
     if (cache === undefined) {
       const value = await provider(context);
-      await context.emitAsync(EventType.Create, value, context);
+      await context.container.emitAsync(EventType.Create, value, context);
       cache = value;
     }
 
@@ -22,7 +22,7 @@ function inSingletonScope<T>(
     cache = undefined;
   };
 
-  return scopeProvider as interfaces.ScopeProvider<T>;
+  return scopeProvider as interfaces.SingletonScopeProvider<T>;
 }
 
 export default inSingletonScope;

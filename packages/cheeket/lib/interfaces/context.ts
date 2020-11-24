@@ -1,14 +1,16 @@
+import { EventEmitter2 } from "eventemitter2";
 import Resolver from "./resolver";
 import Request from "./request";
-import EventProducer from "./event-producer";
 
-interface Context extends Resolver, EventProducer {
-  id: symbol;
+interface Context extends Resolver {
+  readonly id: symbol;
 
-  request: Request<unknown>;
+  readonly request: Request<unknown>;
 
-  parent?: Context;
-  children: Set<Context>;
+  readonly container: EventEmitter2;
+
+  readonly parent?: Context;
+  readonly children: Set<Context>;
 }
 
 export default Context;

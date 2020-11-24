@@ -11,17 +11,25 @@ import { EventType } from "../event";
 class ChildContainer extends EventEmitter2 implements interfaces.Container {
   readonly #bindingDictionary: interfaces.MutableBindingDictionary = new MutableBindingDictionary();
 
-  readonly #parentBindingDictionaries: interfaces.BindingDictionary[];
+  readonly #containerContext: interfaces.ContainerContext = {
+    bindingDictionary: this.#bindingDictionary,
+    eventEmitter: this,
+  };
+
+  readonly #parentContainerContexts: interfaces.ContainerContext[];
 
   readonly #combinedBindingDictionary: interfaces.BindingDictionary;
 
-  constructor(parentBindingDictionaries: interfaces.BindingDictionary[]) {
+  constructor(parentContainerContexts: interfaces.ContainerContext[]) {
     super();
 
-    this.#parentBindingDictionaries = parentBindingDictionaries;
-    this.#combinedBindingDictionary = new CombinedBindingDictionary(
-      this.createMergedBindingDictionaries()
-    );
+    this.#parentContainerContexts = parentContainerContexts;
+    this.#combinedBindingDictionary = new CombinedBindingDictionary([
+      this.#bindingDictionary,
+      ...parentContainerContexts.map(
+        ({ bindingDictionary }) => bindingDictionary
+      ),
+    ]);
   }
 
   bind<T>(token: interfaces.Token<T>, provider: interfaces.Provider<T>): void {
@@ -79,15 +87,15 @@ class ChildContainer extends EventEmitter2 implements interfaces.Container {
 
   private createContext<T>(token: interfaces.Token<T>): interfaces.Context {
     const request = new Request(token);
-    return new Context(this.createMergedBindingDictionaries(), this, request);
+    return new Context(this.createContainerContexts(), request);
   }
 
   createChildContainer(): interfaces.Container {
-    return new ChildContainer(this.createMergedBindingDictionaries());
+    return new ChildContainer(this.createContainerContexts());
   }
 
-  private createMergedBindingDictionaries(): interfaces.BindingDictionary[] {
-    return [this.#bindingDictionary, ...this.#parentBindingDictionaries];
+  private createContainerContexts(): interfaces.ContainerContext[] {
+    return [this.#containerContext, ...this.#parentContainerContexts];
   }
 }
 
