@@ -76,3 +76,5 @@ expect(warrior.sneak()).toEqual(throwableWeapon.throw());
   
 - [@cheeket/injector](https://www.npmjs.com/package/@cheeket/injector
 ): a decorator-based injector plugin  
+- [@cheeket/koa](https://www.npmjs.com/package/@cheeket/koa
+): use cheeket in koa  
