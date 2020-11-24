@@ -4,6 +4,7 @@ import Binder from "./binder";
 
 interface Container extends Resolver, Binder, EventEmitter2 {
   createChildContainer(): Container;
+  clear(): Promise<void>;
 }
 
 export default Container;

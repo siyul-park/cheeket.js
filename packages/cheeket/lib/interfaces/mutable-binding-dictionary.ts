@@ -7,6 +7,7 @@ interface MutableBindingDictionary extends BindingDictionary {
   get<T>(token: Token<T>): Provider<T> | undefined;
   getAll<T>(token: Token<T>): Provider<T>[];
   delete<T>(token: Token<T>): void;
+  clear(): void;
   has<T>(token: Token<T>): boolean;
 }
 

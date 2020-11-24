@@ -97,6 +97,12 @@ class ChildContainer extends EventEmitter2 implements interfaces.Container {
   private createContainerContexts(): interfaces.ContainerContext[] {
     return [this.#containerContext, ...this.#parentContainerContexts];
   }
+
+  async clear(): Promise<void> {
+    this.#bindingDictionary.clear();
+
+    await this.emitAsync(EventType.Clear, this);
+  }
 }
 
 export default ChildContainer;

@@ -15,5 +15,6 @@ export { default as Token } from "./token";
 export { default as Type } from "./type";
 export { default as ResolveEventListener } from "./resolve-event-listener";
 export { default as CreateEventListener } from "./create-event-listener";
+export { default as ClearEventListener } from "./clear-event-listener";
 export { default as EventToken } from "./event-token";
 export * from "eventemitter2";
