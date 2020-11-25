@@ -1,10 +1,10 @@
 import Resolver from "./resolver";
 import Binder from "./binder";
 import EventEmitter from "./event-emitter";
-import EventEmitterOptions from "./event-emitter-options";
+import ContainerConstructorOptions from "./container-constructor-options";
 
 interface Container extends Resolver, Binder, EventEmitter {
-  createChildContainer(options?: EventEmitterOptions): Container;
+  createChildContainer(options?: ContainerConstructorOptions): Container;
   clear(): Promise<void>;
 }
 

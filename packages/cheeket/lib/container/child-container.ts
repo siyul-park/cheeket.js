@@ -22,7 +22,7 @@ class ChildContainer extends EventEmitter2 implements interfaces.Container {
 
   constructor(
     parentContainerContexts: interfaces.ContainerContext[],
-    options?: interfaces.EventEmitterOptions
+    options?: interfaces.ContainerConstructorOptions
   ) {
     super(options);
 
@@ -94,7 +94,7 @@ class ChildContainer extends EventEmitter2 implements interfaces.Container {
   }
 
   createChildContainer(
-    options?: interfaces.EventEmitterOptions
+    options?: interfaces.ContainerConstructorOptions
   ): interfaces.Container {
     return new ChildContainer(this.createContainerContexts(), options);
   }
