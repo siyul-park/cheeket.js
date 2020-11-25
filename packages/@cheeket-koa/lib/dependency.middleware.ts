@@ -5,7 +5,7 @@ import ContainerContext from "./container-context";
 import * as Token from "./token";
 import Initializer from "./initializer";
 
-function container(
+function dependency(
   initializer: Initializer,
   options?: interfaces.ContainerConstructorOptions
 ): Application.Middleware<DefaultState, Partial<ContainerContext>> {
@@ -41,4 +41,4 @@ function container(
   };
 }
 
-export default container;
+export default dependency;
