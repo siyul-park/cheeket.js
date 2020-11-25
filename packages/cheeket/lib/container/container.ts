@@ -75,7 +75,7 @@ class Container extends EventEmitter2 implements interfaces.Container {
   }
 
   createChildContainer(
-    options?: interfaces.EventEmitterOptions
+    options?: interfaces.ContainerConstructorOptions
   ): interfaces.Container {
     return new ChildContainer([this.#containerContext], options);
   }
