@@ -44,5 +44,5 @@ export { default as ResolveEventListener } from "./resolve-event-listener";
 export { default as CreateEventListener } from "./create-event-listener";
 export { default as ClearEventListener } from "./clear-event-listener";
 export { default as EventToken } from "./event-token";
-export { default as EventEmitterOptions } from "./event-emitter-options";
+export { default as ContainerConstructorOptions } from "./container-constructor-options";
 export { default as EventEmitter } from "./event-emitter";

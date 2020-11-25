@@ -5,9 +5,9 @@ import ContainerContext from "./container-context";
 import * as Token from "./token";
 import Initializer from "./initializer";
 
-function container(
+function dependency(
   initializer: Initializer,
-  options?: interfaces.EventEmitterOptions
+  options?: interfaces.ContainerConstructorOptions
 ): Application.Middleware<DefaultState, Partial<ContainerContext>> {
   const rootContainer = new Container(options);
   initializer.initRootContainer(rootContainer);
@@ -26,7 +26,7 @@ function container(
     contextContainer.bind(Token.Accepts, () => ctx.accept);
     contextContainer.bind(Token.Respond, () => ctx.respond);
 
-    initializer.initRootContainer(contextContainer);
+    initializer.initContextContainer(contextContainer);
 
     ctx.containers = {
       root: rootContainer,
@@ -41,4 +41,4 @@ function container(
   };
 }
 
-export default container;
+export default dependency;
