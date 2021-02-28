@@ -36,9 +36,6 @@ echo "✅ Finish"
 # Typescript 세팅
 sh "${scriptPath}/set-up-typescript.sh" "${rootPath}" "${packagePath}"
 
-# cross env 세팅
-sh "${scriptPath}/set-up-cross-env.sh" "${packagePath}"
-
 # gulp 세팅
 sh "${scriptPath}/set-up-gulp.sh" "${rootPath}" "${packagePath}"
 
