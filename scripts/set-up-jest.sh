@@ -17,13 +17,6 @@ templatePath="${rootPath}/templates/default"
 
 cd "${packagePath}" || exit
 
-# jest 다운로드
-echo "⚙️ Install jest"
-
-npm i jest ts-jest @types/jest --save-dev
-
-echo "✅ Finish"
-
 echo "🚀️ Set up jest"
 
 # jest 설정

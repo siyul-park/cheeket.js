@@ -20,14 +20,6 @@ cd "${packagePath}" || exit
 
 echo "🚀️ Set up Typescript"
 
-# typescript 다운로드
-echo "⚙️ Install typescript"
-
-npm i typescript --save-dev
-npm i @types/node --save-dev
-
-echo "✅ Finish"
-
 # tsconfig 상속
 echo "⚙️ Extend all tsconfig"
 
