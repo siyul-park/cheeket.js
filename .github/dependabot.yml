@@ -18,3 +18,21 @@ updates:
     target-branch: develop
     labels:
       - dependencies
+  - package-ecosystem: npm
+    directory: "/commons/*"
+    schedule:
+      interval: daily
+      time: "21:00"
+      timezone: "Asia/Seoul"
+    target-branch: develop
+    labels:
+      - dependencies
+  - package-ecosystem: npm
+    directory: "/example/*"
+    schedule:
+      interval: daily
+      time: "21:00"
+      timezone: "Asia/Seoul"
+    target-branch: develop
+    labels:
+      - dependencies
