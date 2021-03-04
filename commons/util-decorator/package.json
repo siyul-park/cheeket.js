@@ -1,12 +1,16 @@
 {
-  "name": "template-default",
+  "name": "@util/decorator",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "test": "jest",
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist",
     "compile": "tsc",
-    "test": "jest",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
