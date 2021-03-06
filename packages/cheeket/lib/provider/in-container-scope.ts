@@ -4,7 +4,7 @@ import { EventType } from "../event";
 function inContainerScope<T>(
   provider: interfaces.Provider<T>
 ): interfaces.ContainerScopeProvider<T> {
-  const cache = new Map<interfaces.EventEmitter2, T>();
+  const cache = new Map<interfaces.EventEmitter, T>();
 
   const scopeProvider: Partial<interfaces.ContainerScopeProvider<T>> = async (
     context: interfaces.Context
