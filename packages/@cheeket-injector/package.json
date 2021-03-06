@@ -1,6 +1,6 @@
 {
   "name": "@cheeket/injector",
-  "version": "2.3.0",
+  "version": "2.3.4",
   "description": "a decorator-based injector plugin for of cheeket",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,7 +19,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.2",
-    "cheeket": "^2.3.0",
+    "cheeket": "^2.3.4",
     "cross-env": "^7.0.2",
     "eslint": "^7.12.0",
     "gulp": "^4.0.2",
@@ -33,5 +33,5 @@
     "cheeket": "2.x",
     "reflect-metadata": "0.1"
   },
-  "gitHead": "ea196b144314415e6d987ca881d7b3deb0cd84c0"
+  "gitHead": "715b9e353f5449d9caf406ef61e5a74678a0a2cb"
 }
