@@ -12,7 +12,7 @@ function container<
   ResponseBodyT = any
 >(
   initializer: Initializer,
-  options?: interfaces.EventEmitterOptions
+  options?: interfaces.ContainerConstructorOptions
 ): Application.Middleware<
   StateT,
   ContextT & Partial<ContainerContext>,
