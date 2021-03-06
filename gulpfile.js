@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require("path");
 
 const { src, dest, series, lastRun } = require('gulp');
+const sourcemaps = require('gulp-sourcemaps');
 const gulpif = require('gulp-if');
 const ts = require('gulp-typescript');
 const uglify = require('gulp-uglify');
@@ -59,13 +60,19 @@ const tsFilenames = getTsFilenames(tsProject);
 
 function compile() {
   return src(tsFilenames, { sourcemaps: true, since: lastRun(compile) })
+    .pipe(sourcemaps.init())
     .pipe(tsProject())
+    .pipe(sourcemaps.write('.'))
     .pipe(dest(tsconfig.compilerOptions.outDir));
 }
 
 function compression() {
+  const isProduction = process.env.NODE_ENV === 'production';
+
   return src(path.join(tsconfig.compilerOptions.outDir, '**/*.js'), { sourcemaps: true, since: lastRun(compression) })
-    .pipe(gulpif(process.env.NODE_ENV === 'production', uglify()))
+    .pipe(gulpif(isProduction, sourcemaps.init()))
+    .pipe(gulpif(isProduction, uglify()))
+    .pipe(gulpif(isProduction, sourcemaps.write('.')))
     .pipe(dest(tsconfig.compilerOptions.outDir));
 }
 
