@@ -52,6 +52,7 @@ sh "${scriptPath}/add-default-script-in-package.sh" "${templatePath}" "${package
 echo "⚙️ set up default file"
 
 cp -r "${templatePath}/lib" "${packagePath}"
+cp -r "${templatePath}/test" "${packagePath}"
 
 echo "✅ Finish"
 

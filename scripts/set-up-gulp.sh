@@ -13,6 +13,8 @@ fi
 rootPath=$1
 packagePath=$2
 
+templatePath="${rootPath}/templates/default"
+
 cd "${packagePath}" || exit
 
 echo "🚀️ Set up gulp"
@@ -20,7 +22,7 @@ echo "🚀️ Set up gulp"
 # gulpfile 복사
 echo "⚙️ Copy gulpfile"
 
-cp "${rootPath}/gulpfile.js" "${packagePath}"
+cp "${templatePath}/gulpfile.js" "${packagePath}"
 
 echo "✅ Finish"
 
