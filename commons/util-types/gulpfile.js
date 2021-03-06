@@ -59,10 +59,12 @@ const tsconfig = getTsconfig(tsProject);
 const tsFilenames = getTsFilenames(tsProject);
 
 function compile() {
+  const useSourcemaps = tsconfig.compilerOptions.sourceMap;
+
   return src(tsFilenames, { sourcemaps: true, since: lastRun(compile) })
-    .pipe(sourcemaps.init())
+    .pipe(gulpif(useSourcemaps, sourcemaps.init()))
     .pipe(tsProject())
-    .pipe(sourcemaps.write('.'))
+    .pipe(gulpif(useSourcemaps, sourcemaps.write('.')))
     .pipe(dest(tsconfig.compilerOptions.outDir));
 }
 
