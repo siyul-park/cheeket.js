@@ -4,7 +4,8 @@ import { DefaultContext, DefaultState, ParameterizedContext } from "koa";
 interface Initializer<
   StateT = DefaultState,
   ContextT = DefaultContext,
-  ResponseBodyT = never
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ResponseBodyT = any
 > {
   initRootContainer(container: interfaces.Container): void;
   initContextContainer(
