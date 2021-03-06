@@ -45,8 +45,11 @@ function container<
     ctx.resolve = (token) => contextContainer.resolve(token);
     ctx.resolveAll = (token) => contextContainer.resolveAll(token);
 
-    await next();
-    await contextContainer.clear();
+    try {
+      await next();
+    } finally {
+      await contextContainer.clear();
+    }
   };
 }
 
