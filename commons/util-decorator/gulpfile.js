@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require("path");
 
-const { src, dest, series, lastRun } = require('gulp');
+const { src, dest, series } = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
 const gulpif = require('gulp-if');
 const ts = require('gulp-typescript');
