@@ -24,6 +24,5 @@
   "peerDependencies": {
     "cheeket": "2.x",
     "reflect-metadata": "0.1"
-  },
-  "gitHead": "715b9e353f5449d9caf406ef61e5a74678a0a2cb"
+  }
 }
