@@ -1,0 +1,26 @@
+{
+  "name": "@cheeket/winston",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./dist",
+    "compile": "gulp",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prepublishOnly": "npm run build:prd"
+  },
+  "devDependencies": {
+    "cheeket": "^2.3.5",
+    "winston": "^3.3.3"
+  },
+  "peerDependencies": {
+    "cheeket": "^2.3.x",
+    "winston": "^3.3.x"
+  }
+}

@@ -24,7 +24,7 @@ function autoInjected<T>(Target: interfaces.Type<T>): interfaces.Provider<T> {
       })
     );
 
-    return new Target(...parameters);
+    return new Target(...(parameters as never[]));
   };
 }
 

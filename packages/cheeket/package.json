@@ -2,6 +2,9 @@
   "name": "cheeket",
   "version": "2.3.5",
   "description": "A very lightweight dependency injection container for TypeScript/JavaScript for constructor injection as functional.",
+  "homepage": "https://github.com/siyual-park/cheeket.js",
+  "license": "MIT",
+  "author": "siyual.park",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -14,15 +17,12 @@
     "lint:fix": "eslint --fix .",
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
-  "author": "siyual.park",
-  "license": "MIT",
-  "homepage": "https://github.com/siyual-park/cheeket.js",
-  "devDependencies": {
-    "@types/uniqid": "^5.2.0"
-  },
   "dependencies": {
     "eventemitter2": "^6.4.3",
     "uniqid": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/uniqid": "^5.2.0"
   },
   "gitHead": "715b9e353f5449d9caf406ef61e5a74678a0a2cb"
 }
