@@ -16,7 +16,7 @@
     "prepublishOnly": "npm run build:prd"
   },
   "devDependencies": {
-    "cheeket": "^2.3.5",
+    "cheeket": "^2.3.6",
     "winston": "^3.3.3"
   },
   "peerDependencies": {

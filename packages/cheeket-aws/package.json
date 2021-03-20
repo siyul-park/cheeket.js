@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "aws-sdk": "^2.868.0",
-    "cheeket": "^2.3.5"
+    "cheeket": "^2.3.6"
   },
   "peerDependencies": {
     "aws-sdk": "^2.x",
