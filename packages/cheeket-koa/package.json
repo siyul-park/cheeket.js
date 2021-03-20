@@ -1,7 +1,10 @@
 {
-  "name": "@cheeket/injector",
-  "version": "2.3.5",
-  "description": "a decorator-based injector plugin for of cheeket",
+  "name": "@cheeket/koa",
+  "version": "1.0.0-alpha.3",
+  "description": "use cheeket in koa",
+  "homepage": "https://github.com/siyual-park/cheeket.js",
+  "license": "MIT",
+  "author": "siyual.park",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -14,16 +17,18 @@
     "lint:fix": "eslint --fix .",
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
-  "author": "siyual.park",
-  "license": "MIT",
-  "homepage": "https://github.com/siyual-park/cheeket.js",
   "devDependencies": {
+    "@types/accepts": "^1.3.5",
+    "@types/cookies": "^0.7.5",
+    "@types/koa": "^2.13.1",
     "cheeket": "^2.3.5",
-    "reflect-metadata": "^0.1.13"
+    "koa": "^2.13.0"
   },
   "peerDependencies": {
+    "accepts": "x",
     "cheeket": "2.x",
-    "reflect-metadata": "0.1"
+    "cookies": "x",
+    "koa": "2.x"
   },
   "gitHead": "715b9e353f5449d9caf406ef61e5a74678a0a2cb"
 }
