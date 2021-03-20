@@ -1,5 +1,4 @@
 # Cheeket
-[![CodeFactor](https://www.codefactor.io/repository/github/siyual-park/cheeket.js/badge)](https://www.codefactor.io/repository/github/siyual-park/cheeket.js)
 ![](https://img.shields.io/npm/dm/cheeket.png?style=flat-square)
 
 A lightweight and extensible dependency injection container for TypeScript/JavaScript for constructor injection as functional.
