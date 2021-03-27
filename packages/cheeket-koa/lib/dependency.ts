@@ -4,7 +4,7 @@ import { interfaces } from "cheeket";
 import ContainerContext from "./container-context";
 import * as Token from "./token";
 
-function container<
+function dependency<
   StateT = DefaultState,
   ContextT = DefaultContext,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -47,4 +47,4 @@ function container<
   };
 }
 
-export default container;
+export default dependency;
