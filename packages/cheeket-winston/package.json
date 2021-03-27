@@ -13,10 +13,10 @@
     "compile": "gulp",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "prepublishOnly": "npm run build:prd"
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
   "devDependencies": {
-    "cheeket": "^2.3.5",
+    "cheeket": "^2.3.6",
     "winston": "^3.3.3"
   },
   "peerDependencies": {

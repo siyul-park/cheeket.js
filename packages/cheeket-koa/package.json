@@ -1,6 +1,6 @@
 {
   "name": "@cheeket/koa",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0",
   "description": "use cheeket in koa",
   "homepage": "https://github.com/siyual-park/cheeket.js",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "@types/accepts": "^1.3.5",
     "@types/cookies": "^0.7.5",
     "@types/koa": "^2.13.1",
-    "cheeket": "^2.3.5",
+    "cheeket": "^2.3.6",
     "koa": "^2.13.0"
   },
   "peerDependencies": {
@@ -29,6 +29,5 @@
     "cheeket": "2.x",
     "cookies": "x",
     "koa": "2.x"
-  },
-  "gitHead": "715b9e353f5449d9caf406ef61e5a74678a0a2cb"
+  }
 }
