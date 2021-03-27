@@ -1,6 +1,6 @@
 {
   "name": "cheeket",
-  "version": "2.3.6",
+  "version": "2.3.7",
   "description": "A very lightweight dependency injection container for TypeScript/JavaScript for constructor injection as functional.",
   "homepage": "https://github.com/siyual-park/cheeket.js",
   "license": "MIT",

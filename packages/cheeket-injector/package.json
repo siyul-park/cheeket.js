@@ -1,6 +1,6 @@
 {
   "name": "@cheeket/injector",
-  "version": "2.3.6",
+  "version": "2.3.7",
   "description": "a decorator-based injector plugin for of cheeket",
   "homepage": "https://github.com/siyual-park/cheeket.js",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   },
   "devDependencies": {
-    "cheeket": "^2.3.6",
+    "cheeket": "^2.3.7",
     "reflect-metadata": "^0.1.13"
   },
   "peerDependencies": {
