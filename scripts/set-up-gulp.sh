@@ -22,7 +22,7 @@ echo "🚀️ Set up gulp"
 # gulpfile 복사
 echo "⚙️ Copy gulpfile"
 
-cp "${templatePath}/gulpfile.js" "${packagePath}"
+ln -s "${templatePath}/gulpfile.js" "${packagePath}"
 
 echo "✅ Finish"
 

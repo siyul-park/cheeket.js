@@ -7,8 +7,6 @@
     "examples/*"
   ],
   "scripts": {
-    "build:dev": "cross-env NODE_ENV=development lerna run build",
-    "build:prd": "cross-env NODE_ENV=production lerna run build",
     "build": "lerna run build",
     "lint": "lerna run lint --parallel",
     "lint:fix": "lerna run lint:fix --parallel",
@@ -17,18 +15,19 @@
     "package:publish": "lerna publish",
     "package:init": "./scripts/init-package.sh",
     "package:sort": "sort-package-json \"**/package.json\"",
+    "package:update": "lernaupdate",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.20",
-    "@types/node": "^14.14.31",
-    "@typescript-eslint/eslint-plugin": "^4.15.2",
-    "@typescript-eslint/parser": "^4.15.2",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.37",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
     "cross-env": "^7.0.3",
     "deepmerge": "^4.2.2",
-    "eslint": "^7.21.0",
+    "eslint": "^7.23.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.1",
@@ -39,13 +38,14 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-typescript": "^5.0.1",
     "gulp-uglify": "^3.0.2",
-    "husky": "^5.1.1",
+    "husky": "^6.0.0",
     "jest": "^26.6.3",
     "lerna": "^4.0.0",
+    "lerna-update-wizard": "^0.17.8",
     "pinst": "^2.1.6",
     "prettier": "^2.2.1",
     "sort-package-json": "^1.49.0",
-    "ts-jest": "^26.5.2",
-    "typescript": "^4.2.2"
+    "ts-jest": "^26.5.4",
+    "typescript": "^4.2.3"
   }
 }

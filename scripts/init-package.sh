@@ -72,3 +72,5 @@ git add .
 echo "✅ Finish"
 
 echo "🎉 Finish to install ${packageName} in ${packageLocation}"
+
+npm run package:sort
