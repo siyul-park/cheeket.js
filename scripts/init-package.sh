@@ -73,4 +73,5 @@ echo "✅ Finish"
 
 echo "🎉 Finish to install ${packageName} in ${packageLocation}"
 
+cd "${rootPath}" || exit
 npm run package:sort
