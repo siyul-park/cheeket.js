@@ -46,3 +46,4 @@ export { default as ClearEventListener } from "./clear-event-listener";
 export { default as EventToken } from "./event-token";
 export { default as ContainerConstructorOptions } from "./container-constructor-options";
 export { default as EventEmitter } from "./event-emitter";
+export { default as ContextRequester } from "./context-requester";

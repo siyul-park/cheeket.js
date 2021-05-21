@@ -1,4 +1,5 @@
 import { EventEmitter2 } from "eventemitter2";
+import uniqid from "uniqid";
 
 import * as interfaces from "../interfaces";
 import Context from "../context/context";
@@ -13,8 +14,10 @@ class Container extends EventEmitter2 implements interfaces.Container {
 
   readonly #containerContext: interfaces.ContainerContext = {
     bindingDictionary: this.#bindingDictionary,
-    eventEmitter: this,
+    contextRequester: this,
   };
+
+  readonly id = Symbol(uniqid());
 
   bind<T>(token: interfaces.Token<T>, provider: interfaces.Provider<T>): void {
     this.#bindingDictionary.set(token, provider);
