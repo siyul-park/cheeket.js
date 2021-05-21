@@ -1,6 +1,6 @@
 {
   "name": "@cheeket/aws",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "license": "ISC",
   "author": "",
@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "aws-sdk": "^2.868.0",
-    "cheeket": "^2.3.7"
+    "cheeket": "^2.3.8"
   },
   "peerDependencies": {
     "aws-sdk": "^2.x",
