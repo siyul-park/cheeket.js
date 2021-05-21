@@ -1,9 +1,9 @@
 import BindingDictionary from "./binding-dictionary";
-import EventEmitter from "./event-emitter";
+import ContextRequester from "./context-requester";
 
 interface ContainerContext {
   bindingDictionary: BindingDictionary;
-  eventEmitter: EventEmitter;
+  contextRequester: ContextRequester;
 }
 
 export default ContainerContext;

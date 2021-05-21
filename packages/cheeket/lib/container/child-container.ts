@@ -1,4 +1,5 @@
 import { EventEmitter2 } from "eventemitter2";
+import uniqid from "uniqid";
 
 import * as interfaces from "../interfaces";
 import Context from "../context/context";
@@ -13,7 +14,7 @@ class ChildContainer extends EventEmitter2 implements interfaces.Container {
 
   readonly #containerContext: interfaces.ContainerContext = {
     bindingDictionary: this.#bindingDictionary,
-    eventEmitter: this,
+    contextRequester: this,
   };
 
   readonly #parentContainerContexts: interfaces.ContainerContext[];
@@ -26,6 +27,7 @@ class ChildContainer extends EventEmitter2 implements interfaces.Container {
   ) {
     super(options);
 
+    this.id = Symbol(uniqid());
     this.#parentContainerContexts = parentContainerContexts;
     this.#combinedBindingDictionary = new CombinedBindingDictionary([
       this.#bindingDictionary,
@@ -108,6 +110,8 @@ class ChildContainer extends EventEmitter2 implements interfaces.Container {
 
     await this.emitAsync(EventType.Clear, this);
   }
+
+  id: symbol;
 }
 
 export default ChildContainer;

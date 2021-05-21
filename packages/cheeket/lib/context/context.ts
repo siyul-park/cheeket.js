@@ -9,7 +9,7 @@ class Context implements interfaces.Context {
 
   readonly #containerContexts: interfaces.ContainerContext[];
 
-  public readonly container: interfaces.EventEmitter;
+  public readonly container: interfaces.ContextRequester;
 
   public readonly children = new Set<interfaces.Context>();
 
@@ -24,7 +24,7 @@ class Context implements interfaces.Context {
     if (current === undefined) {
       throw new Error("There must be at least one container.");
     }
-    this.container = current.eventEmitter;
+    this.container = current.contextRequester;
   }
 
   async resolve<T>(token: interfaces.Token<T>): Promise<T> {
@@ -62,7 +62,7 @@ class Context implements interfaces.Context {
     const value = await provider(context);
     context.request.resolved = value;
 
-    await this.#containerContexts[containerIndex].eventEmitter.emitAsync(
+    await this.#containerContexts[containerIndex].contextRequester.emitAsync(
       EventType.Resolve,
       context
     );

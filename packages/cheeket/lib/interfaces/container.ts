@@ -1,9 +1,9 @@
 import Resolver from "./resolver";
 import Binder from "./binder";
-import EventEmitter from "./event-emitter";
 import ContainerConstructorOptions from "./container-constructor-options";
+import ContextRequester from "./context-requester";
 
-interface Container extends Resolver, Binder, EventEmitter {
+interface Container extends Resolver, Binder, ContextRequester {
   createChildContainer(options?: ContainerConstructorOptions): Container;
   clear(): Promise<void>;
 }
