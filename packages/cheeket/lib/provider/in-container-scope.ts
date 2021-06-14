@@ -24,7 +24,7 @@ function inContainerScope<T, State = DefaultState>(
 
   return async (context, next) => {
     let value = cache.get(context.container);
-    if (value != null) {
+    if (value == null) {
       value = await provider(context);
 
       cache.set(context.container, value);

@@ -25,19 +25,30 @@ class NodeContainer<State = DefaultState>
 
   private readonly resolveChain: ResolveChain;
 
+  private readonly resolveMiddleware: Middleware<unknown, unknown>;
+
   private middleware?: Middleware<unknown, unknown>;
 
   constructor(parent?: ResolveChain) {
     super({ captureRejections: true });
 
+    this.resolveMiddleware = resolveMiddleware(this.bindMap);
+
     const middlewareProvider = () => {
       if (this.middleware != null) {
         return this.middleware;
       }
-      const middleware = joinMiddleware(
-        this.middlewareManager.compact(),
-        resolveMiddleware(this.bindMap)
-      );
+
+      let middleware: Middleware<unknown, unknown>;
+      if (this.middlewareManager.size > 0) {
+        middleware = joinMiddleware(
+          this.middlewareManager.compact(),
+          resolveMiddleware(this.bindMap)
+        );
+      } else {
+        middleware = resolveMiddleware(this.bindMap);
+      }
+
       this.middleware = middleware;
 
       return middleware;

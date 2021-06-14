@@ -14,6 +14,10 @@ class MiddlewareManager implements MiddlewarePipeline {
     this.cache = undefined;
   }
 
+  get size(): number {
+    return this.middlewares.length;
+  }
+
   compact(): Middleware<unknown, unknown> {
     if (this.cache != null) {
       return this.cache;
