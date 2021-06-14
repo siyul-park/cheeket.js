@@ -14,8 +14,6 @@ function bindInContext<T, State = DefaultState>(
   } else {
     context.response = value;
   }
-
-  context.container.emit("create", value);
 }
 
 export default bindInContext;

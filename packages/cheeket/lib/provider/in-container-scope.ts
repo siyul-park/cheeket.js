@@ -24,19 +24,16 @@ function inContainerScope<T, State = DefaultState>(
 
   return async (context, next) => {
     let value = cache.get(context.container);
-    const isCached = value != null;
-    if (!isCached) {
+    if (value != null) {
       value = await provider(context);
 
       cache.set(context.container, value);
 
       context.container.addListener("close", handleOnClose);
+      context.container.emit("create", value);
     }
 
     bindInContext(context, value, options);
-    if (!isCached) {
-      context.container.emit("create", value);
-    }
 
     await next();
   };

@@ -4,25 +4,30 @@ import { DefaultState } from "../context";
 import { Middleware } from "../middleware";
 import bindInContext from "./bind-in-context";
 
-function inRequestScope<T, State = DefaultState>(
+function inSingletonScope<T, State = DefaultState>(
   provider: Provider<T>,
   options: { array: true }
 ): Middleware<T[], State>;
-function inRequestScope<T, State = DefaultState>(
+function inSingletonScope<T, State = DefaultState>(
   provider: Provider<T>,
   options?: { array: false | undefined }
 ): Middleware<T, State>;
-function inRequestScope<T, State = DefaultState>(
+function inSingletonScope<T, State = DefaultState>(
   provider: Provider<T>,
   options?: ProviderWrappingOptions
 ): Middleware<T | T[], State> {
+  let cache: T | undefined;
+
   return async (context, next) => {
-    const value = await provider(context);
-    bindInContext(context, value, options);
-    context.container.emit("create", value);
+    if (cache == null) {
+      cache = await provider(context);
+      context.container.emit("create", cache);
+    }
+
+    bindInContext(context, cache, options);
 
     await next();
   };
 }
 
-export default inRequestScope;
+export default inSingletonScope;
