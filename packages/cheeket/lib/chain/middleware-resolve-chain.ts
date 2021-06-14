@@ -28,11 +28,9 @@ class MiddlewareResolveChain implements ResolveChain {
       nextValue = await this.next.resolve(token, context);
     });
 
-    if (context.response != null) {
-      return context.response;
-    }
-    if (nextValue != null) {
-      return nextValue;
+    const value = context.response ?? nextValue;
+    if (value != null) {
+      return value;
     }
 
     throw new Error(`Can't resolve ${token.toString()}`);
