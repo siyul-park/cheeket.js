@@ -12,6 +12,10 @@ class BinderAdapter<State = DefaultState> implements Binder<State> {
   ) {}
 
   bind<T>(token: Token<T>, middleware: Middleware<T, State>): void {
+    if (this.isBound(token, middleware)) {
+      return;
+    }
+
     const middlewares = this.bindMap.get(token) ?? [];
     middlewares.push(middleware as Middleware<unknown, unknown>);
     this.bindMap.set(token, middlewares);
