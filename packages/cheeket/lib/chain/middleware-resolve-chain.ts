@@ -5,6 +5,7 @@ import { Middleware } from "../middleware";
 import { Context } from "../context";
 import ContextAdapter from "./context-adapter";
 import ResolveChain from "./resolve-chain";
+import ResolveError from "./resolve-error";
 
 class MiddlewareResolveChain implements ResolveChain {
   constructor(
@@ -31,7 +32,7 @@ class MiddlewareResolveChain implements ResolveChain {
       return context.response;
     }
 
-    throw new Error(`Can't resolve ${token.toString()}`);
+    throw new ResolveError(token);
   }
 }
 

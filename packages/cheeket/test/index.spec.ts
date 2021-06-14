@@ -73,6 +73,8 @@ describe("InRequestScope", () => {
 
     expect(vehicle.getWheels()).toHaveLength(4);
     expect(vehicle !== other).toBeTruthy();
+
+    container.close();
   });
 
   test("nested container", async () => {
@@ -111,6 +113,9 @@ describe("InRequestScope", () => {
 
     expect(vehicle.getWheels()).toHaveLength(4);
     expect(vehicle !== other).toBeTruthy();
+
+    childContainer.close();
+    container.close();
   });
 });
 
@@ -150,6 +155,8 @@ describe("InContainerScope", () => {
 
     expect(vehicle.getWheels()).toHaveLength(4);
     expect(vehicle === other).toBeTruthy();
+
+    container.close();
   });
 
   test("nested container", async () => {
@@ -297,5 +304,8 @@ describe("middleware", () => {
     expect(mockCallback.mock.calls[1][0].parent).toBe(
       mockCallback.mock.calls[0][0]
     );
+
+    childContainer.close();
+    container.close();
   });
 });
