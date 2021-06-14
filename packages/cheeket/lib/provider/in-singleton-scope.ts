@@ -1,10 +1,13 @@
 import AsyncLock from "async-lock";
+import uniqid from "uniqid";
 
 import ProviderWrappingOptions from "./provider-wrapping-options";
 import Provider from "./provider";
 import { DefaultState } from "../context";
 import { Middleware } from "../middleware";
 import bindInContext from "./bind-in-context";
+
+const lock = new AsyncLock();
 
 function inSingletonScope<T, State = DefaultState>(
   provider: Provider<T>,
@@ -19,10 +22,10 @@ function inSingletonScope<T, State = DefaultState>(
   options?: ProviderWrappingOptions
 ): Middleware<T | T[], State> {
   let cache: T | undefined;
-  const lock = new AsyncLock();
+  const id = uniqid();
 
   return async (context, next) => {
-    await lock.acquire(context.container.id, async () => {
+    await lock.acquire(id, async () => {
       if (cache == null) {
         cache = await provider(context);
         context.container.emit("create", cache);
