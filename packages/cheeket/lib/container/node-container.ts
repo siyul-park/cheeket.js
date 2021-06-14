@@ -1,4 +1,5 @@
 import EventEmitter from "events";
+import uniqid from "uniqid";
 import { Token } from "../token";
 import Container from "./container";
 import { DefaultState } from "../context";
@@ -14,6 +15,8 @@ import { BinderAdapter } from "../binder";
 class NodeContainer<State = DefaultState>
   extends EventEmitter
   implements Container<State> {
+  readonly id = uniqid();
+
   private readonly bindMap = new Map<
     Token<unknown>,
     Middleware<unknown, unknown>[]

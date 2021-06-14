@@ -1,8 +1,6 @@
-import EventEmitter from "events";
-
 import { Token } from "../token";
 import { Middleware } from "../middleware";
-import { Context } from "../context";
+import { ContainerEventEmitter, Context } from "../context";
 import ContextAdapter from "./context-adapter";
 import ResolveChain from "./resolve-chain";
 import ResolveError from "./resolve-error";
@@ -10,7 +8,7 @@ import ResolveError from "./resolve-error";
 class MiddlewareResolveChain implements ResolveChain {
   constructor(
     readonly middlewareProvider: () => Middleware<unknown, unknown>,
-    private readonly container: EventEmitter,
+    private readonly container: ContainerEventEmitter,
     private readonly next?: ResolveChain
   ) {}
 

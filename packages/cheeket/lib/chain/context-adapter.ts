@@ -1,13 +1,11 @@
-import EventEmitter from "events";
-
 import { Token } from "../token";
-import { Context, DefaultState } from "../context";
+import { ContainerEventEmitter, Context, DefaultState } from "../context";
 import ResolveChain from "./resolve-chain";
 
 class ContextAdapter<T, State = DefaultState> implements Context<T, State> {
   children: Context<unknown, unknown>[];
 
-  container: EventEmitter;
+  container: ContainerEventEmitter;
 
   parent?: Context<unknown, unknown>;
 
@@ -19,7 +17,7 @@ class ContextAdapter<T, State = DefaultState> implements Context<T, State> {
 
   constructor(
     private readonly resolveChain: ResolveChain,
-    container: EventEmitter,
+    container: ContainerEventEmitter,
     token: Token<T>,
     parent?: Context<unknown, unknown>
   ) {

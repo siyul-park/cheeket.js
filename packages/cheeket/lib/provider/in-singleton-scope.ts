@@ -1,3 +1,5 @@
+import AsyncLock from "async-lock";
+
 import ProviderWrappingOptions from "./provider-wrapping-options";
 import Provider from "./provider";
 import { DefaultState } from "../context";
@@ -17,14 +19,17 @@ function inSingletonScope<T, State = DefaultState>(
   options?: ProviderWrappingOptions
 ): Middleware<T | T[], State> {
   let cache: T | undefined;
+  const lock = new AsyncLock();
 
   return async (context, next) => {
-    if (cache == null) {
-      cache = await provider(context);
-      context.container.emit("create", cache);
-    }
+    await lock.acquire(context.container.id, async () => {
+      if (cache == null) {
+        cache = await provider(context);
+        context.container.emit("create", cache);
+      }
 
-    bindInContext(context, cache, options);
+      bindInContext(context, cache, options);
+    });
 
     await next();
   };

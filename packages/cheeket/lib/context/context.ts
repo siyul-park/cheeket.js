@@ -1,8 +1,7 @@
-import EventEmitter from "events";
-
 import { Token } from "../token";
 import { Resolver } from "../resolve";
 import DefaultState from "./default-state";
+import ContainerEventEmitter from "./container-event-emitter";
 
 interface Context<T, State = DefaultState> extends Resolver {
   request: Token<T>;
@@ -13,7 +12,7 @@ interface Context<T, State = DefaultState> extends Resolver {
   parent?: Context<unknown, unknown>;
   children: Context<unknown, unknown>[];
 
-  container: EventEmitter;
+  container: ContainerEventEmitter;
 }
 
 export default Context;

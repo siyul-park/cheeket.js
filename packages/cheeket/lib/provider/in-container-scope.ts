@@ -1,4 +1,6 @@
+import AsyncLock from "async-lock";
 import EventEmitter from "events";
+
 import ProviderWrappingOptions from "./provider-wrapping-options";
 import Provider from "./provider";
 import { DefaultState } from "../context";
@@ -21,19 +23,22 @@ function inContainerScope<T, State = DefaultState>(
   const handleOnClose = (container: EventEmitter) => {
     cache.delete(container);
   };
+  const lock = new AsyncLock();
 
   return async (context, next) => {
-    let value = cache.get(context.container);
-    if (value == null) {
-      value = await provider(context);
+    await lock.acquire(context.container.id, async () => {
+      let value = cache.get(context.container);
+      if (value == null) {
+        value = await provider(context);
 
-      cache.set(context.container, value);
+        cache.set(context.container, value);
 
-      context.container.addListener("close", handleOnClose);
-      context.container.emit("create", value);
-    }
+        context.container.addListener("close", handleOnClose);
+        context.container.emit("create", value);
+      }
 
-    bindInContext(context, value, options);
+      bindInContext(context, value, options);
+    });
 
     await next();
   };
