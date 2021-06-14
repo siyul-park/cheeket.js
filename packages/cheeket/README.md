@@ -55,7 +55,7 @@ const ninjaProvider = async (context: interfaces.Context) => {
   );
 };
 
-const container = new Container();
+const container = new RootContainer();
 
 container.bind(Types.Weapon, inRequestScope(katanaProvider));
 container.bind(Types.ThrowableWeapon, inRequestScope(shurikenProvider));
