@@ -73,6 +73,10 @@ class NodeContainer<State = DefaultState>
   createChildContainer<ChildState = DefaultState>(): Container<ChildState> {
     return new NodeContainer(this.resolveChain);
   }
+
+  close(): void {
+    this.emit("close", this);
+  }
 }
 
 export default NodeContainer;

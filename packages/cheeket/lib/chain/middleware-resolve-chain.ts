@@ -22,7 +22,7 @@ class MiddlewareResolveChain implements ResolveChain {
 
     let nextValue: T | undefined;
     await middleware(context, async () => {
-      if (this.next == null) {
+      if (this.next == null || context.response != null) {
         return;
       }
       nextValue = await this.next.resolve(token, context);

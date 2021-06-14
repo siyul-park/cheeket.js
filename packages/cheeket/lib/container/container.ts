@@ -11,6 +11,8 @@ interface Container<State = DefaultState>
     Binder<State>,
     MiddlewarePipeline {
   createChildContainer<ChildState = DefaultState>(): Container<ChildState>;
+
+  close(): void;
 }
 
 export default Container;
