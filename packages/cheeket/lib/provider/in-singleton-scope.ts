@@ -1,28 +1,41 @@
-import * as interfaces from "../interfaces";
-import { EventType } from "../event";
+import AsyncLock from "async-lock";
+import uniqid from "uniqid";
 
-function inSingletonScope<T>(
-  provider: interfaces.Provider<T>
-): interfaces.SingletonScopeProvider<T> {
+import ProviderWrappingOptions from "./provider-wrapping-options";
+import Provider from "./provider";
+import { DefaultState } from "../context";
+import { Middleware } from "../middleware";
+import bindInContext from "./bind-in-context";
+
+const lock = new AsyncLock();
+
+function inSingletonScope<T, State = DefaultState>(
+  provider: Provider<T>,
+  options: { array: true }
+): Middleware<T[], State>;
+function inSingletonScope<T, State = DefaultState>(
+  provider: Provider<T>,
+  options?: { array: false | undefined }
+): Middleware<T, State>;
+function inSingletonScope<T, State = DefaultState>(
+  provider: Provider<T>,
+  options?: ProviderWrappingOptions
+): Middleware<T | T[], State> {
   let cache: T | undefined;
+  const id = uniqid();
 
-  const scopeProvider: Partial<interfaces.SingletonScopeProvider<T>> = async (
-    context: interfaces.Context
-  ) => {
-    if (cache === undefined) {
-      const value = await provider(context);
-      await context.container.emitAsync(EventType.Create, value, context);
-      cache = value;
-    }
+  return async (context, next) => {
+    await lock.acquire(id, async () => {
+      if (cache == null) {
+        cache = await provider(context);
+        context.container.emit("create", cache);
+      }
 
-    return cache;
+      bindInContext(context, cache, options);
+    });
+
+    await next();
   };
-
-  scopeProvider.clear = () => {
-    cache = undefined;
-  };
-
-  return scopeProvider as interfaces.SingletonScopeProvider<T>;
 }
 
 export default inSingletonScope;

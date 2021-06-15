@@ -1,39 +1,46 @@
-import * as interfaces from "../interfaces";
-import { EventType } from "../event";
+import AsyncLock from "async-lock";
 
-function inContainerScope<T>(
-  provider: interfaces.Provider<T>
-): interfaces.ContainerScopeProvider<T> {
-  const cache = new Map<interfaces.EventEmitter, T>();
+import ProviderWrappingOptions from "./provider-wrapping-options";
+import Provider from "./provider";
+import { ContainerEventEmitter, DefaultState } from "../context";
+import { Middleware } from "../middleware";
+import bindInContext from "./bind-in-context";
 
-  const scopeProvider: Partial<interfaces.ContainerScopeProvider<T>> = async (
-    context: interfaces.Context
-  ) => {
-    const existed = cache.get(context.container);
-    if (existed !== undefined) {
-      return existed;
-    }
-
-    const value = await provider(context);
-    await context.container.emitAsync(EventType.Create, value, context);
-    cache.set(context.container, value);
-
-    const listener: interfaces.ClearEventListener = (container) => {
-      cache.delete(container);
-    };
-
-    context.container.once(EventType.Clear, listener);
-
-    return value;
+function inContainerScope<T, State = DefaultState>(
+  provider: Provider<T>,
+  options: { array: true }
+): Middleware<T[], State>;
+function inContainerScope<T, State = DefaultState>(
+  provider: Provider<T>,
+  options?: { array: false | undefined }
+): Middleware<T, State>;
+function inContainerScope<T, State = DefaultState>(
+  provider: Provider<T>,
+  options?: ProviderWrappingOptions
+): Middleware<T | T[], State> {
+  const cache = new Map<string, T>();
+  const handleOnClose = (container: ContainerEventEmitter) => {
+    cache.delete(container.id);
   };
+  const lock = new AsyncLock();
 
-  scopeProvider.delete = (container: interfaces.Container) => {
-    cache.delete(container);
+  return async (context, next) => {
+    await lock.acquire(context.container.id, async () => {
+      let value = cache.get(context.container.id);
+      if (value == null) {
+        value = await provider(context);
+
+        cache.set(context.container.id, value);
+
+        context.container.addListener("close", handleOnClose);
+        context.container.emit("create", value);
+      }
+
+      bindInContext(context, value, options);
+    });
+
+    await next();
   };
-
-  Object.defineProperty(scopeProvider, "size", { get: () => cache.size });
-
-  return scopeProvider as interfaces.ContainerScopeProvider<T>;
 }
 
 export default inContainerScope;
