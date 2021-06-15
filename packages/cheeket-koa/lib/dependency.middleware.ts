@@ -2,7 +2,7 @@ import * as Koa from "koa";
 import * as Cheeket from "cheeket";
 
 import Context from "./context";
-import Token from "./token";
+import Tokens from "./tokens";
 
 function dependency<
   RootState = Cheeket.DefaultState,
@@ -15,43 +15,43 @@ function dependency<
     const contextContainer = finalRootContainer.createChildContainer<ContextState>();
 
     contextContainer.bind(
-      Token.Context,
+      Tokens.Context,
       Cheeket.toMiddleware<Koa.Context, ContextState>(() => context)
     );
     contextContainer.bind(
-      Token.Application,
+      Tokens.Application,
       Cheeket.toMiddleware(() => context.app)
     );
     contextContainer.bind(
-      Token.Request,
+      Tokens.Request,
       Cheeket.toMiddleware(() => context.request)
     );
     contextContainer.bind(
-      Token.Response,
+      Tokens.Response,
       Cheeket.toMiddleware(() => context.response)
     );
     contextContainer.bind(
-      Token.Req,
+      Tokens.Req,
       Cheeket.toMiddleware(() => context.req)
     );
     contextContainer.bind(
-      Token.Res,
+      Tokens.Res,
       Cheeket.toMiddleware(() => context.res)
     );
     contextContainer.bind(
-      Token.OriginalUrl,
+      Tokens.OriginalUrl,
       Cheeket.toMiddleware(() => context.origin)
     );
     contextContainer.bind(
-      Token.Cookies,
+      Tokens.Cookies,
       Cheeket.toMiddleware(() => context.cookies)
     );
     contextContainer.bind(
-      Token.Accepts,
+      Tokens.Accepts,
       Cheeket.toMiddleware(() => context.accept)
     );
     contextContainer.bind(
-      Token.Respond,
+      Tokens.Respond,
       Cheeket.toMiddleware(() => context.respond)
     );
 

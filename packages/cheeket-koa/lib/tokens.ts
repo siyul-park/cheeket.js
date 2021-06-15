@@ -4,8 +4,7 @@ import * as accepts from "accepts";
 import * as Cookies from "cookies";
 import { Token } from "cheeket";
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-const Token = Object.freeze({
+const Tokens = Object.freeze({
   Application: Symbol("Application") as Token<Koa>,
   Context: Symbol("Application.Context") as Token<Koa.Context>,
   Request: Symbol("Application.Request") as Token<Koa.Request>,
@@ -18,4 +17,4 @@ const Token = Object.freeze({
   Respond: Symbol("Respond") as Token<boolean>,
 });
 
-export default Token;
+export default Tokens;
