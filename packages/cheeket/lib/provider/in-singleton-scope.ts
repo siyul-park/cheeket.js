@@ -25,14 +25,18 @@ function inSingletonScope<T, State = DefaultState>(
   const id = uniqid();
 
   return async (context, next) => {
-    await lock.acquire(id, async () => {
-      if (cache == null) {
-        cache = await provider(context);
-        context.container.emit("create", cache);
-      }
-
+    if (cache != null) {
       bindInContext(context, cache, options);
-    });
+    } else {
+      await lock.acquire(id, async () => {
+        if (cache == null) {
+          cache = await provider(context);
+          context.container.emit("create", cache);
+        }
+
+        bindInContext(context, cache, options);
+      });
+    }
 
     await next();
   };

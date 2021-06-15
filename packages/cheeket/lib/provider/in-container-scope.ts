@@ -25,19 +25,25 @@ function inContainerScope<T, State = DefaultState>(
   const lock = new AsyncLock();
 
   return async (context, next) => {
-    await lock.acquire(context.container.id, async () => {
-      let value = cache.get(context.container.id);
-      if (value == null) {
-        value = await provider(context);
-
-        cache.set(context.container.id, value);
-
-        context.container.addListener("close", handleOnClose);
-        context.container.emit("create", value);
-      }
-
+    const value = cache.get(context.container.id);
+    if (value != null) {
       bindInContext(context, value, options);
-    });
+    } else {
+      await lock.acquire(context.container.id, async () => {
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        let value = cache.get(context.container.id);
+        if (value == null) {
+          value = await provider(context);
+
+          cache.set(context.container.id, value);
+
+          context.container.addListener("close", handleOnClose);
+          context.container.emit("create", value);
+        }
+
+        bindInContext(context, value, options);
+      });
+    }
 
     await next();
   };
