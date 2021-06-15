@@ -32,6 +32,7 @@
     "eslint-config-airbnb-typescript": "^12.3.1",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-monorepo": "^0.3.2",
     "eslint-plugin-prettier": "^3.3.1",
     "glob": "^7.1.6",
     "gulp": "^4.0.2",
