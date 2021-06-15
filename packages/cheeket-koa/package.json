@@ -1,0 +1,19 @@
+{
+  "name": "@cheeket/koa",
+  "version": "2.1.1",
+  "description": "use cheeket in koa",
+  "homepage": "https://github.com/siyual-park/cheeket.js",
+  "license": "MIT",
+  "author": "siyual.park",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./dist",
+    "compile": "gulp",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build"
+  }
+}
