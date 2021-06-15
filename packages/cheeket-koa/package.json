@@ -1,6 +1,6 @@
 {
   "name": "@cheeket/koa",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "use cheeket in koa",
   "homepage": "https://github.com/siyual-park/cheeket.js",
   "license": "MIT",
