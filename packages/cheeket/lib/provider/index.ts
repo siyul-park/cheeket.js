@@ -4,3 +4,4 @@ export { default as ProviderWrappingOptions } from "./provider-wrapping-options"
 export { default as inRequestScope } from "./in-request-scope";
 export { default as inContainerScope } from "./in-container-scope";
 export { default as inSingletonScope } from "./in-singleton-scope";
+export { default as toMiddleware } from "./to-middleware";

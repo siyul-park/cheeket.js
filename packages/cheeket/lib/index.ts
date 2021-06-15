@@ -10,5 +10,6 @@ export {
   inSingletonScope,
   inContainerScope,
   inRequestScope,
+  toMiddleware,
 } from "./provider";
 export { Resolver } from "./resolve";
