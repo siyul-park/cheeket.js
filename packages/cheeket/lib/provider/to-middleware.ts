@@ -1,7 +1,7 @@
 import ProviderWrappingOptions from "./provider-wrapping-options";
 import Provider from "./provider";
-import {DefaultState} from "../context";
-import {Middleware} from "../middleware";
+import { DefaultState } from "../context";
+import { Middleware } from "../middleware";
 import bindInContext from "./bind-in-context";
 
 function toMiddleware<T, State = DefaultState>(
