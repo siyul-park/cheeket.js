@@ -48,10 +48,10 @@ const katanaProvider = () => new Katana();
 
 const shurikenProvider = () => new Shuriken();
 
-const ninjaProvider = async (context: interfaces.Context) => {
+const ninjaProvider = async (resolver: Resolver) => {
   return new Ninja(
-    await context.resolve<Weapon>(Types.Weapon),
-    await context.resolve<ThrowableWeapon>(Types.ThrowableWeapon)
+    await resolver.resolve<Weapon>(Types.Weapon),
+    await resolver.resolve<ThrowableWeapon>(Types.ThrowableWeapon)
   );
 };
 
@@ -70,10 +70,4 @@ const weapon = await container.resolve<Weapon>(Types.Weapon);
 expect(warrior.fight()).toEqual(weapon.hit());
 expect(warrior.sneak()).toEqual(throwableWeapon.throw());
 ```
-  
-## Plugins  
-  
-- [@cheeket/injector](https://www.npmjs.com/package/@cheeket/injector
-): a decorator-based injector plugin  
-- [@cheeket/koa](https://www.npmjs.com/package/@cheeket/koa
-): use cheeket in koa  
+
