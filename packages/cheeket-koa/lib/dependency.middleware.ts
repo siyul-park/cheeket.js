@@ -12,7 +12,8 @@ function dependency<
 ): Koa.Middleware<Koa.DefaultState, Context<RootState, ContextState>> {
   const finalRootContainer = rootContainer ?? new Cheeket.RootContainer();
   return async (context, next) => {
-    const contextContainer = finalRootContainer.createChildContainer<ContextState>();
+    const contextContainer =
+      finalRootContainer.createChildContainer<ContextState>();
 
     contextContainer.bind(
       Tokens.Context,
