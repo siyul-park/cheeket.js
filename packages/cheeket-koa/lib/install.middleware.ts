@@ -9,14 +9,14 @@ function install<
 >(
   module: Module<RootState, ContextState>
 ): Koa.Middleware<Koa.DefaultState, Context<RootState, ContextState>> {
-  const rootContainers = new Set<Cheeket.Container<RootState>>();
+  const containers = new Set<Cheeket.Container<RootState>>();
   const handleClose = (container: Cheeket.Container<RootState>) => {
-    rootContainers.delete(container);
+    containers.delete(container);
   };
 
   return async (context, next) => {
-    if (!rootContainers.has(context.containers.root)) {
-      rootContainers.add(context.containers.root);
+    if (!containers.has(context.containers.root)) {
+      containers.add(context.containers.root);
       module.configureRoot(context.containers.root);
       context.containers.root.on("close", handleClose);
     }
