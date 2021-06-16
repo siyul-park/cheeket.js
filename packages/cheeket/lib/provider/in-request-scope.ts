@@ -3,6 +3,7 @@ import Provider from "./provider";
 import { DefaultState } from "../context";
 import { Middleware } from "../middleware";
 import bindInContext from "./bind-in-context";
+import emitCreateEvent from "./emit-create-event";
 
 function inRequestScope<T, State = DefaultState>(
   provider: Provider<T>,
@@ -19,7 +20,7 @@ function inRequestScope<T, State = DefaultState>(
   return async (context, next) => {
     const value = await provider(context);
     bindInContext(context, value, options);
-    context.container.emit("create", value);
+    await emitCreateEvent(context.container, value);
 
     await next();
   };

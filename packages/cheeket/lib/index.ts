@@ -13,3 +13,4 @@ export {
   toMiddleware,
 } from "./provider";
 export { Resolver } from "./resolve";
+export { AsyncEventEmitter } from "./event-emitter";

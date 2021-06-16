@@ -5,6 +5,7 @@ import Provider from "./provider";
 import { ContainerEventEmitter, DefaultState } from "../context";
 import { Middleware } from "../middleware";
 import bindInContext from "./bind-in-context";
+import emitCreateEvent from "./emit-create-event";
 
 function inContainerScope<T, State = DefaultState>(
   provider: Provider<T>,
@@ -38,7 +39,7 @@ function inContainerScope<T, State = DefaultState>(
           cache.set(context.container.id, value);
 
           context.container.addListener("close", handleOnClose);
-          context.container.emit("create", value);
+          await emitCreateEvent(context.container, value);
         }
 
         bindInContext(context, value, options);

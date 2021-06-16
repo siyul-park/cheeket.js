@@ -1,5 +1,5 @@
-import EventEmitter from "events";
 import uniqid from "uniqid";
+
 import { Token } from "../token";
 import Container from "./container";
 import { DefaultState } from "../context";
@@ -11,9 +11,10 @@ import {
 } from "../middleware";
 import { ResolveChain, MiddlewareResolveChain } from "../chain";
 import { BinderAdapter } from "../binder";
+import { AsyncEventEmitter } from "../event-emitter";
 
 class NodeContainer<State = DefaultState>
-  extends EventEmitter
+  extends AsyncEventEmitter
   implements Container<State>
 {
   readonly id = uniqid();
@@ -34,7 +35,7 @@ class NodeContainer<State = DefaultState>
   private middleware?: Middleware<unknown, unknown>;
 
   constructor(parent?: ResolveChain) {
-    super({ captureRejections: true });
+    super();
 
     this.resolveMiddleware = resolveMiddleware(this.bindMap);
 
