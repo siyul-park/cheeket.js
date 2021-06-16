@@ -31,7 +31,9 @@ function inSingletonScope<T, State = DefaultState>(
       await lock.acquire(id, async () => {
         if (cache == null) {
           cache = await provider(context);
+
           context.container.emit("create", cache);
+          await context.container.emitAsync("create:async", cache);
         }
 
         bindInContext(context, cache, options);

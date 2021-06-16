@@ -38,7 +38,9 @@ function inContainerScope<T, State = DefaultState>(
           cache.set(context.container.id, value);
 
           context.container.addListener("close", handleOnClose);
+
           context.container.emit("create", value);
+          await context.container.emitAsync("create:async", value);
         }
 
         bindInContext(context, value, options);

@@ -204,6 +204,9 @@ describe("InContainerScope", () => {
     expect(vehicle.getWheels()).toHaveLength(4);
     expect(vehicle === other).toBeTruthy();
     expect(vehicle === root).toBeTruthy();
+
+    childContainer.close();
+    container.close();
   });
 });
 
@@ -254,6 +257,8 @@ describe("middleware", () => {
     expect(mockCallback.mock.calls[1][0].parent).toBe(
       mockCallback.mock.calls[0][0]
     );
+
+    container.close();
   });
 
   test("nested container", async () => {
@@ -306,6 +311,46 @@ describe("middleware", () => {
     );
 
     childContainer.close();
+    container.close();
+  });
+});
+
+describe("emitAsync", () => {
+  test("only one container", async () => {
+    const container = new RootContainer();
+
+    container.bind(
+      Token.Wheels,
+      inContainerScope(() => new RoundWheel(), { array: true })
+    );
+    container.bind(
+      Token.Wheels,
+      inContainerScope(() => new RoundWheel(), { array: true })
+    );
+    container.bind(
+      Token.Wheels,
+      inContainerScope(() => new SquareWheel(), { array: true })
+    );
+    container.bind(
+      Token.Wheels,
+      inContainerScope(() => new SquareWheel(), { array: true })
+    );
+
+    container.bind(
+      Token.Vehicle,
+      inContainerScope<Vehicle>(
+        async (resolver) => new Bus(await resolver.resolve(Token.Wheels))
+      )
+    );
+
+    container.on("create:async", async (value, done) => {
+
+
+      done();
+    });
+
+    await container.resolve(Token.Vehicle);
+
     container.close();
   });
 });

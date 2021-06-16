@@ -18,8 +18,11 @@ function inRequestScope<T, State = DefaultState>(
 ): Middleware<T | T[], State> {
   return async (context, next) => {
     const value = await provider(context);
+
     bindInContext(context, value, options);
+
     context.container.emit("create", value);
+    await context.container.emitAsync("create:async", value);
 
     await next();
   };
