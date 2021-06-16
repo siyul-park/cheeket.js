@@ -15,13 +15,18 @@ function install<
   };
 
   return async (context, next) => {
-    if (!containers.has(context.containers.root)) {
-      containers.add(context.containers.root);
-      module.configureRoot(context.containers.root);
-      context.containers.root.on("close", handleClose);
+    const {
+      root: rootContainer,
+      context: contextContainer,
+    } = context.containers;
+
+    if (!containers.has(rootContainer)) {
+      containers.add(rootContainer);
+      module.configureRoot(rootContainer);
+      rootContainer.on("close", handleClose);
     }
 
-    module.configureContext(context.containers.context);
+    module.configureContext(contextContainer);
 
     await next();
   };
