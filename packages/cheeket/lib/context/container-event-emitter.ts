@@ -1,9 +1,7 @@
-import EventEmitter from "events";
+import { AsyncEventEmitter } from "../event-emitter";
 
-interface ContainerEventEmitter extends EventEmitter {
+interface ContainerEventEmitter extends AsyncEventEmitter {
   readonly id: string;
-
-  emitAsync(event: string | symbol, ...args: unknown[]): Promise<boolean>;
 }
 
 export default ContainerEventEmitter;

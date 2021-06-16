@@ -344,8 +344,6 @@ describe("emitAsync", () => {
     );
 
     container.on("create:async", async (value, done) => {
-
-
       done();
     });
 

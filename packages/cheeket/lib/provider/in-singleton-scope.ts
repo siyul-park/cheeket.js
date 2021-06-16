@@ -6,6 +6,7 @@ import Provider from "./provider";
 import { DefaultState } from "../context";
 import { Middleware } from "../middleware";
 import bindInContext from "./bind-in-context";
+import emitCreateEvent from "./emit-create-event";
 
 const lock = new AsyncLock();
 
@@ -31,9 +32,7 @@ function inSingletonScope<T, State = DefaultState>(
       await lock.acquire(id, async () => {
         if (cache == null) {
           cache = await provider(context);
-
-          context.container.emit("create", cache);
-          await context.container.emitAsync("create:async", cache);
+          await emitCreateEvent(context.container, cache);
         }
 
         bindInContext(context, cache, options);
