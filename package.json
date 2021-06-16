@@ -22,19 +22,19 @@
     "postpublish": "pinst --enable"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.20",
-    "@types/node": "^15.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.15.2",
-    "@typescript-eslint/parser": "^4.15.2",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.12.2",
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
     "cross-env": "^7.0.3",
     "deepmerge": "^4.2.2",
-    "eslint": "^7.21.0",
+    "eslint": "^7.28.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-monorepo": "^0.3.2",
-    "eslint-plugin-prettier": "^3.3.1",
-    "glob": "^7.1.6",
+    "eslint-plugin-prettier": "^3.4.0",
+    "glob": "^7.1.7",
     "gulp": "^4.0.2",
     "gulp-if": "^3.0.0",
     "gulp-sourcemaps": "^3.0.0",
@@ -45,9 +45,9 @@
     "lerna": "^4.0.0",
     "lerna-update-wizard": "^0.17.8",
     "pinst": "^2.1.6",
-    "prettier": "^2.2.1",
-    "sort-package-json": "^1.49.0",
+    "prettier": "^2.3.1",
+    "sort-package-json": "^1.50.0",
     "ts-jest": "^26.5.4",
-    "typescript": "^4.2.3"
+    "typescript": "^4.3.2"
   }
 }

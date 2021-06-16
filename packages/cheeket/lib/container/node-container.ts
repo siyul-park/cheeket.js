@@ -14,7 +14,8 @@ import { BinderAdapter } from "../binder";
 
 class NodeContainer<State = DefaultState>
   extends EventEmitter
-  implements Container<State> {
+  implements Container<State>
+{
   readonly id = uniqid();
 
   private readonly bindMap = new Map<
