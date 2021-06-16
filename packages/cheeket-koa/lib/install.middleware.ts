@@ -15,10 +15,8 @@ function install<
   };
 
   return async (context, next) => {
-    const {
-      root: rootContainer,
-      context: contextContainer,
-    } = context.containers;
+    const { root: rootContainer, context: contextContainer } =
+      context.containers;
 
     if (!containers.has(rootContainer)) {
       containers.add(rootContainer);
