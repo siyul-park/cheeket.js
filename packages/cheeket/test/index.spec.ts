@@ -43,19 +43,19 @@ describe("InRequestScope", () => {
 
     container.bind(
       Token.Wheels,
-      inRequestScope(() => new RoundWheel(), { array: true })
+      inRequestScope(() => new RoundWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inRequestScope(() => new RoundWheel(), { array: true })
+      inRequestScope(() => new RoundWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inRequestScope(() => new SquareWheel(), { array: true })
+      inRequestScope(() => new SquareWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inRequestScope(() => new SquareWheel(), { array: true })
+      inRequestScope(() => new SquareWheel()).bind({ array: true })
     );
 
     const wheels = await container.resolve(Token.Wheels);
@@ -65,7 +65,7 @@ describe("InRequestScope", () => {
       Token.Vehicle,
       inRequestScope<Vehicle>(
         async (resolver) => new Bus(await resolver.resolve(Token.Wheels))
-      )
+      ).bind()
     );
 
     const vehicle = await container.resolve(Token.Vehicle);
@@ -82,19 +82,19 @@ describe("InRequestScope", () => {
 
     container.bind(
       Token.Wheels,
-      inRequestScope(() => new RoundWheel(), { array: true })
+      inRequestScope(() => new RoundWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inRequestScope(() => new RoundWheel(), { array: true })
+      inRequestScope(() => new RoundWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inRequestScope(() => new SquareWheel(), { array: true })
+      inRequestScope(() => new SquareWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inRequestScope(() => new SquareWheel(), { array: true })
+      inRequestScope(() => new SquareWheel()).bind({ array: true })
     );
 
     const childContainer = container.createChildContainer();
@@ -105,7 +105,7 @@ describe("InRequestScope", () => {
       Token.Vehicle,
       inRequestScope<Vehicle>(
         async (resolver) => new Bus(await resolver.resolve(Token.Wheels))
-      )
+      ).bind()
     );
 
     const vehicle = await childContainer.resolve(Token.Vehicle);
@@ -125,19 +125,19 @@ describe("InContainerScope", () => {
 
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new RoundWheel(), { array: true })
+      inContainerScope(() => new RoundWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new RoundWheel(), { array: true })
+      inContainerScope(() => new RoundWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new SquareWheel(), { array: true })
+      inContainerScope(() => new SquareWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new SquareWheel(), { array: true })
+      inContainerScope(() => new SquareWheel()).bind({ array: true })
     );
 
     const wheels = await container.resolve(Token.Wheels);
@@ -147,7 +147,7 @@ describe("InContainerScope", () => {
       Token.Vehicle,
       inContainerScope<Vehicle>(
         async (resolver) => new Bus(await resolver.resolve(Token.Wheels))
-      )
+      ).bind()
     );
 
     const vehicle = await container.resolve(Token.Vehicle);
@@ -164,19 +164,19 @@ describe("InContainerScope", () => {
 
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new RoundWheel(), { array: true })
+      inContainerScope(() => new RoundWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new RoundWheel(), { array: true })
+      inContainerScope(() => new RoundWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new SquareWheel(), { array: true })
+      inContainerScope(() => new SquareWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new SquareWheel(), { array: true })
+      inContainerScope(() => new SquareWheel()).bind({ array: true })
     );
 
     const childContainer = container.createChildContainer();
@@ -187,14 +187,14 @@ describe("InContainerScope", () => {
       Token.Vehicle,
       inContainerScope<Vehicle>(
         async (resolver) => new Bus(await resolver.resolve(Token.Wheels))
-      )
+      ).bind()
     );
 
     childContainer.bind(
       Token.Vehicle,
       inContainerScope<Vehicle>(
         async (resolver) => new Bus(await resolver.resolve(Token.Wheels))
-      )
+      ).bind()
     );
 
     const vehicle = await childContainer.resolve(Token.Vehicle);
@@ -216,26 +216,26 @@ describe("middleware", () => {
 
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new RoundWheel(), { array: true })
+      inContainerScope(() => new RoundWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new RoundWheel(), { array: true })
+      inContainerScope(() => new RoundWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new SquareWheel(), { array: true })
+      inContainerScope(() => new SquareWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new SquareWheel(), { array: true })
+      inContainerScope(() => new SquareWheel()).bind({ array: true })
     );
 
     container.bind(
       Token.Vehicle,
       inContainerScope<Vehicle>(
         async (resolver) => new Bus(await resolver.resolve(Token.Wheels))
-      )
+      ).bind()
     );
 
     const mockCallback = jest.fn(async (context, next) => {
@@ -266,19 +266,19 @@ describe("middleware", () => {
 
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new RoundWheel(), { array: true })
+      inContainerScope(() => new RoundWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new RoundWheel(), { array: true })
+      inContainerScope(() => new RoundWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new SquareWheel(), { array: true })
+      inContainerScope(() => new SquareWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new SquareWheel(), { array: true })
+      inContainerScope(() => new SquareWheel()).bind({ array: true })
     );
 
     const childContainer = container.createChildContainer();
@@ -287,7 +287,7 @@ describe("middleware", () => {
       Token.Vehicle,
       inContainerScope<Vehicle>(
         async (resolver) => new Bus(await resolver.resolve(Token.Wheels))
-      )
+      ).bind()
     );
 
     const mockCallback = jest.fn(async (context, next) => {
@@ -321,26 +321,26 @@ describe("emitAsync", () => {
 
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new RoundWheel(), { array: true })
+      inContainerScope(() => new RoundWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new RoundWheel(), { array: true })
+      inContainerScope(() => new RoundWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new SquareWheel(), { array: true })
+      inContainerScope(() => new SquareWheel()).bind({ array: true })
     );
     container.bind(
       Token.Wheels,
-      inContainerScope(() => new SquareWheel(), { array: true })
+      inContainerScope(() => new SquareWheel()).bind({ array: true })
     );
 
     container.bind(
       Token.Vehicle,
       inContainerScope<Vehicle>(
         async (resolver) => new Bus(await resolver.resolve(Token.Wheels))
-      )
+      ).bind()
     );
 
     container.on("create:async", async (value, done) => {
