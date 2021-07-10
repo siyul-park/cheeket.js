@@ -9,8 +9,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build:prd": "cross-env NODE_ENV=production npm run build",
-    "build": "npm run clean && npm run compile",
+    "build": "gulp",
+    "build:watch": "gulp watch",
     "clean": "rm -rf ./dist",
     "compile": "tsc",
     "lint": "eslint .",
