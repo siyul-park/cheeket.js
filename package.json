@@ -17,7 +17,7 @@
     "lint:fix": "lerna run lint:fix --parallel",
     "test": "lerna run test --parallel",
     "clean": "lerna run clean --parallel",
-    "package:publish": "lerna publish",
+    "package:publish": "lerna publish --access public",
     "package:init": "./scripts/init-package.sh",
     "package:sort": "sort-package-json \"**/package.json\"",
     "package:update": "lernaupdate",
