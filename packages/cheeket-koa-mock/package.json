@@ -1,0 +1,18 @@
+{
+  "name": "@cheeket/koa-mock",
+  "version": "0.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "build": "gulp",
+    "build:watch": "gulp watch",
+    "clean": "rm -rf ./dist",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build"
+  }
+}
