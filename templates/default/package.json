@@ -3,9 +3,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "npm run clean && npm run compile",
+    "build": "gulp",
+    "build:watch": "gulp watch",
     "clean": "rm -rf ./dist",
-    "compile": "gulp",
     "test": "jest",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",

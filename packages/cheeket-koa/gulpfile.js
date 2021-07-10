@@ -1,12 +1,13 @@
 const fs = require('fs');
 const path = require("path");
 
-const { src, dest, series } = require('gulp');
+const gulp = require('gulp');
 const sourcemaps = require('gulp-sourcemaps');
 const gulpif = require('gulp-if');
 const ts = require('gulp-typescript');
 const uglify = require('gulp-uglify');
-const merge = require('deepmerge')
+const changed = require('gulp-changed');
+const merge = require('deepmerge');
 
 function getTsconfigName() {
   if (!process.env.NODE_ENV) return 'tsconfig.json';
@@ -33,7 +34,7 @@ function getFinalTsConfig(config, currentPath) {
 }
 
 function getTsconfig(tsProject) {
-  return getFinalTsConfig(tsProject.rawConfig, tsProject.projectDirectory)
+  return getFinalTsConfig(tsProject.rawConfig, tsProject.projectDirectory);
 }
 
 const tsProject = ts.createProject(getTsconfigName());
@@ -43,22 +44,29 @@ function compile() {
   const useSourcemaps = tsconfig.compilerOptions.sourceMap;
 
   return tsProject.src()
+    .pipe(changed(tsconfig.compilerOptions.outDir, { extension: '.js' }))
     .pipe(gulpif(useSourcemaps, sourcemaps.init()))
     .pipe(tsProject())
     .pipe(gulpif(useSourcemaps, sourcemaps.write('.')))
-    .pipe(dest(tsconfig.compilerOptions.outDir));
+    .pipe(gulp.dest(tsconfig.compilerOptions.outDir));
 }
 
 function compression() {
   const isProduction = process.env.NODE_ENV === 'production';
 
-  return src(path.join(tsconfig.compilerOptions.outDir, '**/*.js'))
+  return gulp.src(path.join(tsconfig.compilerOptions.outDir, '**/*.js'))
+    .pipe(changed(tsconfig.compilerOptions.outDir, { extension: '.js' }))
     .pipe(gulpif(isProduction, sourcemaps.init()))
-    .pipe(gulpif(isProduction, uglify()))
+    .pipe(gulpif(isProduction, uglify({ compress: { awaits: false } })))
     .pipe(gulpif(isProduction, sourcemaps.write('.')))
-    .pipe(dest(tsconfig.compilerOptions.outDir));
+    .pipe(gulp.dest(tsconfig.compilerOptions.outDir));
 }
 
-const build = series(compile, compression);
+const build = gulp.series(compile, compression);
 
-exports.default = series(build);
+function watch() {
+  gulp.watch(tsconfig.include, build);
+}
+
+exports.watch = watch
+exports.default = build;
