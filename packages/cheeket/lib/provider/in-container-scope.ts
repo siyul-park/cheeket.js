@@ -11,6 +11,7 @@ function inContainerScope<T, State = DefaultState>(
   const cache = new Map<string, T>();
   const handleOnClose = (container: ContainerEventEmitter) => {
     cache.delete(container.id);
+    container.removeListener("close", handleOnClose);
   };
   const lock = new AsyncLock();
 

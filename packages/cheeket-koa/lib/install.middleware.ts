@@ -12,6 +12,7 @@ function install<
   const containers = new Set<Cheeket.Container<RootState>>();
   const handleClose = (container: Cheeket.Container<RootState>) => {
     containers.delete(container);
+    container.removeListener("close", handleClose);
   };
 
   return async (context, next) => {
