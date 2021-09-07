@@ -87,7 +87,10 @@ class NodeContainer<State = DefaultState>
   }
 
   createChildContainer<ChildState = DefaultState>(): Container<ChildState> {
-    return new NodeContainer(this.resolveChain);
+    const container = new NodeContainer<ChildState>(this.resolveChain);
+    container.setMaxListeners(this.getMaxListeners());
+
+    return container;
   }
 
   close(): void {
