@@ -7,7 +7,7 @@ interface Context<T> extends Resolver, EventEmitter {
   request: Token<T>;
   response: T | undefined;
 
-  parent: Context<never>;
+  parent: Context<never> | undefined;
   children: Context<never>[];
 }
 
