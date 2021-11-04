@@ -1,6 +1,7 @@
 import Resolver from "./resolver";
+import Register from "./register";
 
-interface Container extends Resolver {
+interface Container extends Resolver, Register {
   childContainer(): Container;
 }
 
