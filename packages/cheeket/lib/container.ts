@@ -8,7 +8,7 @@ import ProviderStorage from "./provider-storage";
 import Context from "./context";
 import ResolveChain from "./resolve-chain";
 
-import PreDefinedToken from "./pre-defined-token";
+import InternalTokens from "./internal-tokens";
 
 class Container implements Resolver, Register {
   private readonly storage: ProviderStorage;
@@ -27,7 +27,7 @@ class Container implements Resolver, Register {
 
     this.eventEmitter.setMaxListeners(Infinity);
     this.storage.set(
-      PreDefinedToken.EventEmitter,
+      InternalTokens.EventEmitter,
       (context: Context<EventEmitter>) => {
         context.response = this.eventEmitter;
       }
