@@ -5,7 +5,6 @@ import Register from "./register";
 import Token from "./token";
 import Provider from "./provider";
 import ProviderStorage from "./provider-storage";
-import Context from "./context";
 import ResolveChain from "./resolve-chain";
 
 import InternalTokens from "./internal-tokens";
@@ -26,12 +25,9 @@ class Container implements Resolver, Register {
     this.parent = parent;
 
     this.eventEmitter.setMaxListeners(Infinity);
-    this.storage.set(
-      InternalTokens.EventEmitter,
-      (context: Context<EventEmitter>) => {
-        context.response = this.eventEmitter;
-      }
-    );
+    this.storage.set(InternalTokens.EventEmitter, (context) => {
+      context.response = this.eventEmitter;
+    });
   }
 
   register<T>(token: Token<T>, provider: Provider<T>): this {
