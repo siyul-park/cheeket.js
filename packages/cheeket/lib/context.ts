@@ -1,14 +1,12 @@
-import EventEmitter from "events";
-
 import Resolver from "./resolver";
 import Token from "./token";
 
-interface Context<T> extends Resolver, EventEmitter {
+interface Context<T> extends Resolver {
   request: Token<T>;
   response: T | undefined;
 
-  parent: Context<never> | undefined;
-  children: Context<never>[];
+  parent: Context<unknown> | undefined;
+  children: Context<unknown>[];
 }
 
 export default Context;
