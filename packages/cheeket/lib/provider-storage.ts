@@ -38,6 +38,15 @@ class ProviderStorage {
     this.map.set(token, providers);
     this.cache.delete(token);
   }
+
+  delete<T>(token: Token<T>): void {
+    this.map.delete(token);
+    this.cache.delete(token);
+  }
+
+  keys(): Token<unknown>[] {
+    return Array.from(this.map.keys());
+  }
 }
 
 export default ProviderStorage;

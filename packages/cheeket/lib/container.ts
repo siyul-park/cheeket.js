@@ -8,6 +8,7 @@ import ProviderStorage from "./provider-storage";
 import ResolveChain from "./resolve-chain";
 
 import InternalTokens from "./internal-tokens";
+import InternalEvents from "./internal-events";
 
 class Container implements Resolver, Register {
   private readonly storage: ProviderStorage;
@@ -37,6 +38,20 @@ class Container implements Resolver, Register {
 
   resolve<T>(token: Token<T>): Promise<T | undefined> {
     return this.resolveChain.resolve(token);
+  }
+
+  clear(): void {
+    const internalTokens = new Set<Token<unknown>>(
+      Object.values(InternalTokens)
+    );
+
+    this.storage.keys().forEach((key) => {
+      if (!internalTokens.has(key)) {
+        this.storage.delete(key);
+      }
+    });
+
+    this.eventEmitter.emit(InternalEvents.Clear);
   }
 }
 

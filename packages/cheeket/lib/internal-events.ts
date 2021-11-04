@@ -1,3 +1,5 @@
-const InternalEvents = Object.freeze({});
+const InternalEvents = Object.freeze({
+  Clear: "clear",
+});
 
 export default InternalEvents;
