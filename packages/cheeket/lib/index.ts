@@ -5,3 +5,4 @@ export { default as Register } from "./register";
 export { default as Container } from "./container";
 
 export { default as InternalTokens } from "./internal-tokens";
+export { default as InternalEvents } from "./internal-events";
