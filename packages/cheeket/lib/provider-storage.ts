@@ -39,9 +39,34 @@ class ProviderStorage {
     this.cache.delete(token);
   }
 
-  delete<T>(token: Token<T>): void {
-    this.map.delete(token);
-    this.cache.delete(token);
+  delete<T>(token: Token<T>, provider?: Provider<T>): void {
+    if (provider == null) {
+      this.map.delete(token);
+      this.cache.delete(token);
+    } else {
+      const providers = this.map.get(token);
+      if (providers == null) {
+        return;
+      }
+
+      const index = providers.findIndex((cur) => cur === provider);
+      if (index > -1) {
+        providers.splice(index, 1);
+        this.cache.delete(token);
+      }
+    }
+  }
+
+  has<T>(token: Token<T>, provider?: Provider<T>): boolean {
+    if (provider == null) {
+      return this.map.has(token);
+    }
+    const providers = this.map.get(token);
+    if (providers == null) {
+      return false;
+    }
+
+    return providers.findIndex((cur) => cur === provider) > -1;
   }
 
   keys(): Token<unknown>[] {
