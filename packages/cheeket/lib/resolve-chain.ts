@@ -2,6 +2,7 @@ import Resolver from "./resolver";
 import Token from "./token";
 import ProviderStorage from "./provider-storage";
 import Context from "./context";
+import ResolveError from "./resolve-error";
 
 class ResolveChain implements Resolver {
   constructor(
@@ -9,15 +10,16 @@ class ResolveChain implements Resolver {
     private readonly next?: ResolveChain
   ) {}
 
-  async resolve<T>(
-    token: Token<T>,
-    parent?: Context<unknown>
-  ): Promise<T | undefined> {
+  async resolve<T>(token: Token<T>, parent?: Context<unknown>): Promise<T> {
     const context = this.createContext(token, parent);
     const provider = this.storage.get(token);
 
     if (provider == null) {
-      return this?.next?.resolve(token, context);
+      const response = this?.next?.resolve(token, context);
+      if (response === undefined) {
+        throw new ResolveError(`Can't resolve ${context.request.toString()}`);
+      }
+      return response;
     }
 
     await provider(context, async () => {
@@ -26,6 +28,9 @@ class ResolveChain implements Resolver {
       }
     });
 
+    if (context.response === undefined) {
+      throw new ResolveError(`Can't resolve ${context.request.toString()}`);
+    }
     return context.response;
   }
 

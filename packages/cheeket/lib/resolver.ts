@@ -1,7 +1,7 @@
 import Token from "./token";
 
 interface Resolver {
-  resolve<T>(token: Token<T>): Promise<T | undefined>;
+  resolve<T>(token: Token<T>): Promise<T>;
 }
 
 export default Resolver;

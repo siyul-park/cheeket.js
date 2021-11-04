@@ -48,7 +48,7 @@ class Container implements Resolver, Register {
     return this.storage.has(token, provider);
   }
 
-  resolve<T>(token: Token<T>): Promise<T | undefined> {
+  resolve<T>(token: Token<T>): Promise<T> {
     return this.resolveChain.resolve(token);
   }
 
