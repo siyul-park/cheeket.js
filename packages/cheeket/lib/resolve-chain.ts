@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+
 import Resolver from "./resolver";
 import Token from "./token";
 import ProviderStorage from "./provider-storage";
@@ -9,6 +11,21 @@ class ResolveChain implements Resolver {
     private readonly storage: ProviderStorage,
     private readonly next?: ResolveChain
   ) {}
+
+  async resolveOrDefault<T, D>(
+    token: Token<T>,
+    other: D,
+    parent?: Context<unknown>
+  ): Promise<T | D> {
+    try {
+      return await this.resolve(token, parent);
+    } catch (e) {
+      if (e instanceof ResolveError) {
+        return other;
+      }
+      throw e;
+    }
+  }
 
   async resolve<T>(token: Token<T>, parent?: Context<unknown>): Promise<T> {
     const context = this.createContext(token, parent);
@@ -44,7 +61,9 @@ class ResolveChain implements Resolver {
       parent,
       children: [] as Context<unknown>[],
 
-      // eslint-disable-next-line @typescript-eslint/no-shadow
+      resolveOrDefault: <U, D>(token: Token<U>, other: D) => {
+        return this.resolveOrDefault(token, other, context);
+      },
       resolve: <U>(token: Token<U>) => {
         return this.resolve(token, context);
       },
