@@ -4,14 +4,14 @@ import Resolver from "./resolver";
 import Register from "./register";
 import Token from "./token";
 import Provider from "./provider";
-import Storage from "./storage";
+import ProviderStorage from "./provider-storage";
 import Context from "./context";
 import ResolveChain from "./resolve-chain";
 
 import PreDefinedToken from "./pre-defined-token";
 
 class Container implements Resolver, Register {
-  private readonly storage: Storage;
+  private readonly storage: ProviderStorage;
 
   private readonly eventEmitter: EventEmitter;
 
@@ -20,7 +20,7 @@ class Container implements Resolver, Register {
   private readonly parent: Container | undefined;
 
   constructor(parent?: Container) {
-    this.storage = new Storage();
+    this.storage = new ProviderStorage();
     this.eventEmitter = new EventEmitter();
     this.resolveChain = new ResolveChain(this.storage, parent?.resolveChain);
     this.parent = parent;

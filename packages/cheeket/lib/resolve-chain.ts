@@ -1,11 +1,11 @@
 import Resolver from "./resolver";
 import Token from "./token";
-import Storage from "./storage";
+import ProviderStorage from "./provider-storage";
 import Context from "./context";
 
 class ResolveChain implements Resolver {
   constructor(
-    private readonly storage: Storage,
+    private readonly storage: ProviderStorage,
     private readonly next?: ResolveChain
   ) {}
 
@@ -16,10 +16,9 @@ class ResolveChain implements Resolver {
     const context = this.createContext(token, parent);
     const provider = this.storage.get(token);
 
-    await provider?.(context);
-    if (provider == null || context.response === undefined) {
-      return this?.next?.resolve(token, context);
-    }
+    await provider?.(context, async () => {
+      await this?.next?.resolve(token, context);
+    });
 
     return context.response;
   }
