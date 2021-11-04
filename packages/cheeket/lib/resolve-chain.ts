@@ -3,10 +3,10 @@ import Token from "./token";
 import Storage from "./storage";
 import Context from "./context";
 
-class ResolverChain implements Resolver {
+class ResolveChain implements Resolver {
   constructor(
     private readonly storage: Storage,
-    private readonly next?: ResolverChain
+    private readonly next?: ResolveChain
   ) {}
 
   async resolve<T>(
@@ -45,4 +45,4 @@ class ResolverChain implements Resolver {
   }
 }
 
-export default ResolverChain;
+export default ResolveChain;
