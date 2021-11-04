@@ -26,8 +26,9 @@ class Container implements Resolver, Register {
     this.parent = parent;
 
     this.eventEmitter.setMaxListeners(Infinity);
-    this.storage.set(InternalTokens.EventEmitter, async (context) => {
+    this.storage.set(InternalTokens.EventEmitter, async (context, next) => {
       context.response = this.eventEmitter;
+      await next();
     });
   }
 

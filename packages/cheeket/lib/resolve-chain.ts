@@ -16,8 +16,14 @@ class ResolveChain implements Resolver {
     const context = this.createContext(token, parent);
     const provider = this.storage.get(token);
 
-    await provider?.(context, async () => {
-      await this?.next?.resolve(token, context);
+    if (provider == null) {
+      return this?.next?.resolve(token, context);
+    }
+
+    await provider(context, async () => {
+      if (context.response === undefined) {
+        context.response = await this?.next?.resolve(token, context);
+      }
     });
 
     return context.response;
