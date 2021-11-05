@@ -15,9 +15,10 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
 
   constructor(parent?: Container) {
     super();
-    this.setMaxListeners(Infinity);
 
     this.storage = new MiddlewareStorage();
+
+    this.setMaxListeners(Infinity);
 
     this.storage.set(InternalTokens.AsyncEventEmitter, async (context, next) => {
       context.response = this;
