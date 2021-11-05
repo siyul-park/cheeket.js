@@ -1,5 +1,5 @@
-import Middleware from "../middleware";
-import MiddlewareStorage from "../middleware-storage";
+import Middleware from "./middleware";
+import MiddlewareStorage from "./middleware-storage";
 
 function route(storage: MiddlewareStorage): Middleware<unknown> {
   return async (context, next) => {

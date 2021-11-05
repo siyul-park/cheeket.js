@@ -1,14 +1,9 @@
 import Resolver from "./resolver";
 import Register from "./register";
 import Token from "./token";
-import Middleware from "./middleware";
-import MiddlewareStorage from "./middleware-storage";
+import { Middleware, chain, proxy, route, MiddlewareStorage } from "./middleware";
 import ResolveProcessor from "./resolve-processor";
 import AsyncEventEmitter from "./async-event-emitter";
-
-import proxy from "./middleware/proxy";
-import chain from "./middleware/chain";
-import route from "./middleware/route";
 
 import InternalTokens from "./internal-tokens";
 import InternalEvents from "./internal-events";

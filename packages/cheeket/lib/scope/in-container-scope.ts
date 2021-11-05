@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 
-import Middleware from "./middleware";
-import InternalTokens from "./internal-tokens";
-import InternalEvents from "./internal-events";
-import Factory from "./factory";
-import BindStrategy from "./bind-strategy";
-import AsyncLock from "./async-lock";
-import AsyncEventEmitter from "./async-event-emitter";
+import Middleware from "../middleware/middleware";
+import InternalTokens from "../internal-tokens";
+import InternalEvents from "../internal-events";
+import Factory from "../factory";
+import BindStrategy from "../bind-strategy/bind-strategy";
+import AsyncLock from "../async-lock";
+import AsyncEventEmitter from "../async-event-emitter";
 
 interface InContainerScope<T> extends Middleware<T> {
   get size(): number;

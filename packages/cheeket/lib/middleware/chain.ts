@@ -1,4 +1,4 @@
-import Middleware from "../middleware";
+import Middleware from "./middleware";
 import ResolveProcessor from "../resolve-processor";
 
 function chain(processor: ResolveProcessor | undefined): Middleware<unknown> {

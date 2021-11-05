@@ -1,6 +1,6 @@
-import Token from "./token";
+import Token from "../token";
 import Middleware from "./middleware";
-import compose from "./middleware/compose";
+import compose from "./compose";
 
 class MiddlewareStorage {
   private readonly map = new Map<Token<unknown>, Middleware<unknown>[]>();

@@ -1,5 +1,5 @@
 import Token from "./token";
-import Middleware from "./middleware";
+import Middleware from "./middleware/middleware";
 
 interface Register {
   use(...middlewares: Middleware<unknown>[]): this;

@@ -4,7 +4,7 @@ import Resolver from "./resolver";
 import Token from "./token";
 import Context from "./context";
 import ResolveError from "./resolve-error";
-import Middleware from "./middleware";
+import Middleware from "./middleware/middleware";
 
 class ResolveProcessor implements Resolver {
   constructor(private readonly middleware: Middleware<unknown>) {}

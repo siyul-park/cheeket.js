@@ -1,4 +1,4 @@
-import Middleware from "../middleware";
+import Middleware from "./middleware";
 import Context from "../context";
 import Next from "../next";
 
