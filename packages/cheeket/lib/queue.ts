@@ -9,6 +9,10 @@ class Queue<T> {
     return this.arr.shift();
   }
 
+  first(): T | undefined {
+    return this.arr[0];
+  }
+
   get size(): number {
     return this.arr.length;
   }
