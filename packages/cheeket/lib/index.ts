@@ -6,6 +6,8 @@ export { default as Container } from "./container";
 export { default as Token } from "./token";
 export { default as Type } from "./type";
 export { default as Abstract } from "./abstract";
+export { default as Next } from "./next";
+export { default as Done } from "./done";
 
 export { default as Factory } from "./factory";
 export { default as BindStrategy } from "./bind-strategy";
