@@ -8,10 +8,10 @@ import AsyncEventEmitter from "./async-event-emitter";
 
 import proxy from "./middleware/proxy";
 import chain from "./middleware/chain";
+import route from "./middleware/route";
 
 import InternalTokens from "./internal-tokens";
 import InternalEvents from "./internal-events";
-import route from "./middleware/route";
 
 class Container implements Resolver, Register {
   private readonly storage: ProviderStorage;
