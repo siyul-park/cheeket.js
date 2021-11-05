@@ -1,10 +1,10 @@
 import ProviderStorage from "../provider-storage";
 import Provider from "../provider";
-import InternalTokens from "../internal-tokens";
+import Token from "../token";
 
-function proxy(storage: ProviderStorage): Provider<unknown> {
+function proxy<T>(storage: ProviderStorage, token: Token<T>): Provider<T> {
   return async (context, next) => {
-    const middleware = storage.get(InternalTokens.Middleware);
+    const middleware = storage.get(token);
     await middleware?.(context, next);
   };
 }
