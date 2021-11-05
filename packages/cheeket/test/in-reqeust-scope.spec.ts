@@ -94,7 +94,7 @@ describe("inRequestScope", () => {
     const parent = new Container();
     const child = parent.createChild();
 
-    const provider1 = inRequestScope(() => new Dummy(), bindObject());
+    const provider1 = inRequestScope(() => new Dummy(), bindArray());
     const provider2 = inRequestScope(() => new Dummy(), bindArray());
 
     parent.register(DummyArray, provider1);

@@ -88,7 +88,7 @@ describe("inGlobalScope", () => {
     const parent = new Container();
     const child = parent.createChild();
 
-    const provider1 = inGlobalScope(() => new Dummy(), bindObject());
+    const provider1 = inGlobalScope(() => new Dummy(), bindArray());
     const provider2 = inGlobalScope(() => new Dummy(), bindArray());
 
     parent.register(DummyArray, provider1);

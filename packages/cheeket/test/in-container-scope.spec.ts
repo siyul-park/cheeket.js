@@ -126,7 +126,7 @@ describe("inContainerScope", () => {
     const parent = new Container();
     const child = parent.createChild();
 
-    const provider1 = inContainerScope(() => new Dummy(), bindObject());
+    const provider1 = inContainerScope(() => new Dummy(), bindArray());
     const provider2 = inContainerScope(() => new Dummy(), bindArray());
 
     parent.register(DummyArray, provider1);
