@@ -7,4 +7,3 @@ export { default as InternalEvents } from "./internal-events";
 
 export { default as Module } from "./module";
 export { default as NestedModule } from "./nested-module";
-export { default as RootModule } from "./root-module";

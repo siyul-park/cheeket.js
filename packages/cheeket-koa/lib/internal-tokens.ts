@@ -5,8 +5,6 @@ import { IncomingMessage, ServerResponse } from "http";
 import * as Cookies from "cookies";
 import * as accepts from "accepts";
 
-import RootModule from "./root-module";
-
 const InternalTokens = Object.freeze({
   Application: Symbol.for("Application") as Token<Application>,
   Context: Symbol.for("Application.Context") as Token<Koa.Context>,
@@ -18,8 +16,6 @@ const InternalTokens = Object.freeze({
   Cookies: Symbol.for("Cookies") as Token<Cookies>,
   Accepts: Symbol.for("Accepts") as Token<accepts.Accepts>,
   Respond: Symbol.for("Respond") as Token<boolean>,
-
-  RootModule: Symbol.for("RootModule") as Token<RootModule>,
 });
 
 export default InternalTokens;
