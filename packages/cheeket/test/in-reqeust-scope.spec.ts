@@ -1,10 +1,4 @@
-import {
-  bindArray,
-  bindObject,
-  Container,
-  inRequestScope,
-  Token,
-} from "../lib";
+import { bindArray, bindObject, Container, inRequestScope, Token } from "../lib";
 
 class Dummy {}
 const DummyArray = Symbol("Dummy[]") as Token<Dummy[]>;

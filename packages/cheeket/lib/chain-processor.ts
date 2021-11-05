@@ -1,9 +1,7 @@
 import Provider from "./provider";
 import ResolveProcessor from "./resolve-processor";
 
-function chainProcessor(
-  processor: ResolveProcessor | undefined
-): Provider<unknown> {
+function chainProcessor(processor: ResolveProcessor | undefined): Provider<unknown> {
   return async (context, next) => {
     await next();
 

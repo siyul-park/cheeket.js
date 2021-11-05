@@ -26,17 +26,11 @@ class Container implements Resolver, Register {
 
     this.eventEmitter.setMaxListeners(Infinity);
 
-    this.storage.set(
-      InternalTokens.AsyncEventEmitter,
-      async (context, next) => {
-        context.response = this.eventEmitter;
-        await next();
-      }
-    );
-    this.storage.set(
-      InternalTokens.Middleware,
-      chainProcessor(parent?.resolveProcessor)
-    );
+    this.storage.set(InternalTokens.AsyncEventEmitter, async (context, next) => {
+      context.response = this.eventEmitter;
+      await next();
+    });
+    this.storage.set(InternalTokens.Middleware, chainProcessor(parent?.resolveProcessor));
     this.storage.set(InternalTokens.Middleware, routeProvider(this.storage));
   }
 
@@ -72,9 +66,7 @@ class Container implements Resolver, Register {
   }
 
   clear(): void {
-    const internalTokens = new Set<Token<unknown>>(
-      Object.values(InternalTokens)
-    );
+    const internalTokens = new Set<Token<unknown>>(Object.values(InternalTokens));
 
     this.storage.keys().forEach((key) => {
       if (!internalTokens.has(key)) {

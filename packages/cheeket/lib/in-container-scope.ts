@@ -12,17 +12,12 @@ interface InContainerScope<T> extends Provider<T> {
   get size(): number;
 }
 
-function inContainerScope<T, U = T>(
-  factory: Factory<T, U>,
-  bindStrategy: BindStrategy<T, U>
-): InContainerScope<T> {
+function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindStrategy<T, U>): InContainerScope<T> {
   const values = new Map<AsyncEventEmitter, U>();
   const lock = new AsyncLock();
 
   const provider: Provider<T> = async (context, next) => {
-    const eventEmitter = await context.resolve(
-      InternalTokens.AsyncEventEmitter
-    );
+    const eventEmitter = await context.resolve(InternalTokens.AsyncEventEmitter);
 
     const founded = values.get(eventEmitter);
     if (founded !== undefined) {

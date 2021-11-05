@@ -9,11 +9,7 @@ import Provider from "./provider";
 class ResolveProcessor implements Resolver {
   constructor(private readonly provider: Provider<unknown>) {}
 
-  async resolveOrDefault<T, D>(
-    token: Token<T>,
-    other: D,
-    parent?: Context<unknown>
-  ): Promise<T | D> {
+  async resolveOrDefault<T, D>(token: Token<T>, other: D, parent?: Context<unknown>): Promise<T | D> {
     try {
       return await this.resolve(token, parent);
     } catch (e) {
@@ -35,10 +31,7 @@ class ResolveProcessor implements Resolver {
     return context.response;
   }
 
-  private createContext<T>(
-    token: Token<T>,
-    parent?: Context<unknown>
-  ): Context<T> {
+  private createContext<T>(token: Token<T>, parent?: Context<unknown>): Context<T> {
     const context: Context<T> = {
       request: token,
       response: undefined,

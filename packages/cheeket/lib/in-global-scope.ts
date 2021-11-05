@@ -9,16 +9,11 @@ type InGlobalScope<T> = Provider<T>;
 
 const lock = new AsyncLock();
 
-function inGlobalScope<T, U = T>(
-  factory: Factory<T, U>,
-  bindStrategy: BindStrategy<T, U>
-): InGlobalScope<T> {
+function inGlobalScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindStrategy<T, U>): InGlobalScope<T> {
   let value: U | undefined;
 
   return async (context, next) => {
-    const eventEmitter = await context.resolve(
-      InternalTokens.AsyncEventEmitter
-    );
+    const eventEmitter = await context.resolve(InternalTokens.AsyncEventEmitter);
 
     if (value !== undefined) {
       await bindStrategy.bind(context, value);

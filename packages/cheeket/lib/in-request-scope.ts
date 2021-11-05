@@ -6,14 +6,9 @@ import BindStrategy from "./bind-strategy";
 
 type InRequestScope<T> = Provider<T>;
 
-function inRequestScope<T, U = T>(
-  factory: Factory<T, U>,
-  bindStrategy: BindStrategy<T, U>
-): InRequestScope<T> {
+function inRequestScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindStrategy<T, U>): InRequestScope<T> {
   return async (context, next) => {
-    const eventEmitter = await context.resolve(
-      InternalTokens.AsyncEventEmitter
-    );
+    const eventEmitter = await context.resolve(InternalTokens.AsyncEventEmitter);
 
     const value = await factory(context);
 
