@@ -1,1 +1,0 @@
-packages/cheeket/README.md
