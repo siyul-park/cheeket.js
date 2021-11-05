@@ -4,8 +4,8 @@ class AsyncLock {
   private readonly queues = new Map<unknown, Queue<() => Promise<unknown>>>();
 
   acquire<T>(key: unknown, process: () => Promise<T>): Promise<T> {
-    const processes = this.queues.get(key) ?? new Queue();
-    this.queues.set(key, processes);
+    const jobs = this.queues.get(key) ?? new Queue();
+    this.queues.set(key, jobs);
 
     return new Promise<T>((resolve, reject) => {
       const job = async () => {
@@ -14,26 +14,26 @@ class AsyncLock {
         } catch (e) {
           reject(e);
         } finally {
-          processes.dequeue();
+          jobs.dequeue(job);
           this.exec(key);
         }
       };
 
-      processes.enqueue(job);
+      jobs.enqueue(job);
 
-      if (processes.size <= 1) {
+      if (jobs.size <= 1) {
         this.exec(key);
       }
     });
   }
 
   private exec(key: unknown) {
-    const processes = this.queues.get(key);
-    const process = processes?.first();
-    if (process === undefined) {
+    const jobs = this.queues.get(key);
+    const job = jobs?.first();
+    if (job === undefined) {
       return;
     }
-    process();
+    job();
   }
 }
 

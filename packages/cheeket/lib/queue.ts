@@ -5,8 +5,15 @@ class Queue<T> {
     this.arr.push(item);
   }
 
-  dequeue(): T | undefined {
-    return this.arr.shift();
+  dequeue(item?: T): T | undefined {
+    if (item === undefined) {
+      return this.arr.shift();
+    }
+    const index = this.arr.findIndex((value) => value === item);
+    if (index < 0) {
+      return undefined;
+    }
+    return this.arr.splice(index, 1)[0];
   }
 
   first(): T | undefined {
