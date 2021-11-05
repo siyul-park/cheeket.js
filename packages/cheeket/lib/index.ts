@@ -7,6 +7,9 @@ export { default as Container } from "./container";
 export { default as Factory } from "./factory";
 export { default as BindStrategy } from "./bind-strategy";
 
+export { default as bindArray } from "./bind-array";
+export { default as bindObject } from "./bind-object";
+
 export { default as InternalTokens } from "./internal-tokens";
 export { default as InternalEvents } from "./internal-events";
 
