@@ -1,6 +1,6 @@
 import Token from "./token";
 import Provider from "./provider";
-import joinProvider from "./join-provider";
+import composeProvider from "./compose-provider";
 
 class ProviderStorage {
   private readonly map = new Map<Token<unknown>, Provider<unknown>[]>();
@@ -18,7 +18,7 @@ class ProviderStorage {
       return undefined;
     }
 
-    const provider = joinProvider(providers);
+    const provider = composeProvider(providers);
     this.cache.set(token, provider as Provider<unknown>);
 
     return provider;

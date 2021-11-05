@@ -5,7 +5,7 @@ import Token from "./token";
 import ProviderStorage from "./provider-storage";
 import Context from "./context";
 import ResolveError from "./resolve-error";
-import joinProvider from "./join-provider";
+import composeProvider from "./compose-provider";
 import InternalTokens from "./internal-tokens";
 import Provider from "./provider";
 
@@ -40,14 +40,14 @@ class ResolveChain implements Resolver {
       await next();
     };
 
-    const jointedProvider = joinProvider(
+    const finalProvider = composeProvider(
       [middleware, provider, nextChain],
       (context) => {
         return context.response === undefined;
       }
     );
 
-    await jointedProvider?.(context, async () => {});
+    await finalProvider?.(context, async () => {});
 
     if (context.response === undefined) {
       throw new ResolveError(`Can't resolve ${context.request.toString()}`);

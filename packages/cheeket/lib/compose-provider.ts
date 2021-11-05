@@ -2,7 +2,7 @@ import Provider from "./provider";
 import Context from "./context";
 import Next from "./next";
 
-function joinProvider<T>(
+function composeProvider<T>(
   providers: (Provider<T> | undefined | null)[],
   filter: (context: Context<T>) => boolean = () => true
 ): Provider<T> | undefined {
@@ -25,4 +25,4 @@ function joinProvider<T>(
   });
 }
 
-export default joinProvider;
+export default composeProvider;
