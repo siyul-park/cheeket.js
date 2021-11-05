@@ -69,6 +69,10 @@ class Container implements Resolver, Register {
 
     this.eventEmitter.emit(InternalEvents.Clear);
   }
+
+  createChild(): Container {
+    return new Container(this);
+  }
 }
 
 export default Container;
