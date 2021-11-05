@@ -26,12 +26,12 @@ class Container implements Resolver, Register {
 
     this.eventEmitter.setMaxListeners(Infinity);
 
-    this.storage.set(InternalTokens.Middleware, chain(parent?.resolveProcessor));
-    this.storage.set(InternalTokens.Middleware, route(this.storage));
     this.storage.set(InternalTokens.AsyncEventEmitter, async (context, next) => {
       context.response = this.eventEmitter;
       await next();
     });
+    this.storage.set(InternalTokens.Middleware, chain(parent?.resolveProcessor));
+    this.storage.set(InternalTokens.Middleware, route(this.storage));
 
     this.resolveProcessor = new ResolveProcessor(proxy(this.storage, InternalTokens.Middleware));
   }
