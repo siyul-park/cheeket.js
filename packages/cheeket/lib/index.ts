@@ -14,6 +14,6 @@ export { default as InternalEvents } from "./internal-events";
 
 export { default as AsyncEventEmitter } from "./async-event-emitter";
 
-export * from "./bind-strategy";
+export { default as BindStrategy, bindArray, bindObject } from "./bind-strategy";
 export * from "./scope";
-export { Middleware } from "./middleware";
+export { default as Middleware } from "./middleware";

@@ -1,7 +1,7 @@
 import Resolver from "./resolver";
 import Register from "./register";
 import Token from "./token";
-import { Middleware, chain, proxy, route, MiddlewareStorage } from "./middleware";
+import Middleware, { chain, proxy, route, MiddlewareStorage } from "./middleware";
 import ResolveProcessor from "./resolve-processor";
 import AsyncEventEmitter from "./async-event-emitter";
 
