@@ -2,15 +2,12 @@
 
 import Resolver from "./resolver";
 import Token from "./token";
-import ProviderStorage from "./provider-storage";
 import Context from "./context";
 import ResolveError from "./resolve-error";
-import composeProvider from "./compose-provider";
-import InternalTokens from "./internal-tokens";
 import Provider from "./provider";
 
 class ResolveProcessor implements Resolver {
-  constructor(private readonly storage: ProviderStorage) {}
+  constructor(private readonly provider: Provider<unknown>) {}
 
   async resolveOrDefault<T, D>(
     token: Token<T>,
@@ -30,14 +27,7 @@ class ResolveProcessor implements Resolver {
   async resolve<T>(token: Token<T>, parent?: Context<unknown>): Promise<T> {
     const context = this.createContext(token, parent);
 
-    const middleware = this.storage.get(InternalTokens.Middleware);
-    const provider = this.storage.get(token) as Provider<unknown> | undefined;
-
-    const finalProvider = composeProvider([middleware, provider], (context) => {
-      return context.response === undefined;
-    });
-
-    await finalProvider?.(context, async () => {});
+    await this.provider(context, async () => {});
 
     if (context.response === undefined) {
       throw new ResolveError(`Can't resolve ${context.request.toString()}`);

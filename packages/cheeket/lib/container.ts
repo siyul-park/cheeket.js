@@ -8,6 +8,9 @@ import AsyncEventEmitter from "./async-event-emitter";
 
 import InternalTokens from "./internal-tokens";
 import InternalEvents from "./internal-events";
+import middlewareProxy from "./middleware-proxy";
+import chainProcessor from "./chain-processor";
+import routeProvider from "./route-provider";
 
 class Container implements Resolver, Register {
   private readonly storage: ProviderStorage;
@@ -16,13 +19,10 @@ class Container implements Resolver, Register {
 
   private readonly resolveProcessor: ResolveProcessor;
 
-  private readonly parent: Container | undefined;
-
   constructor(parent?: Container) {
     this.storage = new ProviderStorage();
     this.eventEmitter = new AsyncEventEmitter();
-    this.resolveProcessor = new ResolveProcessor(this.storage);
-    this.parent = parent;
+    this.resolveProcessor = new ResolveProcessor(middlewareProxy(this.storage));
 
     this.eventEmitter.setMaxListeners(Infinity);
 
@@ -33,16 +33,11 @@ class Container implements Resolver, Register {
         await next();
       }
     );
-    this.storage.set(InternalTokens.Middleware, async (context, next) => {
-      await next();
-
-      if (context.response === undefined) {
-        context.response = await this?.parent?.resolveProcessor?.resolve(
-          context.request,
-          context
-        );
-      }
-    });
+    this.storage.set(
+      InternalTokens.Middleware,
+      chainProcessor(parent?.resolveProcessor)
+    );
+    this.storage.set(InternalTokens.Middleware, routeProvider(this.storage));
   }
 
   use(...middlewares: Provider<unknown>[]): this {
