@@ -14,7 +14,7 @@ class MiddlewareStorage {
     }
 
     const middlewares = this.map.get(token) as Middleware<T>[] | undefined;
-    if (middlewares == null) {
+    if (middlewares === undefined) {
       return undefined;
     }
 
