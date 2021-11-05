@@ -27,7 +27,7 @@ function inGlobalScope<T, U = T>(
       return;
     }
 
-    const created = await lock.acquire(factory, async () => {
+    await lock.acquire(factory, async () => {
       if (value !== undefined) {
         await bindStrategy.bind(context, value);
         return;
@@ -36,13 +36,9 @@ function inGlobalScope<T, U = T>(
       value = await factory(context);
       await bindStrategy.bind(context, value);
 
-      return value;
+      eventEmitter.emit(InternalEvents.Create, value);
+      await eventEmitter.emitAsync(InternalEvents.CreateAsync, value);
     });
-
-    if (created !== undefined) {
-      eventEmitter.emit(InternalEvents.Create, created);
-      await eventEmitter.emitAsync(InternalEvents.CreateAsync, created);
-    }
 
     await bindStrategy.runNext(context, next);
   };

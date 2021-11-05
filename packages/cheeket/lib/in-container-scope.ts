@@ -32,7 +32,7 @@ function inContainerScope<T, U = T>(
       return;
     }
 
-    const created = await lock.acquire(eventEmitter, async () => {
+    await lock.acquire(eventEmitter, async () => {
       const founded = values.get(eventEmitter);
       if (founded !== undefined) {
         await bindStrategy.bind(context, founded);
@@ -50,13 +50,9 @@ function inContainerScope<T, U = T>(
 
       await bindStrategy.bind(context, value);
 
-      return value;
+      eventEmitter.emit(InternalEvents.Create, value);
+      await eventEmitter.emitAsync(InternalEvents.CreateAsync, value);
     });
-
-    if (created !== undefined) {
-      eventEmitter.emit(InternalEvents.Create, created);
-      await eventEmitter.emitAsync(InternalEvents.CreateAsync, created);
-    }
 
     await bindStrategy.runNext(context, next);
   };
