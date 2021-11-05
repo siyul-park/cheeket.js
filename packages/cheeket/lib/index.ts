@@ -17,3 +17,4 @@ export {
   default as inContainerScope,
   InContainerScope,
 } from "./in-container-scope";
+export { default as inGlobalScope, InGlobalScope } from "./in-global-scope";
