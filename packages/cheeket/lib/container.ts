@@ -34,6 +34,13 @@ class Container implements Resolver, Register {
     );
   }
 
+  use(...middlewares: Provider<unknown>[]): this {
+    middlewares.forEach((middleware) => {
+      this.storage.set(InternalTokens.Middleware, middleware);
+    });
+    return this;
+  }
+
   register<T>(token: Token<T>, provider: Provider<T>): this {
     if (!this.isRegister(token, provider)) {
       this.storage.set(token, provider);

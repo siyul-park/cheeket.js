@@ -5,6 +5,7 @@ import Token from "./token";
 import ProviderStorage from "./provider-storage";
 import Context from "./context";
 import ResolveError from "./resolve-error";
+import InternalTokens from "./internal-tokens";
 
 class ResolveChain implements Resolver {
   constructor(
@@ -29,21 +30,32 @@ class ResolveChain implements Resolver {
 
   async resolve<T>(token: Token<T>, parent?: Context<unknown>): Promise<T> {
     const context = this.createContext(token, parent);
+
+    const middleware = this.storage.get(InternalTokens.Middleware);
     const provider = this.storage.get(token);
 
-    if (provider == null) {
-      const response = this?.next?.resolve(token, context);
-      if (response === undefined) {
-        throw new ResolveError(`Can't resolve ${context.request.toString()}`);
-      }
-      return response;
-    }
-
-    await provider(context, async () => {
-      if (context.response === undefined) {
+    const resolve = async () => {
+      if (provider == null) {
         context.response = await this?.next?.resolve(token, context);
+        return;
       }
-    });
+
+      await provider(context, async () => {
+        if (context.response === undefined) {
+          context.response = await this?.next?.resolve(token, context);
+        }
+      });
+    };
+
+    if (middleware !== undefined) {
+      await middleware(context, async () => {
+        if (context.response === undefined) {
+          await resolve();
+        }
+      });
+    } else {
+      await resolve();
+    }
 
     if (context.response === undefined) {
       throw new ResolveError(`Can't resolve ${context.request.toString()}`);

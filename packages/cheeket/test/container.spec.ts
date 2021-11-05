@@ -82,4 +82,16 @@ describe("Container", () => {
 
     expect(await container.resolveOrDefault(Dummy1, null)).toBe(null);
   });
+
+  test("use", async () => {
+    const container = new Container();
+
+    container.use((context) => {
+      context.response = new Dummy1();
+
+      expect(context.request).toEqual(Dummy1);
+    });
+
+    expect(await container.resolve(Dummy1)).toBeTruthy();
+  });
 });
