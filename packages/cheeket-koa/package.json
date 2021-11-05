@@ -14,5 +14,18 @@
     "lint:fix": "eslint --fix .",
     "prepublishOnly": "cross-env NODE_ENV=production npm run build",
     "test": "jest"
+  },
+  "devDependencies": {
+    "@types/accepts": "^1.3.5",
+    "@types/cookies": "^0.7.7",
+    "@types/koa": "^2.13.4",
+    "cheeket": "^3.2.2",
+    "koa": "^2.13.4"
+  },
+  "peerDependencies": {
+    "accepts": "^1.3.7",
+    "cheeket": "^3.2.2",
+    "cookies": "^0.8.0",
+    "koa": "^2.13.1"
   }
 }
