@@ -52,6 +52,9 @@ class ProviderStorage {
       const index = providers.findIndex((cur) => cur === provider);
       if (index > -1) {
         providers.splice(index, 1);
+        if (providers.length === 0) {
+          this.map.delete(token);
+        }
         this.cache.delete(token);
       }
     }
