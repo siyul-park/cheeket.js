@@ -16,7 +16,9 @@ function inGlobalScope<T, U = T>(
   let value: U | undefined;
 
   return async (context, next) => {
-    const eventEmitter = await context.resolve(InternalTokens.EventEmitter);
+    const eventEmitter = await context.resolve(
+      InternalTokens.AsyncEventEmitter
+    );
 
     if (value !== undefined) {
       await bindStrategy(context, value, next);
@@ -32,6 +34,7 @@ function inGlobalScope<T, U = T>(
       value = await factory(context);
 
       eventEmitter.emit(InternalEvents.Create, value);
+      await eventEmitter.emitAsync(InternalEvents.CreateAsync, value);
 
       await bindStrategy(context, value, next);
     });

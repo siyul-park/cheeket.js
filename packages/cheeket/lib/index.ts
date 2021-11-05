@@ -16,6 +16,8 @@ export { default as bindObject } from "./bind-object";
 export { default as InternalTokens } from "./internal-tokens";
 export { default as InternalEvents } from "./internal-events";
 
+export { default as AsyncEventEmitter } from "./async-event-emitter";
+
 export {
   default as inContainerScope,
   InContainerScope,
