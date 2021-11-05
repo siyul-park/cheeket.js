@@ -1,7 +1,6 @@
 import Token from "./token";
 import Provider from "./provider";
-import Context from "./context";
-import Next from "./next";
+import joinProvider from "./join-provider";
 
 class ProviderStorage {
   private readonly map = new Map<Token<unknown>, Provider<unknown>[]>();
@@ -19,13 +18,7 @@ class ProviderStorage {
       return undefined;
     }
 
-    const provider = providers.reverse().reduce((pre, cur) => {
-      return async (context: Context<T>, next: Next) => {
-        await cur(context, async () => {
-          await pre(context, next);
-        });
-      };
-    });
+    const provider = joinProvider(providers);
     this.cache.set(token, provider as Provider<unknown>);
 
     return provider;

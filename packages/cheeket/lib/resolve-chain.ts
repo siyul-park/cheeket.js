@@ -5,7 +5,9 @@ import Token from "./token";
 import ProviderStorage from "./provider-storage";
 import Context from "./context";
 import ResolveError from "./resolve-error";
+import joinProvider from "./join-provider";
 import InternalTokens from "./internal-tokens";
+import Provider from "./provider";
 
 class ResolveChain implements Resolver {
   constructor(
@@ -32,30 +34,20 @@ class ResolveChain implements Resolver {
     const context = this.createContext(token, parent);
 
     const middleware = this.storage.get(InternalTokens.Middleware);
-    const provider = this.storage.get(token);
-
-    const resolve = async () => {
-      if (provider == null) {
-        context.response = await this?.next?.resolve(token, context);
-        return;
-      }
-
-      await provider(context, async () => {
-        if (context.response === undefined) {
-          context.response = await this?.next?.resolve(token, context);
-        }
-      });
+    const provider = this.storage.get(token) as Provider<unknown> | undefined;
+    const nextChain: Provider<unknown> = async (context, next) => {
+      context.response = await this?.next?.resolve(token, context);
+      await next();
     };
 
-    if (middleware !== undefined) {
-      await middleware(context, async () => {
-        if (context.response === undefined) {
-          await resolve();
-        }
-      });
-    } else {
-      await resolve();
-    }
+    const jointedProvider = joinProvider(
+      [middleware, provider, nextChain],
+      (context) => {
+        return context.response === undefined;
+      }
+    );
+
+    await jointedProvider?.(context, async () => {});
 
     if (context.response === undefined) {
       throw new ResolveError(`Can't resolve ${context.request.toString()}`);
