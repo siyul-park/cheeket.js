@@ -22,6 +22,12 @@ function inContainerScope<T, U = T>(
   const provider: Provider<T> = async (context, next) => {
     const eventEmitter = await context.resolve(InternalTokens.EventEmitter);
 
+    const founded = values.get(eventEmitter);
+    if (founded !== undefined) {
+      await bindStrategy(context, founded, next);
+      return;
+    }
+
     await lock.acquire(eventEmitter, async () => {
       const founded = values.get(eventEmitter);
       if (founded !== undefined) {

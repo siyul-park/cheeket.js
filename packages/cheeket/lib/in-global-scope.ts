@@ -18,6 +18,11 @@ function inGlobalScope<T, U = T>(
   return async (context, next) => {
     const eventEmitter = await context.resolve(InternalTokens.EventEmitter);
 
+    if (value !== undefined) {
+      await bindStrategy(context, value, next);
+      return;
+    }
+
     await lock.acquire(factory, async () => {
       if (value !== undefined) {
         await bindStrategy(context, value, next);
