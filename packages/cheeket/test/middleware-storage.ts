@@ -51,7 +51,7 @@ describe("MiddlewareStorage", () => {
   test("has", async () => {
     const storage = new MiddlewareStorage();
 
-    const provider: Provider<Dummy> = async (context, next) => {
+    const provider: Middleware<Dummy> = async (context, next) => {
       await next();
     };
     storage.set(Dummy, provider);
