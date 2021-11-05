@@ -26,35 +26,39 @@ function inContainerScope<T, U = T>(
 
     const founded = values.get(eventEmitter);
     if (founded !== undefined) {
-      await bindStrategy(context, founded, next);
+      await bindStrategy.bind(context, founded);
+      await bindStrategy.runNext(next);
+
       return;
     }
 
     const created = await lock.acquire(eventEmitter, async () => {
       const founded = values.get(eventEmitter);
       if (founded !== undefined) {
-        await bindStrategy(context, founded, next);
+        await bindStrategy.bind(context, founded);
         return;
       }
 
       const value = await factory(context);
       values.set(eventEmitter, value);
 
-      await bindStrategy(context, value, next);
-
-      return value;
-    });
-
-    if (created !== undefined) {
       const clearListener = () => {
         eventEmitter.removeListener(InternalEvents.Clear, clearListener);
         values.delete(eventEmitter);
       };
       eventEmitter.addListener(InternalEvents.Clear, clearListener);
 
+      await bindStrategy.bind(context, value);
+
+      return value;
+    });
+
+    if (created !== undefined) {
       eventEmitter.emit(InternalEvents.Create, created);
       await eventEmitter.emitAsync(InternalEvents.CreateAsync, created);
     }
+
+    await bindStrategy.runNext(next);
   };
 
   return Object.defineProperty(provider, "size", {

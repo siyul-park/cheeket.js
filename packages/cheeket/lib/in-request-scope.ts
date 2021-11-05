@@ -17,10 +17,12 @@ function inRequestScope<T, U = T>(
 
     const value = await factory(context);
 
+    await bindStrategy.bind(context, value);
+
     eventEmitter.emit(InternalEvents.Create, value);
     await eventEmitter.emitAsync(InternalEvents.CreateAsync, value);
 
-    await bindStrategy(context, value, next);
+    await bindStrategy.runNext(next);
   };
 }
 
