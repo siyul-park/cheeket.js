@@ -38,7 +38,7 @@ class MiddlewareStorage {
       this.cache.delete(token);
     } else {
       const middlewares = this.map.get(token);
-      if (middlewares == null) {
+      if (middlewares === undefined) {
         return;
       }
 
@@ -58,7 +58,7 @@ class MiddlewareStorage {
       return this.map.has(token);
     }
     const middlewares = this.map.get(token);
-    if (middlewares == null) {
+    if (middlewares === undefined) {
       return false;
     }
 
