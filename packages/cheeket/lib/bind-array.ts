@@ -8,7 +8,7 @@ function bindArray<T>(): BindStrategy<T[], T> {
       }
       context.response.push(response);
     },
-    async runNext(next): Promise<void> {
+    async runNext(context, next): Promise<void> {
       await next();
     },
   };

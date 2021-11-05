@@ -22,7 +22,7 @@ function inRequestScope<T, U = T>(
     eventEmitter.emit(InternalEvents.Create, value);
     await eventEmitter.emitAsync(InternalEvents.CreateAsync, value);
 
-    await bindStrategy.runNext(next);
+    await bindStrategy.runNext(context, next);
   };
 }
 

@@ -27,7 +27,7 @@ function inContainerScope<T, U = T>(
     const founded = values.get(eventEmitter);
     if (founded !== undefined) {
       await bindStrategy.bind(context, founded);
-      await bindStrategy.runNext(next);
+      await bindStrategy.runNext(context, next);
 
       return;
     }
@@ -58,7 +58,7 @@ function inContainerScope<T, U = T>(
       await eventEmitter.emitAsync(InternalEvents.CreateAsync, created);
     }
 
-    await bindStrategy.runNext(next);
+    await bindStrategy.runNext(context, next);
   };
 
   return Object.defineProperty(provider, "size", {

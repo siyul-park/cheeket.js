@@ -22,7 +22,7 @@ function inGlobalScope<T, U = T>(
 
     if (value !== undefined) {
       await bindStrategy.bind(context, value);
-      await bindStrategy.runNext(next);
+      await bindStrategy.runNext(context, next);
 
       return;
     }
@@ -44,7 +44,7 @@ function inGlobalScope<T, U = T>(
       await eventEmitter.emitAsync(InternalEvents.CreateAsync, created);
     }
 
-    await bindStrategy.runNext(next);
+    await bindStrategy.runNext(context, next);
   };
 }
 
