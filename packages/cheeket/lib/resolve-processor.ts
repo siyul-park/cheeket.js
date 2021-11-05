@@ -30,16 +30,12 @@ class ResolveProcessor implements Resolver {
   async resolve<T>(token: Token<T>, parent?: Context<unknown>): Promise<T> {
     const context = this.createContext(token, parent);
 
-    const preProcess = this.storage.get(InternalTokens.PreProcess);
+    const middleware = this.storage.get(InternalTokens.Middleware);
     const provider = this.storage.get(token) as Provider<unknown> | undefined;
-    const postProcess = this.storage.get(InternalTokens.PostProcess);
 
-    const finalProvider = composeProvider(
-      [preProcess, provider, postProcess],
-      (context) => {
-        return context.response === undefined;
-      }
-    );
+    const finalProvider = composeProvider([middleware, provider], (context) => {
+      return context.response === undefined;
+    });
 
     await finalProvider?.(context, async () => {});
 

@@ -33,18 +33,21 @@ class Container implements Resolver, Register {
         await next();
       }
     );
-    this.storage.set(InternalTokens.PostProcess, async (context, next) => {
-      context.response = await this?.parent?.resolveProcessor?.resolve(
-        context.request,
-        context
-      );
+    this.storage.set(InternalTokens.Middleware, async (context, next) => {
       await next();
+
+      if (context.response === undefined) {
+        context.response = await this?.parent?.resolveProcessor?.resolve(
+          context.request,
+          context
+        );
+      }
     });
   }
 
   use(...middlewares: Provider<unknown>[]): this {
     middlewares.forEach((middleware) => {
-      this.storage.set(InternalTokens.PreProcess, middleware);
+      this.storage.set(InternalTokens.Middleware, middleware);
     });
     return this;
   }

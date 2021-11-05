@@ -5,8 +5,7 @@ const InternalTokens = Object.freeze({
   AsyncEventEmitter: Symbol.for(
     "AsyncEventEmitter"
   ) as Token<AsyncEventEmitter>,
-  PreProcess: Symbol.for("PreProcess") as Token<unknown>,
-  PostProcess: Symbol.for("PostProcess") as Token<unknown>,
+  Middleware: Symbol.for("Middleware") as Token<unknown>,
 });
 
 export default InternalTokens;

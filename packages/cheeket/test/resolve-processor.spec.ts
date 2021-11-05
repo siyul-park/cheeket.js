@@ -5,7 +5,7 @@ import InternalTokens from "../lib/internal-tokens";
 class Dummy1 {}
 class Dummy2 {}
 
-describe("ResolveChain", () => {
+describe("ResolveProcessor", () => {
   test("resolve", async () => {
     const storage = new ProviderStorage();
     const chain = new ResolveProcessor(storage);
@@ -26,9 +26,12 @@ describe("ResolveChain", () => {
     const childStorage = new ProviderStorage();
     const childChain = new ResolveProcessor(childStorage);
 
-    childStorage.set(InternalTokens.PostProcess, async (context, next) => {
-      context.response = await parentChain.resolve(context.request, context);
+    childStorage.set(InternalTokens.Middleware, async (context, next) => {
       await next();
+
+      if (context.response === undefined) {
+        context.response = await parentChain.resolve(context.request, context);
+      }
     });
 
     parentStorage.set(Dummy1, (context) => {
@@ -45,9 +48,12 @@ describe("ResolveChain", () => {
     const childStorage = new ProviderStorage();
     const childChain = new ResolveProcessor(childStorage);
 
-    childStorage.set(InternalTokens.PostProcess, async (context, next) => {
-      context.response = await parentChain.resolve(context.request, context);
+    childStorage.set(InternalTokens.Middleware, async (context, next) => {
       await next();
+
+      if (context.response === undefined) {
+        context.response = await parentChain.resolve(context.request, context);
+      }
     });
 
     childStorage.set(Dummy1, async (context, next) => {
