@@ -6,3 +6,8 @@ export { default as Container } from "./container";
 
 export { default as InternalTokens } from "./internal-tokens";
 export { default as InternalEvents } from "./internal-events";
+
+export {
+  default as inContainerScope,
+  InContainerScope,
+} from "./in-container-scope";

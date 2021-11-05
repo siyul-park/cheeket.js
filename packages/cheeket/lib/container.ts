@@ -48,6 +48,10 @@ class Container implements Resolver, Register {
     return this.storage.has(token, provider);
   }
 
+  resolveOrDefault<T, D>(token: Token<T>, other: D): Promise<T | D> {
+    return this.resolveChain.resolveOrDefault(token, other);
+  }
+
   resolve<T>(token: Token<T>): Promise<T> {
     return this.resolveChain.resolve(token);
   }
