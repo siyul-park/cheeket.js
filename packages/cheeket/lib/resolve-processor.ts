@@ -9,11 +9,8 @@ import composeProvider from "./compose-provider";
 import InternalTokens from "./internal-tokens";
 import Provider from "./provider";
 
-class ResolveChain implements Resolver {
-  constructor(
-    private readonly storage: ProviderStorage,
-    private readonly next?: ResolveChain
-  ) {}
+class ResolveProcessor implements Resolver {
+  constructor(private readonly storage: ProviderStorage) {}
 
   async resolveOrDefault<T, D>(
     token: Token<T>,
@@ -33,15 +30,12 @@ class ResolveChain implements Resolver {
   async resolve<T>(token: Token<T>, parent?: Context<unknown>): Promise<T> {
     const context = this.createContext(token, parent);
 
-    const middleware = this.storage.get(InternalTokens.Middleware);
+    const preProcess = this.storage.get(InternalTokens.PreProcess);
     const provider = this.storage.get(token) as Provider<unknown> | undefined;
-    const nextChain: Provider<unknown> = async (context, next) => {
-      context.response = await this?.next?.resolve(token, context);
-      await next();
-    };
+    const postProcess = this.storage.get(InternalTokens.PostProcess);
 
     const finalProvider = composeProvider(
-      [middleware, provider, nextChain],
+      [preProcess, provider, postProcess],
       (context) => {
         return context.response === undefined;
       }
@@ -78,4 +72,4 @@ class ResolveChain implements Resolver {
   }
 }
 
-export default ResolveChain;
+export default ResolveProcessor;

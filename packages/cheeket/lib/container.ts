@@ -3,7 +3,7 @@ import Register from "./register";
 import Token from "./token";
 import Provider from "./provider";
 import ProviderStorage from "./provider-storage";
-import ResolveChain from "./resolve-chain";
+import ResolveProcessor from "./resolve-processor";
 import AsyncEventEmitter from "./async-event-emitter";
 
 import InternalTokens from "./internal-tokens";
@@ -14,17 +14,18 @@ class Container implements Resolver, Register {
 
   private readonly eventEmitter: AsyncEventEmitter;
 
-  private readonly resolveChain: ResolveChain;
+  private readonly resolveProcessor: ResolveProcessor;
 
   private readonly parent: Container | undefined;
 
   constructor(parent?: Container) {
     this.storage = new ProviderStorage();
     this.eventEmitter = new AsyncEventEmitter();
-    this.resolveChain = new ResolveChain(this.storage, parent?.resolveChain);
+    this.resolveProcessor = new ResolveProcessor(this.storage);
     this.parent = parent;
 
     this.eventEmitter.setMaxListeners(Infinity);
+
     this.storage.set(
       InternalTokens.AsyncEventEmitter,
       async (context, next) => {
@@ -32,11 +33,18 @@ class Container implements Resolver, Register {
         await next();
       }
     );
+    this.storage.set(InternalTokens.PostProcess, async (context, next) => {
+      context.response = await this?.parent?.resolveProcessor?.resolve(
+        context.request,
+        context
+      );
+      await next();
+    });
   }
 
   use(...middlewares: Provider<unknown>[]): this {
     middlewares.forEach((middleware) => {
-      this.storage.set(InternalTokens.Middleware, middleware);
+      this.storage.set(InternalTokens.PreProcess, middleware);
     });
     return this;
   }
@@ -58,11 +66,11 @@ class Container implements Resolver, Register {
   }
 
   resolveOrDefault<T, D>(token: Token<T>, other: D): Promise<T | D> {
-    return this.resolveChain.resolveOrDefault(token, other);
+    return this.resolveProcessor.resolveOrDefault(token, other);
   }
 
   resolve<T>(token: Token<T>): Promise<T> {
-    return this.resolveChain.resolve(token);
+    return this.resolveProcessor.resolve(token);
   }
 
   clear(): void {
