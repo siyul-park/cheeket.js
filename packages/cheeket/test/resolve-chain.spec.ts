@@ -1,5 +1,3 @@
-/* eslint-disable no-plusplus,@typescript-eslint/no-loop-func,max-classes-per-file */
-
 import ProviderStorage from "../lib/provider-storage";
 import ResolveChain from "../lib/resolve-chain";
 

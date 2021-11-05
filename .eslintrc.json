@@ -21,7 +21,8 @@
     ]
   },
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "import"
   ],
   "rules": {
     "no-console": "off"

@@ -1,5 +1,3 @@
-/* eslint-disable no-plusplus,@typescript-eslint/no-loop-func */
-
 import ProviderStorage from "../lib/provider-storage";
 import { Provider } from "../lib";
 

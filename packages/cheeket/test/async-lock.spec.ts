@@ -1,4 +1,4 @@
-/* eslint-disable no-plusplus,@typescript-eslint/no-loop-func */
+/* eslint-disable @typescript-eslint/no-loop-func */
 
 import AsyncLock from "../lib/async-lock";
 
