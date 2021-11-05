@@ -44,11 +44,11 @@ class Ninja implements Warrior {
   }
 }
 
-const katanaProvider = () => new Katana();
+const katanamiddleware = () => new Katana();
 
-const shurikenProvider = () => new Shuriken();
+const shurikenmiddleware = () => new Shuriken();
 
-const ninjaProvider = async (resolver: Resolver) => {
+const ninjamiddleware = async (resolver: Resolver) => {
   return new Ninja(
     await resolver.resolve<Weapon>(Types.Weapon),
     await resolver.resolve<ThrowableWeapon>(Types.ThrowableWeapon)
@@ -57,9 +57,9 @@ const ninjaProvider = async (resolver: Resolver) => {
 
 const container = new RootContainer();
 
-container.bind(Types.Weapon, inRequestScope(katanaProvider));
-container.bind(Types.ThrowableWeapon, inRequestScope(shurikenProvider));
-container.bind(Types.Warrior, inRequestScope(ninjaProvider));
+container.bind(Types.Weapon, inRequestScope(katanamiddleware));
+container.bind(Types.ThrowableWeapon, inRequestScope(shurikenmiddleware));
+container.bind(Types.Warrior, inRequestScope(ninjamiddleware));
 
 const warrior = await container.resolve<Warrior>(Types.Warrior);
 const throwableWeapon = await container.resolve<ThrowableWeapon>(

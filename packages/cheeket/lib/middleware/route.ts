@@ -6,8 +6,8 @@ function route(storage: MiddlewareStorage): Middleware<unknown> {
     await next();
 
     if (context.response === undefined) {
-      const provider = storage.get(context.request);
-      await provider?.(context, async () => {});
+      const middleware = storage.get(context.request);
+      await middleware?.(context, async () => {});
     }
   };
 }

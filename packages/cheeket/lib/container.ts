@@ -43,20 +43,20 @@ class Container implements Resolver, Register {
     return this;
   }
 
-  register<T>(token: Token<T>, provider: Middleware<T>): this {
-    if (!this.isRegister(token, provider)) {
-      this.storage.set(token, provider);
+  register<T>(token: Token<T>, middleware: Middleware<T>): this {
+    if (!this.isRegister(token, middleware)) {
+      this.storage.set(token, middleware);
     }
     return this;
   }
 
-  unregister<T>(token: Token<T>, provider?: Middleware<T>): this {
-    this.storage.delete(token, provider);
+  unregister<T>(token: Token<T>, middleware?: Middleware<T>): this {
+    this.storage.delete(token, middleware);
     return this;
   }
 
-  isRegister<T>(token: Token<T>, provider?: Middleware<T>): boolean {
-    return this.storage.has(token, provider);
+  isRegister<T>(token: Token<T>, middleware?: Middleware<T>): boolean {
+    return this.storage.has(token, middleware);
   }
 
   resolveOrDefault<T, D>(token: Token<T>, other: D): Promise<T | D> {

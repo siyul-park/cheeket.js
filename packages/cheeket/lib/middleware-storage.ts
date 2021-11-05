@@ -13,39 +13,39 @@ class MiddlewareStorage {
       return cached;
     }
 
-    const providers = this.map.get(token) as Middleware<T>[] | undefined;
-    if (providers == null) {
+    const middlewares = this.map.get(token) as Middleware<T>[] | undefined;
+    if (middlewares == null) {
       return undefined;
     }
 
-    const provider = compose(providers);
-    this.cache.set(token, provider as Middleware<unknown>);
+    const middleware = compose(middlewares);
+    this.cache.set(token, middleware as Middleware<unknown>);
 
-    return provider;
+    return middleware;
   }
 
-  set<T>(token: Token<T>, provider: Middleware<T>): void {
-    const providers = this.map.get(token) ?? [];
-    providers.push(provider as Middleware<unknown>);
+  set<T>(token: Token<T>, middleware: Middleware<T>): void {
+    const middlewares = this.map.get(token) ?? [];
+    middlewares.push(middleware as Middleware<unknown>);
 
-    this.map.set(token, providers);
+    this.map.set(token, middlewares);
     this.cache.delete(token);
   }
 
-  delete<T>(token: Token<T>, provider?: Middleware<T>): void {
-    if (provider == null) {
+  delete<T>(token: Token<T>, middleware?: Middleware<T>): void {
+    if (middleware == null) {
       this.map.delete(token);
       this.cache.delete(token);
     } else {
-      const providers = this.map.get(token);
-      if (providers == null) {
+      const middlewares = this.map.get(token);
+      if (middlewares == null) {
         return;
       }
 
-      const index = providers.findIndex((cur) => cur === provider);
+      const index = middlewares.findIndex((cur) => cur === middleware);
       if (index > -1) {
-        providers.splice(index, 1);
-        if (providers.length === 0) {
+        middlewares.splice(index, 1);
+        if (middlewares.length === 0) {
           this.map.delete(token);
         }
         this.cache.delete(token);
@@ -53,16 +53,16 @@ class MiddlewareStorage {
     }
   }
 
-  has<T>(token: Token<T>, provider?: Middleware<T>): boolean {
-    if (provider == null) {
+  has<T>(token: Token<T>, middleware?: Middleware<T>): boolean {
+    if (middleware == null) {
       return this.map.has(token);
     }
-    const providers = this.map.get(token);
-    if (providers == null) {
+    const middlewares = this.map.get(token);
+    if (middlewares == null) {
       return false;
     }
 
-    return providers.findIndex((cur) => cur === provider) > -1;
+    return middlewares.findIndex((cur) => cur === middleware) > -1;
   }
 
   keys(): Token<unknown>[] {

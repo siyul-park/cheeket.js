@@ -8,10 +8,10 @@ describe("inRequestScope", () => {
     const container1 = new Container();
     const container2 = new Container();
 
-    const provider = inRequestScope(() => new Dummy(), bindObject());
+    const middleware = inRequestScope(() => new Dummy(), bindObject());
 
-    container1.register(Dummy, provider);
-    container2.register(Dummy, provider);
+    container1.register(Dummy, middleware);
+    container2.register(Dummy, middleware);
 
     const dummy1 = await container1.resolve(Dummy);
     const dummy2 = await container1.resolve(Dummy);
@@ -29,9 +29,9 @@ describe("inRequestScope", () => {
     const parent = new Container();
     const child = parent.createChild();
 
-    const provider = inRequestScope(() => new Dummy(), bindObject());
+    const middleware = inRequestScope(() => new Dummy(), bindObject());
 
-    parent.register(Dummy, provider);
+    parent.register(Dummy, middleware);
 
     const dummy1 = await child.resolve(Dummy);
     const dummy2 = await child.resolve(Dummy);
@@ -51,14 +51,14 @@ describe("inRequestScope", () => {
     const container1 = new Container();
     const container2 = new Container();
 
-    const provider1 = inRequestScope(() => new Dummy(), bindArray());
-    const provider2 = inRequestScope(() => new Dummy(), bindArray());
+    const middleware1 = inRequestScope(() => new Dummy(), bindArray());
+    const middleware2 = inRequestScope(() => new Dummy(), bindArray());
 
-    container1.register(DummyArray, provider1);
-    container1.register(DummyArray, provider2);
+    container1.register(DummyArray, middleware1);
+    container1.register(DummyArray, middleware2);
 
-    container2.register(DummyArray, provider1);
-    container2.register(DummyArray, provider2);
+    container2.register(DummyArray, middleware1);
+    container2.register(DummyArray, middleware2);
 
     const dummy1 = await container1.resolve(DummyArray);
     const dummy2 = await container1.resolve(DummyArray);
@@ -86,11 +86,11 @@ describe("inRequestScope", () => {
     const parent = new Container();
     const child = parent.createChild();
 
-    const provider1 = inRequestScope(() => new Dummy(), bindArray());
-    const provider2 = inRequestScope(() => new Dummy(), bindArray());
+    const middleware1 = inRequestScope(() => new Dummy(), bindArray());
+    const middleware2 = inRequestScope(() => new Dummy(), bindArray());
 
-    parent.register(DummyArray, provider1);
-    child.register(DummyArray, provider2);
+    parent.register(DummyArray, middleware1);
+    child.register(DummyArray, middleware2);
 
     const dummy1 = await child.resolve(DummyArray);
     const dummy2 = await child.resolve(DummyArray);

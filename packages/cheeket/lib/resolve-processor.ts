@@ -7,7 +7,7 @@ import ResolveError from "./resolve-error";
 import Middleware from "./middleware";
 
 class ResolveProcessor implements Resolver {
-  constructor(private readonly provider: Middleware<unknown>) {}
+  constructor(private readonly middleware: Middleware<unknown>) {}
 
   async resolveOrDefault<T, D>(token: Token<T>, other: D, parent?: Context<unknown>): Promise<T | D> {
     try {
@@ -23,7 +23,7 @@ class ResolveProcessor implements Resolver {
   async resolve<T>(token: Token<T>, parent?: Context<unknown>): Promise<T> {
     const context = this.createContext(token, parent);
 
-    await this.provider(context, async () => {});
+    await this.middleware(context, async () => {});
 
     if (context.response === undefined) {
       throw new ResolveError(`Can't resolve ${context.request.toString()}`);

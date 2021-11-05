@@ -16,7 +16,7 @@ function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindSt
   const values = new Map<AsyncEventEmitter, U>();
   const lock = new AsyncLock();
 
-  const provider: Middleware<T> = async (context, next) => {
+  const middleware: Middleware<T> = async (context, next) => {
     const eventEmitter = await context.resolve(InternalTokens.AsyncEventEmitter);
 
     const founded = values.get(eventEmitter);
@@ -52,7 +52,7 @@ function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindSt
     await bindStrategy.runNext(context, next);
   };
 
-  return Object.defineProperty(provider, "size", {
+  return Object.defineProperty(middleware, "size", {
     get(): number {
       return values.size;
     },

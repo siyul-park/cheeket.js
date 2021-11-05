@@ -6,13 +6,13 @@ function compose<T>(
   middlewares: (Middleware<T> | undefined | null)[],
   filter: (context: Context<T>) => boolean = () => true
 ): Middleware<T> | undefined {
-  const existedProviders = middlewares.filter((provider) => provider != null) as Middleware<T>[];
+  const existedmiddlewares = middlewares.filter((middleware) => middleware != null) as Middleware<T>[];
 
-  if (existedProviders.length === 0) {
+  if (existedmiddlewares.length === 0) {
     return undefined;
   }
 
-  return existedProviders.reverse().reduce((pre, cur) => {
+  return existedmiddlewares.reverse().reduce((pre, cur) => {
     return async (context: Context<T>, next: Next) => {
       await cur(context, async () => {
         if (filter(context)) {

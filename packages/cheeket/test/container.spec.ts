@@ -29,7 +29,7 @@ describe("Container", () => {
     expect(await child.resolve(Dummy1)).toBeTruthy();
   });
 
-  test("resolve: multi provider", async () => {
+  test("resolve: multi middleware", async () => {
     const parent = new Container();
     const child = parent.createChild();
 
