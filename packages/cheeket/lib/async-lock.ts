@@ -28,6 +28,7 @@ class AsyncLock {
     const processes = this.queues.get(key) ?? new Queue();
     const process = processes.dequeue();
     if (process === undefined) {
+      this.queues.delete(key);
       return;
     }
     process();
