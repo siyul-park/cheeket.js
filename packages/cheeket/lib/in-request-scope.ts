@@ -1,10 +1,10 @@
-import Provider from "./provider";
+import Middleware from "./middleware";
 import InternalTokens from "./internal-tokens";
 import InternalEvents from "./internal-events";
 import Factory from "./factory";
 import BindStrategy from "./bind-strategy";
 
-type InRequestScope<T> = Provider<T>;
+type InRequestScope<T> = Middleware<T>;
 
 function inRequestScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindStrategy<T, U>): InRequestScope<T> {
   return async (context, next) => {

@@ -1,7 +1,7 @@
-import Provider from "../provider";
-import ProviderStorage from "../provider-storage";
+import Middleware from "../middleware";
+import MiddlewareStorage from "../middleware-storage";
 
-function route(storage: ProviderStorage): Provider<unknown> {
+function route(storage: MiddlewareStorage): Middleware<unknown> {
   return async (context, next) => {
     await next();
 

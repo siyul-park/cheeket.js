@@ -1,13 +1,15 @@
 import Token from "./token";
-import Provider from "./provider";
+import Middleware from "./middleware";
 
 interface Register {
-  register<T>(token: Token<T>, provider: Provider<T>): this;
+  use(...middlewares: Middleware<unknown>[]): this;
 
-  unregister<T>(token: Token<T>, provider: Provider<T>): this;
+  register<T>(token: Token<T>, middleware: Middleware<T>): this;
+
+  unregister<T>(token: Token<T>, middleware: Middleware<T>): this;
   unregister<T>(token: Token<T>): this;
 
-  isRegister<T>(token: Token<T>, provider: Provider<T>): boolean;
+  isRegister<T>(token: Token<T>, middleware: Middleware<T>): boolean;
   isRegister<T>(token: Token<T>): boolean;
 }
 

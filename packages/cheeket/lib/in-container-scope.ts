@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 
-import Provider from "./provider";
+import Middleware from "./middleware";
 import InternalTokens from "./internal-tokens";
 import InternalEvents from "./internal-events";
 import Factory from "./factory";
@@ -8,7 +8,7 @@ import BindStrategy from "./bind-strategy";
 import AsyncLock from "./async-lock";
 import AsyncEventEmitter from "./async-event-emitter";
 
-interface InContainerScope<T> extends Provider<T> {
+interface InContainerScope<T> extends Middleware<T> {
   get size(): number;
 }
 
@@ -16,7 +16,7 @@ function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindSt
   const values = new Map<AsyncEventEmitter, U>();
   const lock = new AsyncLock();
 
-  const provider: Provider<T> = async (context, next) => {
+  const provider: Middleware<T> = async (context, next) => {
     const eventEmitter = await context.resolve(InternalTokens.AsyncEventEmitter);
 
     const founded = values.get(eventEmitter);

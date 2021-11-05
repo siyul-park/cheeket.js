@@ -1,38 +1,38 @@
 import Token from "./token";
-import Provider from "./provider";
-import composeProvider from "./compose-provider";
+import Middleware from "./middleware";
+import compose from "./middleware/compose";
 
-class ProviderStorage {
-  private readonly map = new Map<Token<unknown>, Provider<unknown>[]>();
+class MiddlewareStorage {
+  private readonly map = new Map<Token<unknown>, Middleware<unknown>[]>();
 
-  private readonly cache = new Map<Token<unknown>, Provider<unknown>>();
+  private readonly cache = new Map<Token<unknown>, Middleware<unknown>>();
 
-  get<T>(token: Token<T>): Provider<T> | undefined {
+  get<T>(token: Token<T>): Middleware<T> | undefined {
     const cached = this.cache.get(token);
     if (cached != null) {
       return cached;
     }
 
-    const providers = this.map.get(token) as Provider<T>[] | undefined;
+    const providers = this.map.get(token) as Middleware<T>[] | undefined;
     if (providers == null) {
       return undefined;
     }
 
-    const provider = composeProvider(providers);
-    this.cache.set(token, provider as Provider<unknown>);
+    const provider = compose(providers);
+    this.cache.set(token, provider as Middleware<unknown>);
 
     return provider;
   }
 
-  set<T>(token: Token<T>, provider: Provider<T>): void {
+  set<T>(token: Token<T>, provider: Middleware<T>): void {
     const providers = this.map.get(token) ?? [];
-    providers.push(provider as Provider<unknown>);
+    providers.push(provider as Middleware<unknown>);
 
     this.map.set(token, providers);
     this.cache.delete(token);
   }
 
-  delete<T>(token: Token<T>, provider?: Provider<T>): void {
+  delete<T>(token: Token<T>, provider?: Middleware<T>): void {
     if (provider == null) {
       this.map.delete(token);
       this.cache.delete(token);
@@ -53,7 +53,7 @@ class ProviderStorage {
     }
   }
 
-  has<T>(token: Token<T>, provider?: Provider<T>): boolean {
+  has<T>(token: Token<T>, provider?: Middleware<T>): boolean {
     if (provider == null) {
       return this.map.has(token);
     }
@@ -70,4 +70,4 @@ class ProviderStorage {
   }
 }
 
-export default ProviderStorage;
+export default MiddlewareStorage;

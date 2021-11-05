@@ -1,12 +1,12 @@
-import Provider from "./provider";
-import Context from "./context";
-import Next from "./next";
+import Middleware from "../middleware";
+import Context from "../context";
+import Next from "../next";
 
-function composeProvider<T>(
-  providers: (Provider<T> | undefined | null)[],
+function compose<T>(
+  middlewares: (Middleware<T> | undefined | null)[],
   filter: (context: Context<T>) => boolean = () => true
-): Provider<T> | undefined {
-  const existedProviders = providers.filter((provider) => provider != null) as Provider<T>[];
+): Middleware<T> | undefined {
+  const existedProviders = middlewares.filter((provider) => provider != null) as Middleware<T>[];
 
   if (existedProviders.length === 0) {
     return undefined;
@@ -23,4 +23,4 @@ function composeProvider<T>(
   });
 }
 
-export default composeProvider;
+export default compose;

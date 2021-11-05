@@ -1,11 +1,11 @@
-import ProviderStorage from "../lib/provider-storage";
-import { Provider } from "../lib";
+import MiddlewareStorage from "../lib/middleware-storage";
+import { Middleware } from "../lib";
 
 class Dummy {}
 
-describe("ProviderStorage", () => {
+describe("MiddlewareStorage", () => {
   test("set", async () => {
-    const storage = new ProviderStorage();
+    const storage = new MiddlewareStorage();
 
     storage.set(Dummy, (context) => {
       context.response = new Dummy();
@@ -13,12 +13,12 @@ describe("ProviderStorage", () => {
   });
 
   test("get", async () => {
-    const storage = new ProviderStorage();
+    const storage = new MiddlewareStorage();
 
     let counter = 0;
     const size = 100;
 
-    const provider: Provider<Dummy> = async (context, next) => {
+    const provider: Middleware<Dummy> = async (context, next) => {
       counter++;
       await next();
     };
@@ -49,7 +49,7 @@ describe("ProviderStorage", () => {
   });
 
   test("has", async () => {
-    const storage = new ProviderStorage();
+    const storage = new MiddlewareStorage();
 
     const provider: Provider<Dummy> = async (context, next) => {
       await next();
@@ -61,9 +61,9 @@ describe("ProviderStorage", () => {
   });
 
   test("delete", async () => {
-    const storage = new ProviderStorage();
+    const storage = new MiddlewareStorage();
 
-    const provider: Provider<Dummy> = async (context, next) => {
+    const provider: Middleware<Dummy> = async (context, next) => {
       await next();
     };
     storage.set(Dummy, provider);

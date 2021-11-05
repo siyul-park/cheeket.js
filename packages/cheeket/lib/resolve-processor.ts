@@ -4,10 +4,10 @@ import Resolver from "./resolver";
 import Token from "./token";
 import Context from "./context";
 import ResolveError from "./resolve-error";
-import Provider from "./provider";
+import Middleware from "./middleware";
 
 class ResolveProcessor implements Resolver {
-  constructor(private readonly provider: Provider<unknown>) {}
+  constructor(private readonly provider: Middleware<unknown>) {}
 
   async resolveOrDefault<T, D>(token: Token<T>, other: D, parent?: Context<unknown>): Promise<T | D> {
     try {

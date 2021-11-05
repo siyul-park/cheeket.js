@@ -1,8 +1,8 @@
 import Resolver from "./resolver";
 import Register from "./register";
 import Token from "./token";
-import Provider from "./provider";
-import ProviderStorage from "./provider-storage";
+import Middleware from "./middleware";
+import MiddlewareStorage from "./middleware-storage";
 import ResolveProcessor from "./resolve-processor";
 import AsyncEventEmitter from "./async-event-emitter";
 
@@ -14,14 +14,14 @@ import InternalTokens from "./internal-tokens";
 import InternalEvents from "./internal-events";
 
 class Container implements Resolver, Register {
-  private readonly storage: ProviderStorage;
+  private readonly storage: MiddlewareStorage;
 
   private readonly eventEmitter: AsyncEventEmitter;
 
   private readonly resolveProcessor: ResolveProcessor;
 
   constructor(parent?: Container) {
-    this.storage = new ProviderStorage();
+    this.storage = new MiddlewareStorage();
     this.eventEmitter = new AsyncEventEmitter();
 
     this.eventEmitter.setMaxListeners(Infinity);
@@ -30,32 +30,32 @@ class Container implements Resolver, Register {
       context.response = this.eventEmitter;
       await next();
     });
-    this.storage.set(InternalTokens.Middleware, chain(parent?.resolveProcessor));
-    this.storage.set(InternalTokens.Middleware, route(this.storage));
+    this.storage.set(InternalTokens.PipeLine, chain(parent?.resolveProcessor));
+    this.storage.set(InternalTokens.PipeLine, route(this.storage));
 
-    this.resolveProcessor = new ResolveProcessor(proxy(this.storage, InternalTokens.Middleware));
+    this.resolveProcessor = new ResolveProcessor(proxy(this.storage, InternalTokens.PipeLine));
   }
 
-  use(...middlewares: Provider<unknown>[]): this {
+  use(...middlewares: Middleware<unknown>[]): this {
     middlewares.forEach((middleware) => {
-      this.storage.set(InternalTokens.Middleware, middleware);
+      this.storage.set(InternalTokens.PipeLine, middleware);
     });
     return this;
   }
 
-  register<T>(token: Token<T>, provider: Provider<T>): this {
+  register<T>(token: Token<T>, provider: Middleware<T>): this {
     if (!this.isRegister(token, provider)) {
       this.storage.set(token, provider);
     }
     return this;
   }
 
-  unregister<T>(token: Token<T>, provider?: Provider<T>): this {
+  unregister<T>(token: Token<T>, provider?: Middleware<T>): this {
     this.storage.delete(token, provider);
     return this;
   }
 
-  isRegister<T>(token: Token<T>, provider?: Provider<T>): boolean {
+  isRegister<T>(token: Token<T>, provider?: Middleware<T>): boolean {
     return this.storage.has(token, provider);
   }
 

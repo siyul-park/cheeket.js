@@ -1,4 +1,4 @@
-export { default as Provider } from "./provider";
+export { default as Middleware } from "./middleware";
 export { default as Resolver } from "./resolver";
 export { default as Context } from "./context";
 export { default as Register } from "./register";

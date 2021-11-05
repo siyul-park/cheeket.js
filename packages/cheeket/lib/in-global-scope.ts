@@ -1,11 +1,11 @@
-import Provider from "./provider";
+import Middleware from "./middleware";
 import InternalTokens from "./internal-tokens";
 import InternalEvents from "./internal-events";
 import Factory from "./factory";
 import BindStrategy from "./bind-strategy";
 import AsyncLock from "./async-lock";
 
-type InGlobalScope<T> = Provider<T>;
+type InGlobalScope<T> = Middleware<T>;
 
 const lock = new AsyncLock();
 
