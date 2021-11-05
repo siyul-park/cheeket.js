@@ -8,7 +8,7 @@ abstract class NestedModule implements Module {
 
   configureLocal(container: Container): void {}
 
-  install(module: Token<Module>): this {
+  protected install(module: Token<Module>): this {
     this.children.push(module);
     return this;
   }
