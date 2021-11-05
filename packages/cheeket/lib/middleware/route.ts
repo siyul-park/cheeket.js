@@ -1,7 +1,7 @@
-import Provider from "./provider";
-import ProviderStorage from "./provider-storage";
+import Provider from "../provider";
+import ProviderStorage from "../provider-storage";
 
-function routeProvider(storage: ProviderStorage): Provider<unknown> {
+function route(storage: ProviderStorage): Provider<unknown> {
   return async (context, next) => {
     await next();
 
@@ -12,4 +12,4 @@ function routeProvider(storage: ProviderStorage): Provider<unknown> {
   };
 }
 
-export default routeProvider;
+export default route;
