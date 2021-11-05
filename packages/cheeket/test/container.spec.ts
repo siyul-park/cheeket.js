@@ -86,12 +86,18 @@ describe("Container", () => {
   test("use", async () => {
     const container = new Container();
 
-    container.use((context) => {
+    container.use(async (context, next) => {
       context.response = new Dummy1();
-
-      expect(context.request).toEqual(Dummy1);
+      await next();
     });
 
-    expect(await container.resolve(Dummy1)).toBeTruthy();
+    expect(await container.resolve(Dummy1)).toBeInstanceOf(Dummy1);
+
+    container.use(async (context, next) => {
+      context.response = new Dummy2();
+      await next();
+    });
+
+    expect(await container.resolve(Dummy2)).toBeInstanceOf(Dummy2);
   });
 });

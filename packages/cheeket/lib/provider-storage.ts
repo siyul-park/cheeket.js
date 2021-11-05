@@ -19,7 +19,7 @@ class ProviderStorage {
       return undefined;
     }
 
-    const provider = providers.reduce((pre, cur) => {
+    const provider = providers.reverse().reduce((pre, cur) => {
       return async (context: Context<T>, next: Next) => {
         await cur(context, async () => {
           await pre(context, next);
