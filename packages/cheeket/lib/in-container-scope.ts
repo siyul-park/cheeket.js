@@ -30,7 +30,7 @@ function inContainerScope<T, U = T>(
       return;
     }
 
-    await lock.acquire(eventEmitter, async () => {
+    const created = await lock.acquire(eventEmitter, async () => {
       const founded = values.get(eventEmitter);
       if (founded !== undefined) {
         await bindStrategy(context, founded, next);
@@ -40,17 +40,21 @@ function inContainerScope<T, U = T>(
       const value = await factory(context);
       values.set(eventEmitter, value);
 
+      await bindStrategy(context, value, next);
+
+      return value;
+    });
+
+    if (created !== undefined) {
       const clearListener = () => {
         eventEmitter.removeListener(InternalEvents.Clear, clearListener);
         values.delete(eventEmitter);
       };
       eventEmitter.addListener(InternalEvents.Clear, clearListener);
 
-      eventEmitter.emit(InternalEvents.Create, value);
-      await eventEmitter.emitAsync(InternalEvents.CreateAsync, value);
-
-      await bindStrategy(context, value, next);
-    });
+      eventEmitter.emit(InternalEvents.Create, created);
+      await eventEmitter.emitAsync(InternalEvents.CreateAsync, created);
+    }
   };
 
   return Object.defineProperty(provider, "size", {
