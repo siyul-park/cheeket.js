@@ -1,12 +1,6 @@
 /* eslint-disable no-plusplus,@typescript-eslint/no-loop-func,max-classes-per-file */
 
-import {
-  bindArray,
-  bindObject,
-  Container,
-  inGlobalScope,
-  Token,
-} from "../lib";
+import { bindArray, bindObject, Container, inGlobalScope, Token } from "../lib";
 
 class Dummy {}
 const DummyArray = Symbol("Dummy[]") as Token<Dummy[]>;
