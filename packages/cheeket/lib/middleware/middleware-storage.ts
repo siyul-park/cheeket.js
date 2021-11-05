@@ -9,7 +9,7 @@ class MiddlewareStorage {
 
   get<T>(token: Token<T>): Middleware<T> | undefined {
     const cached = this.cache.get(token);
-    if (cached != null) {
+    if (cached !== undefined) {
       return cached;
     }
 
