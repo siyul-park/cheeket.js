@@ -25,7 +25,6 @@ abstract class NestedModule implements Module {
   }
 
   protected register<T extends Module>(module: Token<T>, middleware: Middleware<T>): this {
-    this.dependency(module);
     this.children.push([module, middleware as Middleware<Module>]);
     return this;
   }
