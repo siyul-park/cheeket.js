@@ -62,6 +62,26 @@ class Container implements Resolver, Register {
     return this.resolveProcessor.resolve(token);
   }
 
+  addListener(eventName: string | symbol, listener: (...args: unknown[]) => void): this {
+    this.eventEmitter.addListener(eventName, listener);
+    return this;
+  }
+
+  once(eventName: string | symbol, listener: (...args: unknown[]) => void): this {
+    this.eventEmitter.once(eventName, listener);
+    return this;
+  }
+
+  removeListener(eventName: string | symbol, listener: (...args: unknown[]) => void): this {
+    this.eventEmitter.removeListener(eventName, listener);
+    return this;
+  }
+
+  off(eventName: string | symbol, listener: (...args: unknown[]) => void): this {
+    this.eventEmitter.off(eventName, listener);
+    return this;
+  }
+
   clear(): void {
     const internalTokens = new Set<Token<unknown>>(Object.values(InternalTokens));
 
