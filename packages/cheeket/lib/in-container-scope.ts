@@ -33,6 +33,8 @@ function inContainerScope<T, U = T>(
     };
     eventEmitter.addListener(InternalEvents.Clear, clearListener);
 
+    eventEmitter.emit(InternalEvents.Create, value);
+
     await bindStrategy(context, value, next);
   };
 
