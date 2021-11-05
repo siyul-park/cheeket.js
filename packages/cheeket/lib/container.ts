@@ -8,21 +8,19 @@ import AsyncEventEmitter from "./async-event-emitter";
 import InternalTokens from "./internal-tokens";
 import InternalEvents from "./internal-events";
 
-class Container implements Resolver, Register {
+class Container extends AsyncEventEmitter implements Resolver, Register {
   private readonly storage: MiddlewareStorage;
-
-  private readonly eventEmitter: AsyncEventEmitter;
 
   private readonly resolveProcessor: ResolveProcessor;
 
   constructor(parent?: Container) {
-    this.storage = new MiddlewareStorage();
-    this.eventEmitter = new AsyncEventEmitter();
+    super();
+    this.setMaxListeners(Infinity);
 
-    this.eventEmitter.setMaxListeners(Infinity);
+    this.storage = new MiddlewareStorage();
 
     this.storage.set(InternalTokens.AsyncEventEmitter, async (context, next) => {
-      context.response = this.eventEmitter;
+      context.response = this;
       await next();
     });
     this.storage.set(InternalTokens.PipeLine, chain(parent?.resolveProcessor));
@@ -62,26 +60,6 @@ class Container implements Resolver, Register {
     return this.resolveProcessor.resolve(token);
   }
 
-  addListener(eventName: string | symbol, listener: (...args: unknown[]) => void): this {
-    this.eventEmitter.addListener(eventName, listener);
-    return this;
-  }
-
-  once(eventName: string | symbol, listener: (...args: unknown[]) => void): this {
-    this.eventEmitter.once(eventName, listener);
-    return this;
-  }
-
-  removeListener(eventName: string | symbol, listener: (...args: unknown[]) => void): this {
-    this.eventEmitter.removeListener(eventName, listener);
-    return this;
-  }
-
-  off(eventName: string | symbol, listener: (...args: unknown[]) => void): this {
-    this.eventEmitter.off(eventName, listener);
-    return this;
-  }
-
   clear(): void {
     const internalTokens = new Set<Token<unknown>>(Object.values(InternalTokens));
 
@@ -91,7 +69,7 @@ class Container implements Resolver, Register {
       }
     });
 
-    this.eventEmitter.emit(InternalEvents.Clear);
+    this.emit(InternalEvents.Clear);
   }
 
   createChild(): Container {
