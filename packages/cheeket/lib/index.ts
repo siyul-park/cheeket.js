@@ -3,6 +3,9 @@ export { default as Resolver } from "./resolver";
 export { default as Context } from "./context";
 export { default as Register } from "./register";
 export { default as Container } from "./container";
+export { default as Token } from "./token";
+export { default as Type } from "./type";
+export { default as Abstract } from "./abstract";
 
 export { default as Factory } from "./factory";
 export { default as BindStrategy } from "./bind-strategy";
