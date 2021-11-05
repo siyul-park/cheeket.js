@@ -46,6 +46,7 @@ describe("inContainerScope", () => {
   test("bindObject: child", async () => {
     const parent = new Container();
     const child = parent.createChild();
+
     const provider = inContainerScope(() => new Dummy(), bindObject());
 
     parent.register(Dummy, provider);

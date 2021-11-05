@@ -36,6 +36,7 @@ describe("inRequestScope", () => {
   test("bindObject: child", async () => {
     const parent = new Container();
     const child = parent.createChild();
+
     const provider = inRequestScope(() => new Dummy(), bindObject());
 
     parent.register(Dummy, provider);
