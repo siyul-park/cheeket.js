@@ -5,8 +5,8 @@ function route(storage: ProviderStorage): Provider<unknown> {
   return async (context, next) => {
     await next();
 
-    const provider = storage.get(context.request);
     if (context.response === undefined) {
+      const provider = storage.get(context.request);
       await provider?.(context, async () => {});
     }
   };
