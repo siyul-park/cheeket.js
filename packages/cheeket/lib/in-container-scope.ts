@@ -50,11 +50,11 @@ function inContainerScope<T, U = T>(
     });
   };
 
-  return Object.assign(provider, {
-    get size(): number {
+  return Object.defineProperty(provider, "size", {
+    get(): number {
       return values.size;
     },
-  });
+  }) as InContainerScope<T>;
 }
 
 export { InContainerScope };
