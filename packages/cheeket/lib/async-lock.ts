@@ -15,7 +15,11 @@ class AsyncLock {
           reject(e);
         } finally {
           jobs.dequeue(job);
-          this.exec(key);
+          if (jobs.size === 0) {
+            this.queues.delete(key);
+          } else {
+            this.exec(key);
+          }
         }
       };
 
