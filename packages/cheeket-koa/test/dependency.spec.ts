@@ -12,7 +12,7 @@ describe("dependency", () => {
     const ctx = createMockContext() as Context & ContainerContext;
     await dependencyMiddleware(ctx, async () => {
       Object.values(InternalTokens).forEach((token: Token<unknown>) => {
-        expect(ctx.containers.local.isRegister(token)).toBeTruthy();
+        expect(ctx.isRegister(token)).toBeTruthy();
       });
     });
 
