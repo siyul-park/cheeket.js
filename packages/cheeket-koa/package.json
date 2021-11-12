@@ -17,13 +17,13 @@
   },
   "devDependencies": {
     "@shopify/jest-koa-mocks": "^3.0.6",
-    "@types/accepts": "^1.3.5",
-    "@types/cookies": "^0.7.7",
     "@types/koa": "^2.13.4",
     "cheeket": "^4.0.0-alpha.0",
     "koa": "^2.13.4"
   },
   "peerDependencies": {
+    "@types/accepts": "^1.3.5",
+    "@types/cookies": "^0.7.7",
     "accepts": "^1.3.7",
     "cheeket": "^4.0.0-alpha.0",
     "cookies": "^0.8.0",
