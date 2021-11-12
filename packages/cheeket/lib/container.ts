@@ -54,10 +54,12 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
   }
 
   isRegister<T>(token: Token<T>, middleware?: Middleware<T>): boolean {
-    if (this.parent?.isRegister(token, middleware) ?? false) {
-      return false;
+    const registered = this.storage.has(token, middleware);
+    if (registered) {
+      return registered;
     }
-    return this.storage.has(token, middleware);
+
+    return this.parent?.isRegister(token, middleware) ?? false;
   }
 
   resolveOrDefault<T, D>(token: Token<T>, other: D): Promise<T | D> {
