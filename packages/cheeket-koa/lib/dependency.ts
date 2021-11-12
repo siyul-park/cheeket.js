@@ -7,7 +7,7 @@ import ContainerContext from "./container-context";
 import InternalTokens from "./internal-tokens";
 import Token from "cheeket/dist/token";
 
-function container<StateT = DefaultState, ContextT = DefaultContext, ResponseBodyT = any>(
+function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBodyT = any>(
   global: Container = new Container()
 ): Middleware<StateT, ContextT & ContainerContext, ResponseBodyT> {
   function bind<T>(value: T): CMiddleware<T> {
@@ -61,4 +61,4 @@ function container<StateT = DefaultState, ContextT = DefaultContext, ResponseBod
   };
 }
 
-export default container;
+export default dependency;
