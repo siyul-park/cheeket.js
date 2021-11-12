@@ -1,10 +1,6 @@
-import Context from "../context/context";
-import DefaultState from "../context/default-state";
-import Next from "./next";
+import Context from "../context";
+import Next from "../next";
 
-type Middleware<T, State = DefaultState> = (
-  context: Context<T, State>,
-  next: Next
-) => Promise<void>;
+type Middleware<T> = (context: Context<T>, next: Next) => Promise<void> | void;
 
 export default Middleware;
