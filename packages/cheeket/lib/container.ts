@@ -13,7 +13,7 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
 
   private readonly resolveProcessor: ResolveProcessor;
 
-  constructor(parent?: Container) {
+  constructor(private readonly parent?: Container) {
     super();
 
     this.storage = new MiddlewareStorage();
@@ -50,6 +50,9 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
   }
 
   isRegister<T>(token: Token<T>, middleware?: Middleware<T>): boolean {
+    if (this.parent?.isRegister(token, middleware) ?? false) {
+      return false;
+    }
     return this.storage.has(token, middleware);
   }
 

@@ -1,10 +1,11 @@
-/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-shadow,@typescript-eslint/no-explicit-any */
 
 import Koa, { Context, DefaultContext, DefaultState, Middleware } from "koa";
 import { Container, Middleware as CMiddleware } from "cheeket";
 
 import ContainerContext from "./container-context";
 import InternalTokens from "./internal-tokens";
+import Token from "cheeket/dist/token";
 
 function container<StateT = DefaultState, ContextT = DefaultContext, ResponseBodyT = any>(
   global: Container = new Container()
@@ -35,8 +36,22 @@ function container<StateT = DefaultState, ContextT = DefaultContext, ResponseBod
       local,
     };
 
-    context.resolve = (token) => local.resolve(token);
-    context.resolveOrDefault = (token, other) => local.resolveOrDefault(token, other);
+    context.resolve = (token) => {
+      return context.containers.local.resolve(token);
+    };
+    context.resolveOrDefault = (token, other) => {
+      return context.containers.local.resolveOrDefault(token, other);
+    };
+
+    context.register = (token, middleware) => {
+      return context.containers.local.register(token, middleware);
+    };
+    context.unregister = <T>(token: Token<T>, middleware?: CMiddleware<T>) => {
+      return context.containers.local.unregister(token, middleware);
+    };
+    context.isRegister = <T>(token: Token<T>, middleware?: CMiddleware<T>) => {
+      return context.containers.local.isRegister(token, middleware);
+    };
 
     try {
       await next();

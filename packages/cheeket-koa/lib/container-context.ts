@@ -1,10 +1,11 @@
-import { Container, Resolver } from "cheeket";
+import { Container, Register, Resolver } from "cheeket";
 
 type ContainerContext = {
   containers: {
     global: Container;
     local: Container;
   };
-} & Resolver;
+} & Resolver &
+  Register;
 
 export default ContainerContext;
