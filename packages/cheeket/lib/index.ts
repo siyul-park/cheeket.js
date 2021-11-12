@@ -13,6 +13,8 @@ export { default as InternalTokens } from "./internal-tokens";
 export { default as InternalEvents } from "./internal-events";
 
 export { default as AsyncEventEmitter } from "./async-event-emitter";
+export { default as AsyncLock } from "./async-lock";
+export { default as Queue } from "./queue";
 
 export { default as BindStrategy, bindArray, bindObject } from "./bind-strategy";
 export * from "./scope";

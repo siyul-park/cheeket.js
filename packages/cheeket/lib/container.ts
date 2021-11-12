@@ -13,12 +13,10 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
 
   private readonly resolveProcessor: ResolveProcessor;
 
-  constructor(parent?: Container) {
+  constructor(private readonly parent?: Container) {
     super();
 
     this.storage = new MiddlewareStorage();
-
-    this.setMaxListeners(Infinity);
 
     this.storage.set(InternalTokens.AsyncEventEmitter, async (context, next) => {
       context.response = this;
@@ -28,6 +26,12 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
     this.storage.set(InternalTokens.PipeLine, route(this.storage));
 
     this.resolveProcessor = new ResolveProcessor(proxy(this.storage, InternalTokens.PipeLine));
+
+    this.setMaxListeners(Infinity);
+
+    parent?.once(InternalEvents.Clear, () => {
+      this.clear();
+    });
   }
 
   use(...middlewares: Middleware<unknown>[]): this {
@@ -50,7 +54,12 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
   }
 
   isRegister<T>(token: Token<T>, middleware?: Middleware<T>): boolean {
-    return this.storage.has(token, middleware);
+    const registered = this.storage.has(token, middleware);
+    if (registered) {
+      return registered;
+    }
+
+    return this.parent?.isRegister(token, middleware) ?? false;
   }
 
   resolveOrDefault<T, D>(token: Token<T>, other: D): Promise<T | D> {
