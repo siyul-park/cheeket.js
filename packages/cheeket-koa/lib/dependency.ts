@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-shadow,@typescript-eslint/no-explicit-any */
 
 import Koa, { Context, DefaultContext, DefaultState, Middleware } from "koa";
-import { Container, Middleware as CMiddleware } from "cheeket";
+import { Container, Middleware as CMiddleware, Token } from "cheeket";
 
 import ContainerContext from "./container-context";
 import InternalTokens from "./internal-tokens";
-import Token from "cheeket/dist/token";
 
 function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBodyT = any>(
   global: Container = new Container()
