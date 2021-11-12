@@ -18,8 +18,5 @@ describe("dependency", () => {
 
     expect(ctx.containers.global).toEqual(container);
     expect(ctx.containers.local).toBeInstanceOf(Container);
-    Object.values(InternalTokens).forEach((token: Token<unknown>) => {
-      expect(ctx.containers.local.isRegister(token)).toBeFalsy();
-    });
   });
 });

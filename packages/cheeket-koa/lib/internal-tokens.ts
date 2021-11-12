@@ -1,4 +1,4 @@
-import { Token } from "cheeket";
+import { Token, InternalTokens as Parent } from "cheeket";
 import Application from "koa";
 import Koa from "koa";
 import { IncomingMessage, ServerResponse } from "http";
@@ -16,6 +16,7 @@ const InternalTokens = Object.freeze({
   Cookies: Symbol.for("Cookies") as Token<Cookies>,
   Accepts: Symbol.for("Accepts") as Token<accepts.Accepts>,
   Respond: Symbol.for("Respond") as Token<boolean>,
+  ...Parent,
 });
 
 export default InternalTokens;
