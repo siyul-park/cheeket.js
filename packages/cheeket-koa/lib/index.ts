@@ -1,4 +1,5 @@
 export { default as ContainerContext } from "./container-context";
+export { default as IMiddleware } from "./middleware";
 
 export { default as dependency } from "./dependency";
 
