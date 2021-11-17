@@ -1,0 +1,34 @@
+{
+  "name": "cheeket-koa-module",
+  "version": "0.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "gulp",
+    "build:watch": "gulp watch",
+    "clean": "rm -rf ./dist",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@shopify/jest-koa-mocks": "^3.0.6",
+    "@types/koa": "^2.13.4",
+    "cheeket": "^4.0.0-alpha.0",
+    "cheeket-koa": "^1.0.0-alpha.4",
+    "koa": "^2.13.4"
+  },
+  "peerDependencies": {
+    "@types/accepts": "^1.3.5",
+    "@types/cookies": "^0.7.7",
+    "accepts": "^1.3.7",
+    "cheeket": "^4.0.0-alpha.0",
+    "cheeket-koa": "^1.0.0-alpha.5",
+    "cookies": "^0.8.0",
+    "koa": "^2.13.1"
+  }
+}
