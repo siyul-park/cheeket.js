@@ -13,7 +13,7 @@ const InternalTokens = Object.freeze({
   Req: Symbol.for("IncomingMessage") as Token<IncomingMessage>,
   Res: Symbol.for("ServerResponse") as Token<ServerResponse>,
   OriginalUrl: Symbol.for("OriginalUrl") as Token<string>,
-  Cookies: Symbol.for("Cookies") as Token<Cookies>,
+  Cookies: Symbol.for("Cookies") as Token<Cookies.ICookies>,
   Accepts: Symbol.for("Accepts") as Token<accepts.Accepts>,
   Respond: Symbol.for("Respond") as Token<boolean>,
   ...Parent,

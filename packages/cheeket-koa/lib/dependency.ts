@@ -5,6 +5,7 @@ import { Container, Middleware as CMiddleware, Token } from "cheeket";
 
 import ContainerContext from "./container-context";
 import InternalTokens from "./internal-tokens";
+import Cookies from "cookies";
 
 function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBodyT = any>(
   global: Container = new Container()
@@ -26,7 +27,7 @@ function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBo
     local.register(InternalTokens.Req, bind(context.req));
     local.register(InternalTokens.Res, bind(context.res));
     local.register(InternalTokens.OriginalUrl, bind(context.originalUrl));
-    local.register(InternalTokens.Cookies, bind(context.cookies));
+    local.register(InternalTokens.Cookies, bind<Cookies.ICookies>(context.cookies));
     local.register(InternalTokens.Accepts, bind(context.accept));
     local.register(InternalTokens.Respond, bind(context.respond));
 
