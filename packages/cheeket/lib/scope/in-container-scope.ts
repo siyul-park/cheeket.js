@@ -45,8 +45,8 @@ function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindSt
 
       await bindStrategy.bind(context, value);
 
-      eventEmitter.emit(InternalEvents.Create, value);
-      await eventEmitter.emitAsync(InternalEvents.CreateAsync, value);
+      eventEmitter.emit(InternalEvents.Create, context);
+      await eventEmitter.emitAsync(InternalEvents.CreateAsync, context);
     });
 
     await bindStrategy.runNext(context, next);
