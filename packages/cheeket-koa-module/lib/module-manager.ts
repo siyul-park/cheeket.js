@@ -1,4 +1,5 @@
 import { Container } from "cheeket";
+
 import Module from "./module";
 
 class ModuleManager implements Module {
