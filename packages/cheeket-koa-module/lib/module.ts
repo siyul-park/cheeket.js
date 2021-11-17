@@ -1,7 +1,8 @@
-import { Container } from "cheeket";
+import { DefaultContext, DefaultState, Middleware } from "koa";
+import { ContainerContext } from "cheeket-koa";
 
-interface Module {
-  configure(container: Container): void;
+interface Module<ContextT = DefaultContext> {
+  modules(): Middleware<DefaultState, ContextT & ContainerContext>;
 }
 
 export default Module;
