@@ -1,8 +1,9 @@
 import { DefaultContext, DefaultState, Middleware } from "koa";
+import compose from "koa-compose";
 import { ContainerContext } from "cheeket-koa";
 import { Container, InternalEvents } from "cheeket";
+
 import Module from "./module";
-import compose from "koa-compose";
 
 class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
   private readonly globalContainers = new Set<Container>();
