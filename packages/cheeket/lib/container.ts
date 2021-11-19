@@ -29,8 +29,10 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
 
     this.setMaxListeners(Infinity);
 
-    parent?.once(InternalEvents.Clear, () => {
-      this.clear();
+    parent?.once(InternalEvents.Clear, (cleared: unknown) => {
+      if (cleared === parent) {
+        this.clear();
+      }
     });
   }
 
@@ -71,7 +73,7 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
   }
 
   clear(): void {
-    this.emit(InternalEvents.Clear);
+    this.emit(InternalEvents.Clear, this);
 
     const internalTokens = new Set<Token<unknown>>(Object.values(InternalTokens));
 

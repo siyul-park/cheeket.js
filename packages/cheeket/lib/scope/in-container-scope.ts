@@ -40,9 +40,12 @@ function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindSt
       const value = await factory(context);
       values.set(eventEmitter, value);
 
-      const clearListener = () => {
-        eventEmitter.removeListener(InternalEvents.Clear, clearListener);
-        values.delete(eventEmitter);
+      const clearListener = (cleared: unknown) => {
+        if (cleared === eventEmitter) {
+          eventEmitter.emit(InternalEvents.Clear, value);
+          eventEmitter.removeListener(InternalEvents.Clear, clearListener);
+          values.delete(eventEmitter);
+        }
       };
       eventEmitter.addListener(InternalEvents.Clear, clearListener);
 
