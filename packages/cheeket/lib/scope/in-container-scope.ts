@@ -63,7 +63,11 @@ function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindSt
       return values.get(eventEmitter);
     },
     delete(eventEmitter: AsyncEventEmitter): void {
-      values.delete(eventEmitter);
+      const value = values.get(eventEmitter);
+      if (value !== undefined) {
+        eventEmitter.emit(InternalEvents.Clear, values.get(eventEmitter));
+        values.delete(eventEmitter);
+      }
     },
   });
 
