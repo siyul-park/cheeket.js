@@ -15,10 +15,6 @@ class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
     return this;
   }
 
-  protected configureGlobal(container: Container): void {}
-
-  protected configureLocal(container: Container): void {}
-
   modules(): Middleware<DefaultState, ContextT & ContainerContext> {
     return compose([
       async (context, next) => {
@@ -37,6 +33,10 @@ class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
       ...this.middlewares,
     ]);
   }
+
+  protected configureGlobal(container: Container): void {}
+
+  protected configureLocal(container: Container): void {}
 }
 
 export default SimpleModule;
