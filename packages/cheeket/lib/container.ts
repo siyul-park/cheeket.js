@@ -29,7 +29,7 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
 
     this.setMaxListeners(Infinity);
 
-    parent?.once(InternalEvents.Clear, (cleared: unknown) => {
+    parent?.on(InternalEvents.Clear, (cleared: unknown) => {
       if (cleared === parent) {
         this.clear();
       }
