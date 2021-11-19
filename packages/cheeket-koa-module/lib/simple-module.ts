@@ -4,7 +4,7 @@ import { Container } from "cheeket";
 import Module from "./module";
 import compose from "koa-compose";
 
-abstract class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
+class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
   private readonly globalContainers = new Set<Container>();
 
   private readonly middlewares: Middleware<DefaultState, ContextT>[] = [];
@@ -14,9 +14,9 @@ abstract class SimpleModule<ContextT = DefaultContext> implements Module<Context
     return this;
   }
 
-  protected abstract configureGlobal(container: Container): void;
+  protected configureGlobal(container: Container): void {}
 
-  protected abstract configureLocal(container: Container): void;
+  protected configureLocal(container: Container): void {}
 
   modules(): Middleware<DefaultState, ContextT & ContainerContext> {
     return compose([
