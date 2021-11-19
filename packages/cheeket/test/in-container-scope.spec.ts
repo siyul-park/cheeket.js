@@ -4,6 +4,37 @@ class Dummy {}
 const DummyArray = Symbol("Dummy[]") as Token<Dummy[]>;
 
 describe("inContainerScope", () => {
+  test("delete", async () => {
+    const container1 = new Container();
+    const container2 = new Container();
+
+    const middleware = inContainerScope(() => new Dummy(), bindObject());
+
+    container1.register(Dummy, middleware);
+    container2.register(Dummy, middleware);
+
+    expect(middleware.size).toEqual(0);
+
+    const dummy1 = await container1.resolve(Dummy);
+    const dummy2 = await container1.resolve(Dummy);
+
+    expect(dummy1).toBe(dummy2);
+    expect(middleware.size).toEqual(1);
+
+    const dummy3 = await container2.resolve(Dummy);
+    const dummy4 = await container2.resolve(Dummy);
+
+    expect(dummy3).toBe(dummy4);
+    expect(dummy1).not.toBe(dummy3);
+    expect(middleware.size).toEqual(2);
+
+    middleware.delete(container1);
+    expect(middleware.size).toEqual(1);
+
+    middleware.delete(container2);
+    expect(middleware.size).toEqual(0);
+  });
+
   test("bindObject", async () => {
     const container1 = new Container();
     const container2 = new Container();

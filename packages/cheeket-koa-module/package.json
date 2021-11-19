@@ -30,8 +30,8 @@
     "@types/cookies": "^0.7.7",
     "@types/koa-compose": "^3.2.5",
     "accepts": "^1.3.7",
-    "cheeket": "^4.0.0-alpha.3",
-    "cheeket-koa": "^1.0.0-alpha.8",
+    "cheeket": "^4.0.0-alpha.4",
+    "cheeket-koa": "^1.0.0-alpha.9",
     "cookies": "^0.8.0",
     "koa": "^2.13.1"
   }
