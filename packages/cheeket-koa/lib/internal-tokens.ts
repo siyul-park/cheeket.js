@@ -6,16 +6,16 @@ import * as Cookies from "cookies";
 import * as accepts from "accepts";
 
 const InternalTokens = Object.freeze({
-  Application: Symbol.for("Application") as Token<Application>,
-  Context: Symbol.for("Application.Context") as Token<Koa.Context>,
-  Request: Symbol.for("Application.Request") as Token<Koa.Request>,
-  Response: Symbol.for("Application.Response") as Token<Koa.Response>,
-  Req: Symbol.for("IncomingMessage") as Token<IncomingMessage>,
-  Res: Symbol.for("ServerResponse") as Token<ServerResponse>,
-  OriginalUrl: Symbol.for("OriginalUrl") as Token<string>,
-  Cookies: Symbol.for("Cookies") as Token<Cookies.ICookies>,
-  Accepts: Symbol.for("Accepts") as Token<accepts.Accepts>,
-  Respond: Symbol.for("Respond") as Token<boolean>,
+  Application: Symbol("Application") as Token<Application>,
+  Context: Symbol("Application.Context") as Token<Koa.Context>,
+  Request: Symbol("Application.Request") as Token<Koa.Request>,
+  Response: Symbol("Application.Response") as Token<Koa.Response>,
+  Req: Symbol("IncomingMessage") as Token<IncomingMessage>,
+  Res: Symbol("ServerResponse") as Token<ServerResponse>,
+  OriginalUrl: Symbol("OriginalUrl") as Token<string>,
+  Cookies: Symbol("Cookies") as Token<Cookies.ICookies>,
+  Accepts: Symbol("Accepts") as Token<accepts.Accepts>,
+  Respond: Symbol("Respond") as Token<boolean>,
   ...Parent,
 });
 
