@@ -8,12 +8,14 @@ import AsyncEventEmitter from "../async-event-emitter";
 import Middleware from "../middleware";
 import BindStrategy from "../bind-strategy";
 
-interface InContainerScope<T> extends Middleware<T> {
+interface InContainerScope<T, U> extends Middleware<T> {
+  get(eventEmitter: AsyncEventEmitter): U | undefined;
   delete(eventEmitter: AsyncEventEmitter): void;
+
   get size(): number;
 }
 
-function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindStrategy<T, U>): InContainerScope<T> {
+function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindStrategy<T, U>): InContainerScope<T, U> {
   const values = new Map<AsyncEventEmitter, U>();
   const lock = new AsyncLock();
 
@@ -54,6 +56,9 @@ function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindSt
   };
 
   Object.assign(middleware, {
+    get(eventEmitter: AsyncEventEmitter): U | undefined {
+      return values.get(eventEmitter);
+    },
     delete(eventEmitter: AsyncEventEmitter): void {
       values.delete(eventEmitter);
     },
@@ -63,7 +68,7 @@ function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindSt
     get(): number {
       return values.size;
     },
-  }) as InContainerScope<T>;
+  }) as InContainerScope<T, U>;
 }
 
 export { InContainerScope };
