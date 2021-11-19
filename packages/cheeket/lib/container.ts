@@ -71,6 +71,8 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
   }
 
   clear(): void {
+    this.emit(InternalEvents.Clear);
+
     const internalTokens = new Set<Token<unknown>>(Object.values(InternalTokens));
 
     this.storage.keys().forEach((key) => {
@@ -78,8 +80,6 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
         this.storage.delete(key);
       }
     });
-
-    this.emit(InternalEvents.Clear);
   }
 
   createChild(): Container {
