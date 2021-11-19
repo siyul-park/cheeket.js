@@ -1,6 +1,6 @@
 import { DefaultContext, DefaultState, Middleware } from "koa";
 import { ContainerContext } from "cheeket-koa";
-import { Container } from "cheeket";
+import { Container, InternalEvents } from "cheeket";
 import Module from "./module";
 import compose from "koa-compose";
 
@@ -23,6 +23,9 @@ class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
       async (context, next) => {
         if (!this.globalContainers.has(context.containers.global)) {
           this.globalContainers.add(context.containers.global);
+          context.containers.global.on(InternalEvents.Clear, () => {
+            this.globalContainers.delete(context.containers.global);
+          });
           this.configureGlobal(context.containers.global);
         }
 
