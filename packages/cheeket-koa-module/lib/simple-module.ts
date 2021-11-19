@@ -7,9 +7,9 @@ import compose from "koa-compose";
 class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
   private readonly globalContainers = new Set<Container>();
 
-  private readonly middlewares: Middleware<DefaultState, ContextT>[] = [];
+  private readonly middlewares: Middleware<DefaultState, ContextT & ContainerContext>[] = [];
 
-  use(...middleware: Middleware<DefaultState, ContextT>[]): this {
+  use(...middleware: Middleware<DefaultState, ContextT & ContainerContext>[]): this {
     this.middlewares.push(...middleware);
     return this;
   }
