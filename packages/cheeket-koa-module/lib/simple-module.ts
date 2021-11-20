@@ -20,9 +20,11 @@ class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
       async (context, next) => {
         if (!this.globalContainers.has(context.containers.global)) {
           this.globalContainers.add(context.containers.global);
-          context.containers.global.on(InternalEvents.Clear, () => {
+          const listener = () => {
             this.globalContainers.delete(context.containers.global);
-          });
+            context.containers.global.removeListener(InternalEvents.Clear, listener);
+          };
+          context.containers.global.on(InternalEvents.Clear, listener);
           this.configureGlobal(context.containers.global);
         }
 
