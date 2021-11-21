@@ -12,7 +12,7 @@ interface InContainerScope<T, U> extends Middleware<T> {
   get(eventEmitter: AsyncEventEmitter): U | undefined;
   delete(eventEmitter: AsyncEventEmitter): void;
 
-  get size(): number;
+  readonly size: number;
 }
 
 function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindStrategy<T, U>): InContainerScope<T, U> {
