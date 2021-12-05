@@ -55,6 +55,13 @@ class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
     }
   }
 
+  isInstalled(container: Container): boolean {
+    if (this.globalContainers.has(container)) {
+      return true;
+    }
+    return this.localContainers.has(container);
+  }
+
   protected configureGlobal(container: Container): void {}
 
   protected configureLocal(container: Container): void {}
