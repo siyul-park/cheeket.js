@@ -1,6 +1,6 @@
 {
   "name": "cheeket-koa-module",
-  "version": "1.0.0-alpha.13",
+  "version": "1.0.0-alpha.14",
   "description": "",
   "license": "ISC",
   "author": "",
@@ -22,7 +22,7 @@
     "@shopify/jest-koa-mocks": "^3.0.6",
     "@types/koa": "^2.13.4",
     "cheeket": "^4.0.0-alpha.7",
-    "cheeket-koa": "^1.0.0-alpha.12",
+    "cheeket-koa": "^1.0.0-alpha.13",
     "koa": "^2.13.4"
   },
   "peerDependencies": {
