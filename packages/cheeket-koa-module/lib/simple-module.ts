@@ -1,14 +1,19 @@
 import { DefaultContext, DefaultState, Middleware } from "koa";
 import compose from "koa-compose";
-import { ContainerContext } from "cheeket-koa";
+import { ContainerContext, dependency } from "cheeket-koa";
 import { Container, InternalEvents } from "cheeket";
 
 import Module from "./module";
 
+export interface SimpleModuleOptions {
+  override?: boolean;
+}
 class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
   private readonly globalContainers = new Set<Container>();
 
   private readonly middlewares: Middleware<DefaultState, ContextT & ContainerContext>[] = [];
+
+  constructor(private readonly options?: SimpleModuleOptions) {}
 
   use(...middleware: Middleware<DefaultState, ContextT & ContainerContext>[]): this {
     this.middlewares.push(...middleware);
@@ -17,6 +22,7 @@ class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
 
   modules(): Middleware<DefaultState, ContextT & ContainerContext> {
     return compose([
+      dependency(undefined, { override: this.options?.override ?? false }),
       async (context, next) => {
         if (!this.globalContainers.has(context.containers.global)) {
           this.globalContainers.add(context.containers.global);
