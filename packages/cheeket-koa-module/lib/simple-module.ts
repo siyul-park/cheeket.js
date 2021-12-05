@@ -11,6 +11,8 @@ export interface SimpleModuleOptions {
 class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
   private readonly globalContainers = new Set<Container>();
 
+  private readonly localContainers = new Set<Container>();
+
   private readonly middlewares: Middleware<DefaultState, ContextT & ContainerContext>[] = [];
 
   constructor(private readonly options?: SimpleModuleOptions) {}
@@ -24,22 +26,33 @@ class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
     return compose([
       dependency(undefined, { override: this.options?.override ?? false }),
       async (context, next) => {
-        if (!this.globalContainers.has(context.containers.global)) {
-          this.globalContainers.add(context.containers.global);
-          const listener = () => {
-            this.globalContainers.delete(context.containers.global);
-            context.containers.global.removeListener(InternalEvents.Clear, listener);
-          };
-          context.containers.global.on(InternalEvents.Clear, listener);
-          this.configureGlobal(context.containers.global);
-        }
-
-        this.configureLocal(context.containers.local);
+        this.configureContainer(this.globalContainers, context.containers.global, (container) =>
+          this.configureGlobal(container)
+        );
+        this.configureContainer(this.localContainers, context.containers.local, (container) =>
+          this.configureLocal(container)
+        );
 
         await next();
       },
       ...this.middlewares,
     ]);
+  }
+
+  private configureContainer(
+    containers: Set<Container>,
+    container: Container,
+    configure: (container: Container) => void
+  ): void {
+    if (!containers.has(container)) {
+      containers.add(container);
+      const listener = () => {
+        containers.delete(container);
+        container.removeListener(InternalEvents.Clear, listener);
+      };
+      container.on(InternalEvents.Clear, listener);
+      configure(container);
+    }
   }
 
   protected configureGlobal(container: Container): void {}
