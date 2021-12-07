@@ -30,11 +30,14 @@ function inGlobalScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindStrat
         return;
       }
 
+      eventEmitter.emit(InternalEvents.PreCreate, context);
+      await eventEmitter.emitAsync(InternalEvents.PreCreateAsync, context);
+
       value = await factory(context);
       await bindStrategy.bind(context, value);
 
-      eventEmitter.emit(InternalEvents.Create, context);
-      await eventEmitter.emitAsync(InternalEvents.CreateAsync, context);
+      eventEmitter.emit(InternalEvents.PostCreate, context);
+      await eventEmitter.emitAsync(InternalEvents.PostCreateAsync, context);
     });
 
     await bindStrategy.runNext(context, next);

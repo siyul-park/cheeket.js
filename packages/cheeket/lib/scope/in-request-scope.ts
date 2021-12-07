@@ -10,12 +10,14 @@ function inRequestScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindStra
   return async (context, next) => {
     const eventEmitter = await context.resolve(InternalTokens.AsyncEventEmitter);
 
-    const value = await factory(context);
+    eventEmitter.emit(InternalEvents.PreCreate, context);
+    await eventEmitter.emitAsync(InternalEvents.PreCreateAsync, context);
 
+    const value = await factory(context);
     await bindStrategy.bind(context, value);
 
-    eventEmitter.emit(InternalEvents.Create, context);
-    await eventEmitter.emitAsync(InternalEvents.CreateAsync, context);
+    eventEmitter.emit(InternalEvents.PostCreate, context);
+    await eventEmitter.emitAsync(InternalEvents.PostCreateAsync, context);
 
     await bindStrategy.runNext(context, next);
   };
