@@ -48,9 +48,9 @@ class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
       containers.add(container);
       const listener = () => {
         containers.delete(container);
-        container.removeListener(InternalEvents.Clear, listener);
+        container.removeListener(InternalEvents.PreClear, listener);
       };
-      container.on(InternalEvents.Clear, listener);
+      container.on(InternalEvents.PreClear, listener);
       configure(container);
     }
   }
