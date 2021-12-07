@@ -34,6 +34,17 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
         this.clear();
       }
     });
+
+    this.on(InternalEvents.Clear, (cleared: unknown) => {
+      if (cleared === this) {
+        const internalTokens = new Set<Token<unknown>>(Object.values(InternalTokens));
+        this.storage.keys().forEach((key) => {
+          if (!internalTokens.has(key)) {
+            this.storage.delete(key);
+          }
+        });
+      }
+    });
   }
 
   use(...middlewares: Middleware<unknown>[]): this {
@@ -74,15 +85,7 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
 
   clear(): void {
     this.emit(InternalEvents.PreClear, this);
-
-    const internalTokens = new Set<Token<unknown>>(Object.values(InternalTokens));
-
-    this.storage.keys().forEach((key) => {
-      if (!internalTokens.has(key)) {
-        this.storage.delete(key);
-      }
-    });
-
+    this.emit(InternalEvents.Clear, this);
     this.emit(InternalEvents.PostClear, this);
   }
 

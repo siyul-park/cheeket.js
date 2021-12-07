@@ -43,16 +43,25 @@ function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindSt
       const value = await factory(context);
       values.set(eventEmitter, value);
 
-      const handleContainerClear = (cleared: unknown) => {
+      const handleClearContainer = (cleared: unknown) => {
         if (cleared === eventEmitter) {
           eventEmitter.emit(InternalEvents.PreClear, value);
-          values.delete(eventEmitter);
+          eventEmitter.emit(InternalEvents.Clear, value);
           eventEmitter.emit(InternalEvents.PostClear, value);
 
-          eventEmitter.removeListener(InternalEvents.PreClear, handleContainerClear);
+          eventEmitter.removeListener(InternalEvents.PreClear, handleClearContainer);
         }
       };
-      eventEmitter.addListener(InternalEvents.PreClear, handleContainerClear);
+      const handleClearValue = (cleared: unknown) => {
+        if (cleared === value) {
+          values.delete(eventEmitter);
+
+          eventEmitter.removeListener(InternalEvents.Clear, handleClearValue);
+        }
+      };
+
+      eventEmitter.addListener(InternalEvents.PreClear, handleClearContainer);
+      eventEmitter.addListener(InternalEvents.Clear, handleClearValue);
 
       await bindStrategy.bind(context, value);
 
