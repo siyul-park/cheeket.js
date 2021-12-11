@@ -63,22 +63,24 @@ function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBo
       local,
     };
 
-    context.resolve = (token) => {
-      return context.containers.local.resolve(token);
-    };
-    context.resolveOrDefault = (token, other) => {
-      return context.containers.local.resolveOrDefault(token, other);
-    };
+    if (originContainers == null) {
+      context.resolve = (token) => {
+        return context.containers.local.resolve(token);
+      };
+      context.resolveOrDefault = (token, other) => {
+        return context.containers.local.resolveOrDefault(token, other);
+      };
 
-    context.register = (token, middleware) => {
-      return context.containers.local.register(token, middleware);
-    };
-    context.unregister = <T>(token: Token<T>, middleware?: CMiddleware<T>) => {
-      return context.containers.local.unregister(token, middleware);
-    };
-    context.isRegister = <T>(token: Token<T>, middleware?: CMiddleware<T>) => {
-      return context.containers.local.isRegister(token, middleware);
-    };
+      context.register = (token, middleware) => {
+        return context.containers.local.register(token, middleware);
+      };
+      context.unregister = <T>(token: Token<T>, middleware?: CMiddleware<T>) => {
+        return context.containers.local.unregister(token, middleware);
+      };
+      context.isRegister = <T>(token: Token<T>, middleware?: CMiddleware<T>) => {
+        return context.containers.local.isRegister(token, middleware);
+      };
+    }
 
     try {
       await next();
