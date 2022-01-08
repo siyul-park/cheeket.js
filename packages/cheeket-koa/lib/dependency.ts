@@ -25,6 +25,14 @@ function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBo
   let cachedGlobal: Container | undefined;
   const override = options?.override ?? false;
 
+  function getCachedGlobal(): Container {
+    if (cachedGlobal != null) {
+      return cachedGlobal;
+    }
+    cachedGlobal = new Container();
+    return cachedGlobal;
+  }
+
   return async (context, next) => {
     const originContainers = context.containers;
 
@@ -33,13 +41,9 @@ function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBo
       return;
     }
 
-    if (global == null && cachedGlobal == null && (override || originContainers?.global == null)) {
-      cachedGlobal = new Container();
-    }
-
     const localGlobal = override
-      ? global ?? cachedGlobal ?? originContainers?.global
-      : originContainers?.global ?? global ?? cachedGlobal;
+      ? global ?? getCachedGlobal() ?? originContainers?.global
+      : originContainers?.global ?? global ?? getCachedGlobal();
     const local =
       !override && localGlobal === originContainers?.global && originContainers?.local != null
         ? originContainers.local
@@ -92,12 +96,12 @@ function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBo
       if (originContainers != null) {
         context.containers = originContainers;
       } else {
-        (context as Partial<ContextT & ContainerContext>).containers = undefined;
-        (context as Partial<ContextT & ContainerContext>).resolve = undefined;
-        (context as Partial<ContextT & ContainerContext>).resolveOrDefault = undefined;
-        (context as Partial<ContextT & ContainerContext>).register = undefined;
-        (context as Partial<ContextT & ContainerContext>).unregister = undefined;
-        (context as Partial<ContextT & ContainerContext>).isRegister = undefined;
+        delete (context as Partial<ContextT & ContainerContext>).containers;
+        delete (context as Partial<ContextT & ContainerContext>).resolve;
+        delete (context as Partial<ContextT & ContainerContext>).resolveOrDefault;
+        delete (context as Partial<ContextT & ContainerContext>).register;
+        delete (context as Partial<ContextT & ContainerContext>).unregister;
+        delete (context as Partial<ContextT & ContainerContext>).isRegister;
       }
     }
   };
