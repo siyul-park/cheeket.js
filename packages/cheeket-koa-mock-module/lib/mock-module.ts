@@ -27,7 +27,7 @@ class MockModule<ContextT = DefaultContext> implements Module<ContextT> {
     });
 
     this.configureGlobal(this.globalMockRegister);
-    this.configureGlobal(this.localMockRegister);
+    this.configureLocal(this.localMockRegister);
   }
 
   use(...middleware: Middleware<DefaultState, ContextT & ContainerContext>[]): this {
