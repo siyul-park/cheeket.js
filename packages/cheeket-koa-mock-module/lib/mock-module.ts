@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { DefaultContext, DefaultState, Middleware } from "koa";
 import { ContainerContext } from "cheeket-koa";
 import { Container, Register } from "cheeket";
