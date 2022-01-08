@@ -96,12 +96,12 @@ function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBo
       if (originContainers != null) {
         context.containers = originContainers;
       } else {
-        delete (context as Partial<ContextT & ContainerContext>).containers;
-        delete (context as Partial<ContextT & ContainerContext>).resolve;
-        delete (context as Partial<ContextT & ContainerContext>).resolveOrDefault;
-        delete (context as Partial<ContextT & ContainerContext>).register;
-        delete (context as Partial<ContextT & ContainerContext>).unregister;
-        delete (context as Partial<ContextT & ContainerContext>).isRegister;
+        (context as Partial<ContextT & ContainerContext>).containers = undefined;
+        (context as Partial<ContextT & ContainerContext>).resolve = undefined;
+        (context as Partial<ContextT & ContainerContext>).resolveOrDefault = undefined;
+        (context as Partial<ContextT & ContainerContext>).register = undefined;
+        (context as Partial<ContextT & ContainerContext>).unregister = undefined;
+        (context as Partial<ContextT & ContainerContext>).isRegister = undefined;
       }
     }
   };
