@@ -37,22 +37,36 @@ function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindSt
         return;
       }
 
+      eventEmitter.emit(InternalEvents.PreCreate, context);
+      await eventEmitter.emitAsync(InternalEvents.PreCreateAsync, context);
+
       const value = await factory(context);
       values.set(eventEmitter, value);
 
-      const clearListener = (cleared: unknown) => {
+      const handleClearContainer = (cleared: unknown) => {
         if (cleared === eventEmitter) {
+          eventEmitter.emit(InternalEvents.PreClear, value);
           eventEmitter.emit(InternalEvents.Clear, value);
-          eventEmitter.removeListener(InternalEvents.Clear, clearListener);
-          values.delete(eventEmitter);
+          eventEmitter.emit(InternalEvents.PostClear, value);
+
+          eventEmitter.removeListener(InternalEvents.PreClear, handleClearContainer);
         }
       };
-      eventEmitter.addListener(InternalEvents.Clear, clearListener);
+      const handleClearValue = (cleared: unknown) => {
+        if (cleared === value) {
+          values.delete(eventEmitter);
+
+          eventEmitter.removeListener(InternalEvents.Clear, handleClearValue);
+        }
+      };
+
+      eventEmitter.addListener(InternalEvents.PreClear, handleClearContainer);
+      eventEmitter.addListener(InternalEvents.Clear, handleClearValue);
 
       await bindStrategy.bind(context, value);
 
-      eventEmitter.emit(InternalEvents.Create, context);
-      await eventEmitter.emitAsync(InternalEvents.CreateAsync, context);
+      eventEmitter.emit(InternalEvents.PostCreate, context);
+      await eventEmitter.emitAsync(InternalEvents.PostCreateAsync, context);
     });
 
     await bindStrategy.runNext(context, next);
@@ -65,8 +79,9 @@ function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindSt
     delete(eventEmitter: AsyncEventEmitter): void {
       const value = values.get(eventEmitter);
       if (value !== undefined) {
-        eventEmitter.emit(InternalEvents.Clear, values.get(eventEmitter));
+        eventEmitter.emit(InternalEvents.PreClear, value);
         values.delete(eventEmitter);
+        eventEmitter.emit(InternalEvents.PostClear, value);
       }
     },
   });

@@ -9,14 +9,12 @@ import InternalTokens from "./internal-tokens";
 import InternalEvents from "./internal-events";
 
 class Container extends AsyncEventEmitter implements Resolver, Register {
-  private readonly storage: MiddlewareStorage;
+  private readonly storage = new MiddlewareStorage();
 
-  private readonly resolveProcessor: ResolveProcessor;
+  private readonly resolveProcessor = new ResolveProcessor(proxy(this.storage, InternalTokens.PipeLine));
 
   constructor(private readonly parent?: Container) {
     super();
-
-    this.storage = new MiddlewareStorage();
 
     this.storage.set(InternalTokens.AsyncEventEmitter, async (context, next) => {
       context.response = this;
@@ -25,13 +23,22 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
     this.storage.set(InternalTokens.PipeLine, chain(parent?.resolveProcessor));
     this.storage.set(InternalTokens.PipeLine, route(this.storage));
 
-    this.resolveProcessor = new ResolveProcessor(proxy(this.storage, InternalTokens.PipeLine));
-
     this.setMaxListeners(Infinity);
 
-    parent?.on(InternalEvents.Clear, (cleared: unknown) => {
+    parent?.on(InternalEvents.PreClear, (cleared: unknown) => {
       if (cleared === parent) {
         this.clear();
+      }
+    });
+
+    this.on(InternalEvents.Clear, (cleared: unknown) => {
+      if (cleared === this) {
+        const internalTokens = new Set<Token<unknown>>(Object.values(InternalTokens));
+        this.storage.keys().forEach((key) => {
+          if (!internalTokens.has(key)) {
+            this.storage.delete(key);
+          }
+        });
       }
     });
   }
@@ -73,15 +80,9 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
   }
 
   clear(): void {
+    this.emit(InternalEvents.PreClear, this);
     this.emit(InternalEvents.Clear, this);
-
-    const internalTokens = new Set<Token<unknown>>(Object.values(InternalTokens));
-
-    this.storage.keys().forEach((key) => {
-      if (!internalTokens.has(key)) {
-        this.storage.delete(key);
-      }
-    });
+    this.emit(InternalEvents.PostClear, this);
   }
 
   createChild(): Container {
