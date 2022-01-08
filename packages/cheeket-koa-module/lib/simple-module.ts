@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { DefaultContext, DefaultState, Middleware } from "koa";
 import compose from "koa-compose";
 import { ContainerContext, dependency } from "cheeket-koa";
@@ -20,6 +22,13 @@ class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
   use(...middleware: Middleware<DefaultState, ContextT & ContainerContext>[]): this {
     this.middlewares.push(...middleware);
     return this;
+  }
+
+  isInstalled(container: Container): boolean {
+    if (this.globalContainers.has(container)) {
+      return true;
+    }
+    return this.localContainers.has(container);
   }
 
   modules(): Middleware<DefaultState, ContextT & ContainerContext> {
@@ -55,13 +64,6 @@ class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
       container.on(InternalEvents.PreClear, listener);
       configure(container);
     }
-  }
-
-  isInstalled(container: Container): boolean {
-    if (this.globalContainers.has(container)) {
-      return true;
-    }
-    return this.localContainers.has(container);
   }
 
   protected configureGlobal(container: Container): void {}

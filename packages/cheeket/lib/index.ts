@@ -18,4 +18,5 @@ export { default as Queue } from "./queue";
 
 export { default as BindStrategy, bindArray, bindObject } from "./bind-strategy";
 export * from "./scope";
-export { default as Middleware } from "./middleware";
+
+export { default as Middleware, MiddlewareStorage, proxy, route, compose, chain } from "./middleware";
