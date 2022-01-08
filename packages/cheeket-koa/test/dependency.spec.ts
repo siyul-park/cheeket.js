@@ -1,7 +1,7 @@
 import { createMockContext } from "@shopify/jest-koa-mocks";
 import { Container, Token } from "cheeket";
 import { Context } from "koa";
-import * as compose from "koa-compose";
+import compose from "koa-compose";
 
 import { ContainerContext, dependency, InternalTokens } from "../lib";
 
