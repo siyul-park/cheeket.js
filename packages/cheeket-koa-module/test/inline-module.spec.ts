@@ -14,7 +14,6 @@ class Dummy2 {}
 describe("InlineModule", () => {
   it("configure: function call", async () => {
     const container = new Container();
-    const dependencyMiddleware = dependency(container);
 
     const globalFunc = jest.fn(() => {});
     const localFunc = jest.fn(() => {});
@@ -27,7 +26,7 @@ describe("InlineModule", () => {
     });
 
     const ctx = createMockContext() as Context & ContainerContext;
-    const middleware = compose([dependencyMiddleware, module.modules()]);
+    const middleware = compose([dependency(container), module.modules()]);
 
     await middleware(ctx, async () => {});
 
@@ -47,7 +46,6 @@ describe("InlineModule", () => {
 
   it("configure: register", async () => {
     const container = new Container();
-    const dependencyMiddleware = dependency(container);
 
     const module = new InlineModule({
       configure: {
@@ -67,7 +65,7 @@ describe("InlineModule", () => {
     });
 
     const ctx = createMockContext() as Context & ContainerContext;
-    const middleware = compose([dependencyMiddleware, module.modules()]);
+    const middleware = compose([dependency(container), module.modules()]);
 
     await middleware(ctx, async () => {
       expect(module.isInstalled(container)).toBeTruthy();

@@ -15,7 +15,6 @@ class Dummy2 {}
 describe("InlineMockModule", () => {
   it("configure: function call", async () => {
     const container = new Container();
-    const dependencyMiddleware = dependency(container);
 
     const globalFunc = jest.fn(() => {});
     const localFunc = jest.fn(() => {});
@@ -28,7 +27,7 @@ describe("InlineMockModule", () => {
     });
 
     const ctx = createMockContext() as Context & ContainerContext;
-    const middleware = compose([dependencyMiddleware, module.modules()]);
+    const middleware = compose([dependency(container), module.modules()]);
 
     await middleware(ctx, async () => {});
 
@@ -43,7 +42,6 @@ describe("InlineMockModule", () => {
 
   it("configure: register", async () => {
     const container = new Container();
-    const dependencyMiddleware = dependency(container);
 
     const module = new InlineMockModule({
       configure: {
@@ -61,7 +59,7 @@ describe("InlineMockModule", () => {
     });
 
     const ctx = createMockContext() as Context & ContainerContext;
-    const middleware = compose([dependencyMiddleware, module.modules()]);
+    const middleware = compose([dependency(container), module.modules()]);
 
     await middleware(ctx, async () => {
       expect(module.isInstalled(container)).toBeTruthy();
@@ -76,7 +74,6 @@ describe("InlineMockModule", () => {
 
   it("configure: override", async () => {
     const container = new Container();
-    const dependencyMiddleware = dependency(container);
 
     const mockDummy1 = new Dummy1();
     const mockDummy2 = new Dummy2();
@@ -114,7 +111,7 @@ describe("InlineMockModule", () => {
     });
 
     const ctx = createMockContext() as Context & ContainerContext;
-    const middleware = compose([dependencyMiddleware, mockModule.modules(), module.modules()]);
+    const middleware = compose([dependency(container), mockModule.modules(), module.modules()]);
 
     await middleware(ctx, async () => {
       expect(module.isInstalled(container)).toBeTruthy();
