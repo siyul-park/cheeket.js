@@ -21,7 +21,7 @@ class MockRegister implements Register {
     return this.storage.has(token, middleware);
   }
 
-  apply(container: Container) {
+  apply(container: Container): void {
     container.use(this.interceptor);
   }
 }
