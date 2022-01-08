@@ -9,14 +9,12 @@ import InternalTokens from "./internal-tokens";
 import InternalEvents from "./internal-events";
 
 class Container extends AsyncEventEmitter implements Resolver, Register {
-  private readonly storage: MiddlewareStorage;
+  private readonly storage = new MiddlewareStorage();
 
-  private readonly resolveProcessor: ResolveProcessor;
+  private readonly resolveProcessor = new ResolveProcessor(proxy(this.storage, InternalTokens.PipeLine));
 
   constructor(private readonly parent?: Container) {
     super();
-
-    this.storage = new MiddlewareStorage();
 
     this.storage.set(InternalTokens.AsyncEventEmitter, async (context, next) => {
       context.response = this;
@@ -24,8 +22,6 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
     });
     this.storage.set(InternalTokens.PipeLine, chain(parent?.resolveProcessor));
     this.storage.set(InternalTokens.PipeLine, route(this.storage));
-
-    this.resolveProcessor = new ResolveProcessor(proxy(this.storage, InternalTokens.PipeLine));
 
     this.setMaxListeners(Infinity);
 
