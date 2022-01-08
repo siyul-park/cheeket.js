@@ -11,6 +11,8 @@ export interface MockModuleOptions {
   override?: boolean;
 }
 class MockModule<ContextT = DefaultContext> implements Module<ContextT> {
+  private init = false;
+
   private readonly internalModule: InlineModule<ContextT>;
 
   private readonly globalMockRegister = new MockRegister();
@@ -25,9 +27,6 @@ class MockModule<ContextT = DefaultContext> implements Module<ContextT> {
         local: (container) => this.localMockRegister.apply(container),
       },
     });
-
-    this.configureGlobal(this.globalMockRegister);
-    this.configureLocal(this.localMockRegister);
   }
 
   use(...middleware: Middleware<DefaultState, ContextT & ContainerContext>[]): this {
@@ -36,6 +35,11 @@ class MockModule<ContextT = DefaultContext> implements Module<ContextT> {
   }
 
   modules(): Middleware<DefaultState, ContextT & ContainerContext> {
+    if (!this.init) {
+      this.configureGlobal(this.globalMockRegister);
+      this.configureLocal(this.localMockRegister);
+      this.init = true;
+    }
     return this.internalModule.modules();
   }
 
