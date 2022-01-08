@@ -22,6 +22,13 @@ class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
     return this;
   }
 
+  isInstalled(container: Container): boolean {
+    if (this.globalContainers.has(container)) {
+      return true;
+    }
+    return this.localContainers.has(container);
+  }
+
   modules(): Middleware<DefaultState, ContextT & ContainerContext> {
     return compose([
       dependency(undefined, { override: this.options?.override ?? false }),
@@ -55,13 +62,6 @@ class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
       container.on(InternalEvents.PreClear, listener);
       configure(container);
     }
-  }
-
-  isInstalled(container: Container): boolean {
-    if (this.globalContainers.has(container)) {
-      return true;
-    }
-    return this.localContainers.has(container);
   }
 
   protected configureGlobal(container: Container): void {}
