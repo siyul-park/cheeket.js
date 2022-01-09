@@ -1,6 +1,6 @@
 {
   "name": "cheeket-koa-mock-module",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "",
   "license": "ISC",
   "author": "",
@@ -21,9 +21,9 @@
   "devDependencies": {
     "@shopify/jest-koa-mocks": "^3.0.6",
     "@types/koa": "^2.13.4",
-    "cheeket": "^4.0.0-alpha.8",
-    "cheeket-koa": "^1.0.0-alpha.14",
-    "cheeket-koa-module": "^1.0.0-alpha.16",
+    "cheeket": "^4.0.0-alpha.9",
+    "cheeket-koa": "^1.0.0-alpha.15",
+    "cheeket-koa-module": "^1.0.0-alpha.17",
     "koa": "^2.13.4"
   },
   "peerDependencies": {
