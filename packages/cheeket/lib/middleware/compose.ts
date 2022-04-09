@@ -1,10 +1,10 @@
-import Middleware from "./middleware";
-import Context from "../context";
-import Next from "../next";
+import Middleware from './middleware';
+import Context from '../context';
+import Next from '../next';
 
 function compose<T>(
   middlewares: (Middleware<T> | undefined | null)[],
-  filter: (context: Context<T>) => boolean = () => true
+  filter: (context: Context<T>) => boolean = () => true,
 ): Middleware<T> | undefined {
   const existedmiddlewares = middlewares.filter((middleware) => middleware != null) as Middleware<T>[];
 

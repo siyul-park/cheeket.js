@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 
-import Resolver from "./resolver";
-import Token from "./token";
-import Context from "./context";
-import ResolveError from "./resolve-error";
-import Middleware from "./middleware/middleware";
+import Resolver from './resolver';
+import Token from '../token';
+import Context from '../context';
+import ResolveError from './resolve-error';
+import Middleware from '../middleware';
 
-class ResolveProcessor implements Resolver {
+class NestedResolver implements Resolver {
   constructor(private readonly middleware: Middleware<unknown>) {}
 
   async resolveOrDefault<T, D>(token: Token<T>, other: D, parent?: Context<unknown>): Promise<T | D> {
@@ -23,7 +23,8 @@ class ResolveProcessor implements Resolver {
   async resolve<T>(token: Token<T>, parent?: Context<unknown>): Promise<T> {
     const context = this.createContext(token, parent);
 
-    await this.middleware(context, async () => {});
+    await this.middleware(context, async () => {
+    });
 
     if (context.response === undefined) {
       throw new ResolveError(`Can't resolve ${context.request.toString()}`);
@@ -38,8 +39,15 @@ class ResolveProcessor implements Resolver {
       parent,
       children: [] as Context<unknown>[],
 
-      resolveOrDefault: <U, D>(token: Token<U>, other: D) => {
-        return this.resolveOrDefault(token, other, context);
+      resolveOrDefault: async <U, D>(token: Token<U>, other: D) => {
+        try {
+          return await this.resolve(token, context);
+        } catch (e) {
+          if (e instanceof ResolveError) {
+            return other;
+          }
+          throw e;
+        }
       },
       resolve: <U>(token: Token<U>) => {
         return this.resolve(token, context);
@@ -51,4 +59,4 @@ class ResolveProcessor implements Resolver {
   }
 }
 
-export default ResolveProcessor;
+export default NestedResolver;

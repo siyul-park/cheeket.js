@@ -1,4 +1,4 @@
-import { Container, MiddlewareStorage, Middleware, Register, Token, route } from "cheeket";
+import { Container, MiddlewareStorage, Middleware, Register, Token, route } from 'cheeket';
 
 class MockRegister implements Register {
   private readonly storage = new MiddlewareStorage();

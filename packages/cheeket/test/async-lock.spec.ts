@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-loop-func */
 
-import AsyncLock from "../lib/async-lock";
+import { AsyncLock } from '../lib';
 
-describe("AsyncLock", () => {
+describe('AsyncLock', () => {
   const lock = new AsyncLock();
 
-  test("acquire", async () => {
-    const key = "test";
+  test('acquire', async () => {
+    const key = 'test';
     const size = 100;
 
     const results: number[] = [];

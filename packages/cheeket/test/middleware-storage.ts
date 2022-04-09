@@ -1,10 +1,10 @@
-import MiddlewareStorage from "../lib/middleware/middleware-storage";
-import { Middleware } from "../lib";
+import MiddlewareStorage from '../lib/middleware/middleware-storage';
+import { Middleware } from '../lib';
 
 class Dummy {}
 
-describe("MiddlewareStorage", () => {
-  test("set", async () => {
+describe('MiddlewareStorage', () => {
+  test('set', async () => {
     const storage = new MiddlewareStorage();
 
     storage.set(Dummy, (context) => {
@@ -12,7 +12,7 @@ describe("MiddlewareStorage", () => {
     });
   });
 
-  test("get", async () => {
+  test('get', async () => {
     const storage = new MiddlewareStorage();
 
     let counter = 0;
@@ -42,13 +42,13 @@ describe("MiddlewareStorage", () => {
           return Promise.reject();
         },
       },
-      async () => {}
+      async () => {},
     );
 
     expect(counter).toEqual(size);
   });
 
-  test("has", async () => {
+  test('has', async () => {
     const storage = new MiddlewareStorage();
 
     const middleware: Middleware<Dummy> = async (context, next) => {
@@ -60,7 +60,7 @@ describe("MiddlewareStorage", () => {
     expect(storage.has(Dummy, middleware)).toBeTruthy();
   });
 
-  test("delete", async () => {
+  test('delete', async () => {
     const storage = new MiddlewareStorage();
 
     const middleware: Middleware<Dummy> = async (context, next) => {

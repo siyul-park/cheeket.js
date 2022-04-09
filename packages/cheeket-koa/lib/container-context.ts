@@ -1,4 +1,4 @@
-import { Container, Register, Resolver } from "cheeket";
+import { Container, Register, Resolver } from 'cheeket';
 
 type ContainerContext = {
   containers: {
@@ -6,6 +6,6 @@ type ContainerContext = {
     local: Container;
   };
 } & Resolver &
-  Register;
+Register;
 
 export default ContainerContext;

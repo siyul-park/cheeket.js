@@ -1,5 +1,5 @@
-import Token from "./token";
-import Middleware from "./middleware/middleware";
+import Token from './token';
+import Middleware from './middleware/middleware';
 
 interface Register {
   register<T>(token: Token<T>, middleware: Middleware<T>): Register;

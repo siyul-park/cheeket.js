@@ -1,5 +1,5 @@
-import Resolver from "./resolver";
-import Token from "./token";
+import Resolver from './resolver';
+import Token from './token';
 
 interface Context<T> extends Resolver {
   request: Token<T>;

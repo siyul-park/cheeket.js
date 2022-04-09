@@ -1,4 +1,4 @@
-import Queue from "./queue";
+import Queue from '../queue';
 
 class AsyncLock {
   private readonly queues = new Map<unknown, Queue<() => Promise<unknown>>>();

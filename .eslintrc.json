@@ -8,8 +8,6 @@
     "airbnb-typescript/base",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "prettier",
     "plugin:monorepo/recommended"
   ],
   "parser": "@typescript-eslint/parser",

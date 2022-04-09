@@ -1,7 +1,7 @@
-import { DefaultContext } from "koa";
-import { Register } from "cheeket";
+import { DefaultContext } from 'koa';
+import { Register } from 'cheeket';
 
-import MockModule from "./mock-module";
+import MockModule from './mock-module';
 
 export interface InlineMockModuleConfig {
   override?: boolean;
