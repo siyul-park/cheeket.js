@@ -67,7 +67,7 @@ describe('Container', () => {
     expect(await container.resolve(Dummy1)).toBeTruthy();
   });
 
-  test('resolveOrDefault', async () => {
+  test('resolveOr', async () => {
     const container = new Container();
 
     container.register(Dummy1, (context) => {
@@ -77,7 +77,7 @@ describe('Container', () => {
     expect(await container.resolveOr(Dummy1, null)).toBeTruthy();
   });
 
-  test('resolveOrDefault: not resolved', async () => {
+  test('resolveOr: not resolved', async () => {
     const container = new Container();
 
     expect(await container.resolveOr(Dummy1, null)).toBe(null);

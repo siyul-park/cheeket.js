@@ -71,8 +71,8 @@ function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBo
       context.resolve = (token) => {
         return context.containers.local.resolve(token);
       };
-      context.resolveOrDefault = (token, other) => {
-        return context.containers.local.resolveOrDefault(token, other);
+      context.resolveOr = (token, other) => {
+        return context.containers.local.resolveOr(token, other);
       };
 
       context.register = (token, middleware) => {
@@ -98,7 +98,7 @@ function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBo
       } else {
         (context as Partial<ContextT & ContainerContext>).containers = undefined;
         (context as Partial<ContextT & ContainerContext>).resolve = undefined;
-        (context as Partial<ContextT & ContainerContext>).resolveOrDefault = undefined;
+        (context as Partial<ContextT & ContainerContext>).resolveOr = undefined;
         (context as Partial<ContextT & ContainerContext>).register = undefined;
         (context as Partial<ContextT & ContainerContext>).unregister = undefined;
         (context as Partial<ContextT & ContainerContext>).isRegister = undefined;
