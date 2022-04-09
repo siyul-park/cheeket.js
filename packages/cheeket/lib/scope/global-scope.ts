@@ -1,8 +1,8 @@
 import InternalTokens from '../internal-tokens';
 import InternalEvents from '../internal-events';
 import Factory from '../factory';
-import AsyncLock from '../async-lock';
-import AsyncEventEmitter from '../async-event-emitter';
+import AsyncLock from '../async/async-lock';
+import AsyncEventEmitter from '../async/async-event-emitter';
 
 interface GlobalScope<T> extends Factory<T> {
   clear(): void;

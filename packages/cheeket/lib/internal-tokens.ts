@@ -1,4 +1,4 @@
-import AsyncEventEmitter from './async-event-emitter';
+import { AsyncEventEmitter } from './async';
 import Token from './token';
 
 const InternalTokens = Object.freeze({

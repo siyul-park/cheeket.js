@@ -11,11 +11,10 @@ export { default as Factory } from './factory';
 export { default as InternalTokens } from './internal-tokens';
 export { default as InternalEvents } from './internal-events';
 
-export { default as AsyncEventEmitter } from './async-event-emitter';
-export { default as AsyncLock } from './async-lock';
+export * from './async';
 export { default as Queue } from './queue';
 
-export { default as BindStrategy, asObject, asArray } from './binder';
+export { default as Binder, asObject, asArray } from './binder';
 export * from './scope';
 
 export { default as Middleware, MiddlewareStorage, proxy, route, compose, chain } from './middleware';

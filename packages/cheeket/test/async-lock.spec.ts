@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-loop-func */
 
-import AsyncLock from '../lib/async-lock';
+import { AsyncLock } from '../lib';
 
 describe('AsyncLock', () => {
   const lock = new AsyncLock();
