@@ -38,7 +38,7 @@ describe('MiddlewareStorage', () => {
         resolve<T>(): Promise<T> {
           return Promise.reject();
         },
-        resolveOrDefault<T, D>(): Promise<T | D> {
+        resolveOr<T, D>(): Promise<T | D> {
           return Promise.reject();
         },
       },

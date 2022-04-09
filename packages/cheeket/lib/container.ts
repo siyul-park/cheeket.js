@@ -2,7 +2,7 @@ import Register from './register';
 import Token from './token';
 import Middleware, { chain, proxy, route, MiddlewareStorage } from './middleware';
 import Resolver, { NestedResolver } from './resolver';
-import AsyncEventEmitter from './async/async-event-emitter';
+import { AsyncEventEmitter } from './async';
 
 import InternalTokens from './internal-tokens';
 import InternalEvents from './internal-events';
@@ -70,8 +70,8 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
     return this.parent?.isRegister(token, middleware) ?? false;
   }
 
-  resolveOrDefault<T, D>(token: Token<T>, other: D): Promise<T | D> {
-    return this.resolver.resolveOrDefault(token, other);
+  resolveOr<T, D>(token: Token<T>, other: D): Promise<T | D> {
+    return this.resolver.resolveOr(token, other);
   }
 
   resolve<T>(token: Token<T>): Promise<T> {

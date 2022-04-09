@@ -67,20 +67,20 @@ describe('Container', () => {
     expect(await container.resolve(Dummy1)).toBeTruthy();
   });
 
-  test('resolveOrDefault', async () => {
+  test('resolveOr', async () => {
     const container = new Container();
 
     container.register(Dummy1, (context) => {
       context.response = new Dummy1();
     });
 
-    expect(await container.resolveOrDefault(Dummy1, null)).toBeTruthy();
+    expect(await container.resolveOr(Dummy1, null)).toBeTruthy();
   });
 
-  test('resolveOrDefault: not resolved', async () => {
+  test('resolveOr: not resolved', async () => {
     const container = new Container();
 
-    expect(await container.resolveOrDefault(Dummy1, null)).toBe(null);
+    expect(await container.resolveOr(Dummy1, null)).toBe(null);
   });
 
   test('use', async () => {
