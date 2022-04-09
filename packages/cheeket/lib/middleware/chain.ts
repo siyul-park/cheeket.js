@@ -1,5 +1,5 @@
 import Middleware from './middleware';
-import ResolveProcessor from '../resolve-processor';
+import ResolveProcessor from '../resolver/resolve-processor';
 
 function chain(processor: ResolveProcessor | undefined): Middleware<unknown> {
   return async (context, next) => {
