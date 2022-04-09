@@ -8,7 +8,7 @@ import AsyncEventEmitter from '../async/async-event-emitter';
 
 interface ContainerScope<T> extends Factory<T> {
   get(eventEmitter: AsyncEventEmitter): T | undefined;
-  delete(eventEmitter: AsyncEventEmitter): void;
+  delete(eventEmitter: AsyncEventEmitter): Promise<void>;
 
   readonly size: number;
 }
@@ -31,34 +31,32 @@ function containerScope<T>(delegator: Factory<T>): ContainerScope<T> {
         return founded;
       }
 
-      eventEmitter.emit(InternalEvents.PreCreate, context);
-      await eventEmitter.emitAsync(InternalEvents.PreCreateAsync, context);
+      await eventEmitter.emit(InternalEvents.PreCreate, context);
 
       const value = await delegator(context);
       values.set(eventEmitter, value);
 
-      const handleClearContainer = (cleared: unknown) => {
+      const handleClearContainer = async (cleared: unknown) => {
         if (cleared === eventEmitter) {
-          eventEmitter.emit(InternalEvents.PreClear, value);
-          eventEmitter.emit(InternalEvents.Clear, value);
-          eventEmitter.emit(InternalEvents.PostClear, value);
-
           eventEmitter.removeListener(InternalEvents.PreClear, handleClearContainer);
+
+          await eventEmitter.emit(InternalEvents.PreClear, value);
+          await eventEmitter.emit(InternalEvents.Clear, value);
+          await eventEmitter.emit(InternalEvents.PostClear, value);
         }
       };
       const handleClearValue = (cleared: unknown) => {
         if (cleared === value) {
-          values.delete(eventEmitter);
-
           eventEmitter.removeListener(InternalEvents.Clear, handleClearValue);
+
+          values.delete(eventEmitter);
         }
       };
 
       eventEmitter.addListener(InternalEvents.PreClear, handleClearContainer);
       eventEmitter.addListener(InternalEvents.Clear, handleClearValue);
 
-      eventEmitter.emit(InternalEvents.PostCreate, context);
-      await eventEmitter.emitAsync(InternalEvents.PostCreateAsync, context);
+      await eventEmitter.emit(InternalEvents.PostCreate, context);
 
       return value;
     });
@@ -68,12 +66,12 @@ function containerScope<T>(delegator: Factory<T>): ContainerScope<T> {
     get(eventEmitter: AsyncEventEmitter): T | undefined {
       return values.get(eventEmitter);
     },
-    delete(eventEmitter: AsyncEventEmitter): void {
+    delete: async (eventEmitter: AsyncEventEmitter) => {
       const value = values.get(eventEmitter);
       if (value !== undefined) {
-        eventEmitter.emit(InternalEvents.PreClear, value);
-        eventEmitter.emit(InternalEvents.Clear, value);
-        eventEmitter.emit(InternalEvents.PostClear, value);
+        await eventEmitter.emit(InternalEvents.PreClear, value);
+        await eventEmitter.emit(InternalEvents.Clear, value);
+        await eventEmitter.emit(InternalEvents.PostClear, value);
       }
     },
   });

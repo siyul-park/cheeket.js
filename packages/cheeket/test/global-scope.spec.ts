@@ -43,6 +43,6 @@ describe('globalScope', () => {
     expect(dummy3).toBe(dummy4);
     expect(dummy1).toBe(dummy3);
 
-    parent.clear();
+    await parent.clear();
   });
 });

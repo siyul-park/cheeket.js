@@ -8,13 +8,9 @@ function requestScope<T>(factory: Factory<T>): RequestScope<T> {
   return async (context) => {
     const eventEmitter = await context.resolve(InternalTokens.AsyncEventEmitter);
 
-    eventEmitter.emit(InternalEvents.PreCreate, context);
-    await eventEmitter.emitAsync(InternalEvents.PreCreateAsync, context);
-
+    await eventEmitter.emit(InternalEvents.PreCreate, context);
     const value = await factory(context);
-
-    eventEmitter.emit(InternalEvents.PostCreate, context);
-    await eventEmitter.emitAsync(InternalEvents.PostCreateAsync, context);
+    await eventEmitter.emit(InternalEvents.PostCreate, context);
 
     return value;
   };
