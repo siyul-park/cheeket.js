@@ -18,4 +18,4 @@ export { default as Binder, asObject, asArray } from './binder';
 export * from './scope';
 
 export { default as Middleware, MiddlewareStorage, proxy, route, compose, chain } from './middleware';
-export { default as Resolver, ResolveError, ResolveProcessor } from './resolver';
+export { default as Resolver, ResolveError, NestedResolver } from './resolver';

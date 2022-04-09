@@ -1,7 +1,7 @@
 import Register from './register';
 import Token from './token';
 import Middleware, { chain, proxy, route, MiddlewareStorage } from './middleware';
-import Resolver, { ResolveProcessor } from './resolver';
+import Resolver, { NestedResolver } from './resolver';
 import AsyncEventEmitter from './async/async-event-emitter';
 
 import InternalTokens from './internal-tokens';
@@ -10,7 +10,7 @@ import InternalEvents from './internal-events';
 class Container extends AsyncEventEmitter implements Resolver, Register {
   private readonly storage = new MiddlewareStorage();
 
-  private readonly resolveProcessor = new ResolveProcessor(proxy(this.storage, InternalTokens.PipeLine));
+  private readonly resolver = new NestedResolver(proxy(this.storage, InternalTokens.PipeLine));
 
   constructor(private readonly parent?: Container) {
     super();
@@ -19,7 +19,7 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
       context.response = this;
       await next();
     });
-    this.storage.set(InternalTokens.PipeLine, chain(parent?.resolveProcessor));
+    this.storage.set(InternalTokens.PipeLine, chain(parent?.resolver));
     this.storage.set(InternalTokens.PipeLine, route(this.storage));
 
     this.setMaxListeners(Infinity);
@@ -71,11 +71,11 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
   }
 
   resolveOrDefault<T, D>(token: Token<T>, other: D): Promise<T | D> {
-    return this.resolveProcessor.resolveOrDefault(token, other);
+    return this.resolver.resolveOrDefault(token, other);
   }
 
   resolve<T>(token: Token<T>): Promise<T> {
-    return this.resolveProcessor.resolve(token);
+    return this.resolver.resolve(token);
   }
 
   clear(): void {
