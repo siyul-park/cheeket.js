@@ -27,10 +27,10 @@ describe('containerScope', () => {
     expect(dummy1).not.toBe(dummy3);
     expect(factory.size).toEqual(2);
 
-    factory.delete(container1);
+    await factory.delete(container1);
     expect(factory.size).toEqual(1);
 
-    factory.delete(container2);
+    await factory.delete(container2);
     expect(factory.size).toEqual(0);
   });
 
@@ -57,7 +57,7 @@ describe('containerScope', () => {
     expect(factory.size).toEqual(1);
     expect(dummy1).toBe(dummy3);
 
-    parent.clear();
+    await parent.clear();
     expect(factory.size).toEqual(0);
   });
 });

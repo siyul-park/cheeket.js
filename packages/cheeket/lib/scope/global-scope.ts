@@ -5,7 +5,7 @@ import AsyncLock from '../async/async-lock';
 import AsyncEventEmitter from '../async/async-event-emitter';
 
 interface GlobalScope<T> extends Factory<T> {
-  clear(): void;
+  clear(): Promise<void>;
 }
 
 const lock = new AsyncLock();
@@ -36,25 +36,21 @@ function globalScope<T>(delegator: Factory<T>): GlobalScope<T> {
         return value;
       }
 
-      eventEmitter.emit(InternalEvents.PreCreate, context);
-      await eventEmitter.emitAsync(InternalEvents.PreCreateAsync, context);
-
+      await eventEmitter.emit(InternalEvents.PreCreate, context);
       value = await delegator(context);
-
-      eventEmitter.emit(InternalEvents.PostCreate, context);
-      await eventEmitter.emitAsync(InternalEvents.PostCreateAsync, context);
+      await eventEmitter.emit(InternalEvents.PostCreate, context);
 
       return value;
     });
   };
 
   Object.assign(factory, {
-    clear(): void {
-      eventEmitters.forEach((eventEmitter) => {
-        eventEmitter.emit(InternalEvents.PreClear, value);
-        eventEmitter.emit(InternalEvents.Clear, value);
-        eventEmitter.emit(InternalEvents.PostClear, value);
-      });
+    clear: async () => {
+      for await (const eventEmitter of eventEmitters) {
+        await eventEmitter.emit(InternalEvents.PreClear, value);
+        await eventEmitter.emit(InternalEvents.Clear, value);
+        await eventEmitter.emit(InternalEvents.PostClear, value);
+      }
 
       value = undefined;
     },

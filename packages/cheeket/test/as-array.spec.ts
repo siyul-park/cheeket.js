@@ -47,11 +47,11 @@ describe('asArray', () => {
     expect(factory1.size).toEqual(2);
     expect(factory2.size).toEqual(2);
 
-    container1.clear();
+    await container1.clear();
     expect(factory1.size).toEqual(1);
     expect(factory2.size).toEqual(1);
 
-    container2.clear();
+    await container2.clear();
     expect(factory1.size).toEqual(0);
     expect(factory2.size).toEqual(0);
   });
@@ -80,7 +80,7 @@ describe('asArray', () => {
     expect(factory1.size).toEqual(0);
     expect(factory2.size).toEqual(1);
 
-    child.clear();
+    await child.clear();
     expect(factory2.size).toEqual(0);
   });
 });

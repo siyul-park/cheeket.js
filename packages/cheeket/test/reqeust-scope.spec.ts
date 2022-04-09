@@ -43,6 +43,6 @@ describe('requestScope', () => {
     expect(dummy3).not.toBe(dummy4);
     expect(dummy1).not.toBe(dummy3);
 
-    parent.clear();
+    await parent.clear();
   });
 });
