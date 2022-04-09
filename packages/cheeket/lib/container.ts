@@ -70,8 +70,8 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
     return this.parent?.isRegister(token, middleware) ?? false;
   }
 
-  resolveOrDefault<T, D>(token: Token<T>, other: D): Promise<T | D> {
-    return this.resolver.resolveOrDefault(token, other);
+  resolveOr<T, D>(token: Token<T>, other: D): Promise<T | D> {
+    return this.resolver.resolveOr(token, other);
   }
 
   resolve<T>(token: Token<T>): Promise<T> {

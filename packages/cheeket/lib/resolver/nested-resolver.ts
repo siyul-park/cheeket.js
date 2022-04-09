@@ -9,7 +9,7 @@ import Middleware from '../middleware';
 class NestedResolver implements Resolver {
   constructor(private readonly middleware: Middleware<unknown>) {}
 
-  async resolveOrDefault<T, D>(token: Token<T>, other: D, parent?: Context<unknown>): Promise<T | D> {
+  async resolveOr<T, D>(token: Token<T>, other: D, parent?: Context<unknown>): Promise<T | D> {
     try {
       return await this.resolve(token, parent);
     } catch (e) {
@@ -39,7 +39,7 @@ class NestedResolver implements Resolver {
       parent,
       children: [] as Context<unknown>[],
 
-      resolveOrDefault: async <U, D>(token: Token<U>, other: D) => {
+      resolveOr: async <U, D>(token: Token<U>, other: D) => {
         try {
           return await this.resolve(token, context);
         } catch (e) {
