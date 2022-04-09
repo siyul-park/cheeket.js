@@ -2,7 +2,7 @@ import Register from './register';
 import Token from './token';
 import Middleware, { chain, proxy, route, MiddlewareStorage } from './middleware';
 import Resolver, { NestedResolver } from './resolver';
-import AsyncEventEmitter from './async/async-event-emitter';
+import { AsyncEventEmitter } from './async';
 
 import InternalTokens from './internal-tokens';
 import InternalEvents from './internal-events';
