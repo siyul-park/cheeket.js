@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { DefaultContext, DefaultState, Middleware } from "koa";
-import compose from "koa-compose";
-import { ContainerContext, dependency } from "cheeket-koa";
-import { Container, InternalEvents } from "cheeket";
+import { DefaultContext, DefaultState, Middleware } from 'koa';
+import compose from 'koa-compose';
+import { ContainerContext, dependency } from 'cheeket-koa';
+import { Container, InternalEvents } from 'cheeket';
 
-import Module from "./module";
+import Module from './module';
 
 export interface SimpleModuleOptions {
   override?: boolean;
@@ -36,10 +36,10 @@ class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
       dependency(undefined, { override: this.options?.override ?? false }),
       async (context, next) => {
         this.configureContainer(this.globalContainers, context.containers.global, (container) =>
-          this.configureGlobal(container)
+          this.configureGlobal(container),
         );
         this.configureContainer(this.localContainers, context.containers.local, (container) =>
-          this.configureLocal(container)
+          this.configureLocal(container),
         );
 
         await next();
@@ -51,7 +51,7 @@ class SimpleModule<ContextT = DefaultContext> implements Module<ContextT> {
   private configureContainer(
     containers: Set<Container>,
     container: Container,
-    configure: (container: Container) => void
+    configure: (container: Container) => void,
   ): void {
     if (!containers.has(container)) {
       containers.add(container);

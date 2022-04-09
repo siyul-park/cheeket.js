@@ -1,4 +1,4 @@
-import BindStrategy from "./bind-strategy";
+import BindStrategy from './bind-strategy';
 
 function bindArray<T>(): BindStrategy<T[], T> {
   return {

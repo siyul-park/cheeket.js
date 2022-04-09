@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 
-import InternalTokens from "../internal-tokens";
-import InternalEvents from "../internal-events";
-import Factory from "../factory";
-import AsyncLock from "../async-lock";
-import AsyncEventEmitter from "../async-event-emitter";
-import Middleware from "../middleware";
-import BindStrategy from "../bind-strategy";
+import InternalTokens from '../internal-tokens';
+import InternalEvents from '../internal-events';
+import Factory from '../factory';
+import AsyncLock from '../async-lock';
+import AsyncEventEmitter from '../async-event-emitter';
+import Middleware from '../middleware';
+import BindStrategy from '../bind-strategy';
 
 interface InContainerScope<T, U> extends Middleware<T> {
   get(eventEmitter: AsyncEventEmitter): U | undefined;
@@ -86,7 +86,7 @@ function inContainerScope<T, U = T>(factory: Factory<T, U>, bindStrategy: BindSt
     },
   });
 
-  return Object.defineProperty(middleware, "size", {
+  return Object.defineProperty(middleware, 'size', {
     get(): number {
       return values.size;
     },

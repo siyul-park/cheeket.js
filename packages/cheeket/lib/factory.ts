@@ -1,4 +1,4 @@
-import Context from "./context";
+import Context from './context';
 
 type Factory<T, U> = (context: Context<T>) => Promise<U> | U;
 

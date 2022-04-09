@@ -1,10 +1,10 @@
-import { bindArray, bindObject, Container, inRequestScope, Token } from "../lib";
+import { bindArray, bindObject, Container, inRequestScope, Token } from '../lib';
 
 class Dummy {}
-const DummyArray = Symbol("Dummy[]") as Token<Dummy[]>;
+const DummyArray = Symbol('Dummy[]') as Token<Dummy[]>;
 
-describe("inRequestScope", () => {
-  test("bindObject", async () => {
+describe('inRequestScope', () => {
+  test('bindObject', async () => {
     const container1 = new Container();
     const container2 = new Container();
 
@@ -25,7 +25,7 @@ describe("inRequestScope", () => {
     expect(dummy1).not.toBe(dummy3);
   });
 
-  test("bindObject: child", async () => {
+  test('bindObject: child', async () => {
     const parent = new Container();
     const child = parent.createChild();
 
@@ -47,7 +47,7 @@ describe("inRequestScope", () => {
     parent.clear();
   });
 
-  test("bindArray", async () => {
+  test('bindArray', async () => {
     const container1 = new Container();
     const container2 = new Container();
 
@@ -82,7 +82,7 @@ describe("inRequestScope", () => {
     expect(dummy1[1]).not.toBe(dummy3[1]);
   });
 
-  test("bindArray: child", async () => {
+  test('bindArray: child', async () => {
     const parent = new Container();
     const child = parent.createChild();
 

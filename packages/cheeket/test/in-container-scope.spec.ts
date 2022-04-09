@@ -1,10 +1,10 @@
-import { bindArray, bindObject, Container, inContainerScope, Token } from "../lib";
+import { bindArray, bindObject, Container, inContainerScope, Token } from '../lib';
 
 class Dummy {}
-const DummyArray = Symbol("Dummy[]") as Token<Dummy[]>;
+const DummyArray = Symbol('Dummy[]') as Token<Dummy[]>;
 
-describe("inContainerScope", () => {
-  test("delete", async () => {
+describe('inContainerScope', () => {
+  test('delete', async () => {
     const container1 = new Container();
     const container2 = new Container();
 
@@ -35,7 +35,7 @@ describe("inContainerScope", () => {
     expect(middleware.size).toEqual(0);
   });
 
-  test("bindObject", async () => {
+  test('bindObject', async () => {
     const container1 = new Container();
     const container2 = new Container();
 
@@ -66,7 +66,7 @@ describe("inContainerScope", () => {
     expect(middleware.size).toEqual(0);
   });
 
-  test("bindObject: child", async () => {
+  test('bindObject: child', async () => {
     const parent = new Container();
     const child = parent.createChild();
 
@@ -93,7 +93,7 @@ describe("inContainerScope", () => {
     expect(middleware.size).toEqual(0);
   });
 
-  test("bindArray", async () => {
+  test('bindArray', async () => {
     const container1 = new Container();
     const container2 = new Container();
 
@@ -145,7 +145,7 @@ describe("inContainerScope", () => {
     expect(middleware2.size).toEqual(0);
   });
 
-  test("bindArray: child", async () => {
+  test('bindArray: child', async () => {
     const parent = new Container();
     const child = parent.createChild();
 

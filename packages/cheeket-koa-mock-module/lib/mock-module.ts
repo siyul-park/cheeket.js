@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { DefaultContext, DefaultState, Middleware } from "koa";
-import { ContainerContext } from "cheeket-koa";
-import { Container, Register } from "cheeket";
-import { InlineModule, Module } from "cheeket-koa-module";
+import { DefaultContext, DefaultState, Middleware } from 'koa';
+import { ContainerContext } from 'cheeket-koa';
+import { Container, Register } from 'cheeket';
+import { InlineModule, Module } from 'cheeket-koa-module';
 
-import MockRegister from "./mock-register";
+import MockRegister from './mock-register';
 
 export interface MockModuleOptions {
   override?: boolean;

@@ -1,6 +1,6 @@
-import { DefaultContext } from "koa";
-import SimpleModule from "./simple-module";
-import { Container } from "cheeket";
+import { DefaultContext } from 'koa';
+import SimpleModule from './simple-module';
+import { Container } from 'cheeket';
 
 export interface InlineModuleConfig {
   override?: boolean;

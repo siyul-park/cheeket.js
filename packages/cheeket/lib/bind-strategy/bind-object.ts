@@ -1,5 +1,5 @@
-import BindStrategy from "./bind-strategy";
-import Context from "../context";
+import BindStrategy from './bind-strategy';
+import Context from '../context';
 
 function bindObject<T>(): BindStrategy<T, T> {
   return {

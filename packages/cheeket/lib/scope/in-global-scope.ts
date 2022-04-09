@@ -1,10 +1,10 @@
-import InternalTokens from "../internal-tokens";
-import InternalEvents from "../internal-events";
-import Factory from "../factory";
-import AsyncLock from "../async-lock";
-import Middleware from "../middleware";
-import BindStrategy from "../bind-strategy";
-import AsyncEventEmitter from "../async-event-emitter";
+import InternalTokens from '../internal-tokens';
+import InternalEvents from '../internal-events';
+import Factory from '../factory';
+import AsyncLock from '../async-lock';
+import Middleware from '../middleware';
+import BindStrategy from '../bind-strategy';
+import AsyncEventEmitter from '../async-event-emitter';
 
 interface InGlobalScope<T> extends Middleware<T> {
   clear(): void;

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-shadow,@typescript-eslint/no-explicit-any */
 
-import Koa, { Context, DefaultContext, DefaultState, Middleware } from "koa";
-import { Container, Middleware as CMiddleware, Token } from "cheeket";
+import Koa, { Context, DefaultContext, DefaultState, Middleware } from 'koa';
+import { Container, Middleware as CMiddleware, Token } from 'cheeket';
 
-import ContainerContext from "./container-context";
-import InternalTokens from "./internal-tokens";
-import Cookies from "cookies";
+import ContainerContext from './container-context';
+import InternalTokens from './internal-tokens';
+import Cookies from 'cookies';
 
 export interface DependencyOptions {
   override?: boolean;
@@ -13,7 +13,7 @@ export interface DependencyOptions {
 
 function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBodyT = any>(
   global?: Container,
-  options?: DependencyOptions
+  options?: DependencyOptions,
 ): Middleware<StateT, ContextT & ContainerContext, ResponseBodyT> {
   function bind<T>(value: T): CMiddleware<T> {
     return async (context, next) => {

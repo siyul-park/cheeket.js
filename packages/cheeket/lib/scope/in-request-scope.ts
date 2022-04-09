@@ -1,8 +1,8 @@
-import InternalTokens from "../internal-tokens";
-import InternalEvents from "../internal-events";
-import Factory from "../factory";
-import Middleware from "../middleware";
-import BindStrategy from "../bind-strategy";
+import InternalTokens from '../internal-tokens';
+import InternalEvents from '../internal-events';
+import Factory from '../factory';
+import Middleware from '../middleware';
+import BindStrategy from '../bind-strategy';
 
 type InRequestScope<T> = Middleware<T>;
 
