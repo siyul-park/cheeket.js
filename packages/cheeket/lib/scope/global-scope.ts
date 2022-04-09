@@ -19,8 +19,8 @@ function globalScope<T>(delegator: Factory<T>): GlobalScope<T> {
     if (!eventEmitters.has(eventEmitter)) {
       const handleClearContainer = (cleared: unknown) => {
         if (cleared === eventEmitter) {
-          eventEmitters.delete(eventEmitter);
           eventEmitter.removeListener(InternalEvents.Clear, handleClearContainer);
+          eventEmitters.delete(eventEmitter);
         }
       };
       eventEmitter.addListener(InternalEvents.Clear, handleClearContainer);

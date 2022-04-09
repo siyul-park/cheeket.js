@@ -38,18 +38,18 @@ function containerScope<T>(delegator: Factory<T>): ContainerScope<T> {
 
       const handleClearContainer = async (cleared: unknown) => {
         if (cleared === eventEmitter) {
+          eventEmitter.removeListener(InternalEvents.PreClear, handleClearContainer);
+
           await eventEmitter.emit(InternalEvents.PreClear, value);
           await eventEmitter.emit(InternalEvents.Clear, value);
           await eventEmitter.emit(InternalEvents.PostClear, value);
-
-          eventEmitter.removeListener(InternalEvents.PreClear, handleClearContainer);
         }
       };
       const handleClearValue = (cleared: unknown) => {
         if (cleared === value) {
-          values.delete(eventEmitter);
-
           eventEmitter.removeListener(InternalEvents.Clear, handleClearValue);
+
+          values.delete(eventEmitter);
         }
       };
 
