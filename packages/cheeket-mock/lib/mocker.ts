@@ -1,6 +1,6 @@
-import { Container, MiddlewareStorage, Middleware, Register, Token, route } from 'cheeket';
+import { MiddlewareStorage, Middleware, Register, Token, route } from 'cheeket';
 
-class MockRegister implements Register {
+class Mocker implements Register {
   private readonly storage = new MiddlewareStorage();
 
   private readonly interceptor = route(this.storage);
@@ -21,9 +21,9 @@ class MockRegister implements Register {
     return this.storage.has(token, middleware);
   }
 
-  apply(container: Container): void {
-    container.use(this.interceptor);
+  mock(): Middleware<unknown> {
+    return this.interceptor;
   }
 }
 
-export default MockRegister;
+export default Mocker;

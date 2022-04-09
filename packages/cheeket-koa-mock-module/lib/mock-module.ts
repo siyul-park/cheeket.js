@@ -4,8 +4,7 @@ import { DefaultContext, DefaultState, Middleware } from 'koa';
 import { ContainerContext } from 'cheeket-koa';
 import { Container, Register } from 'cheeket';
 import { InlineModule, Module } from 'cheeket-koa-module';
-
-import MockRegister from './mock-register';
+import Mocker from 'cheeket-mock';
 
 export interface MockModuleOptions {
   override?: boolean;
@@ -15,16 +14,16 @@ class MockModule<ContextT = DefaultContext> implements Module<ContextT> {
 
   private readonly internalModule: InlineModule<ContextT>;
 
-  private readonly globalMockRegister = new MockRegister();
+  private readonly globalMocker = new Mocker();
 
-  private readonly localMockRegister = new MockRegister();
+  private readonly localMocker = new Mocker();
 
   constructor(options?: MockModuleOptions) {
     this.internalModule = new InlineModule<ContextT>({
       ...options,
       configure: {
-        global: (container) => this.globalMockRegister.apply(container),
-        local: (container) => this.localMockRegister.apply(container),
+        global: (container) => container.use(this.globalMocker.mock()),
+        local: (container) => container.use(this.localMocker.mock()),
       },
     });
   }
@@ -36,8 +35,8 @@ class MockModule<ContextT = DefaultContext> implements Module<ContextT> {
 
   modules(): Middleware<DefaultState, ContextT & ContainerContext> {
     if (!this.init) {
-      this.configureGlobal(this.globalMockRegister);
-      this.configureLocal(this.localMockRegister);
+      this.configureGlobal(this.globalMocker);
+      this.configureLocal(this.localMocker);
       this.init = true;
     }
     return this.internalModule.modules();
