@@ -82,7 +82,7 @@ class AsyncEventEmitter {
   }
 
   async emit(event: string | symbol, ...args: any[]): Promise<boolean> {
-    const listeners = this.#listeners.get(event);
+    const listeners = this.#rawListeners.get(event);
     if (listeners == null) {
       return false;
     }
