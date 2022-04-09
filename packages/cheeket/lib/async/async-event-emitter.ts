@@ -105,9 +105,13 @@ class AsyncEventEmitter {
 
   prependListener(event: string | symbol, listener: (...args: any[]) => void | Promise<void>): this {
     const listeners = this.#listeners.get(event) ?? [];
+    const rawListeners = this.#rawListeners.get(event) ?? [];
+
     listeners.unshift(listener);
+    rawListeners.unshift(listener);
+
     this.#listeners.set(event, listeners);
-    this.#rawListeners.set(event, listeners);
+    this.#rawListeners.set(event, rawListeners);
     return this;
   }
 
@@ -118,9 +122,9 @@ class AsyncEventEmitter {
     };
 
     const listeners = this.#listeners.get(event) ?? [];
-    listeners.unshift(listener);
-
     const rawListeners = this.#listeners.get(event) ?? [];
+
+    listeners.unshift(listener);
     rawListeners.unshift(wrapper);
 
     this.#listeners.set(event, listeners);
