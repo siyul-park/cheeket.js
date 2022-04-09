@@ -1,5 +1,5 @@
 import Context from './context';
 
-type Factory<T, U> = (context: Context<T>) => Promise<U> | U;
+type Factory<T> = (context: Context<unknown>) => Promise<T> | T;
 
 export default Factory;

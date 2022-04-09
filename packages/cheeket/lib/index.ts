@@ -16,7 +16,7 @@ export { default as AsyncEventEmitter } from './async-event-emitter';
 export { default as AsyncLock } from './async-lock';
 export { default as Queue } from './queue';
 
-export { default as BindStrategy, bindArray, bindObject } from './bind-strategy';
+export { default as BindStrategy, asObject, asArray } from './binder';
 export * from './scope';
 
 export { default as Middleware, MiddlewareStorage, proxy, route, compose, chain } from './middleware';
