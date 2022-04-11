@@ -1,6 +1,7 @@
 {
   "packages": [
     "packages/*",
+    "documents/*",
     "examples/*"
   ],
   "version": "independent"
