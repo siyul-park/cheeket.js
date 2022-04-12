@@ -1,6 +1,6 @@
 {
   "name": "cheeket-mock",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
   "license": "ISC",
   "author": "",
@@ -19,7 +19,7 @@
     "koa-compose": "^4.1.0"
   },
   "devDependencies": {
-    "cheeket": "^4.0.0-alpha.9"
+    "cheeket": "^4.0.0"
   },
   "peerDependencies": {
     "cheeket": "^4.0.0"
