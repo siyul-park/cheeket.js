@@ -47,7 +47,7 @@ function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBo
     const local =
       !override && localGlobal === originContainers?.global && originContainers?.local != null
         ? originContainers.local
-        : localGlobal.createChild();
+        : localGlobal.child();
 
     if (local !== originContainers?.local) {
       local.register(InternalTokens.Context, bind<Context>(context));
