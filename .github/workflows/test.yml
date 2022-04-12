@@ -1,26 +1,14 @@
 name: Test CI
 
 on:
-  push:
-    branches:
-      - 'master'
-      - 'develop'
-      - 'release'
-  pull_request:
-    branches:
-      - 'master'
-      - 'develop'
-      - 'release'
+  push
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [14]
-
+        node-version: [16]
     steps:
       - name: Checkout source code
         uses: actions/checkout@v2

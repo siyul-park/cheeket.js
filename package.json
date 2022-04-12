@@ -3,9 +3,7 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "commons/*",
-    "domains/*",
-    "applications/*"
+    "examples/*"
   ],
   "scripts": {
     "build": "lerna run build --stream",

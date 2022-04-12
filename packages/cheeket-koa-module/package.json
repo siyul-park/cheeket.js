@@ -33,6 +33,6 @@
     "cheeket": "^4.0.0-alpha.9",
     "cheeket-koa": "^1.0.0-alpha.14",
     "cookies": "^0.8.0",
-    "koa": "^2.13.1"
+    "koa": "^2.13.4"
   }
 }

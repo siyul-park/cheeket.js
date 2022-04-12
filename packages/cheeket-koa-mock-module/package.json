@@ -37,6 +37,6 @@
     "cheeket-koa-module": "^1.0.0-alpha.16",
     "cheeket-mock": "^0.0.0",
     "cookies": "^0.8.0",
-    "koa": "^2.13.1"
+    "koa": "^2.13.4"
   }
 }
