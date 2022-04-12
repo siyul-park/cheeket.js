@@ -17,7 +17,7 @@ npm install cheeket
 import { Container, Token, InternalEvents, containerScope, asObject, asArray } from 'cheeket';
 
 interface Logger {
-  log: (s: string) => void;
+  log: (message: string) => void;
 }
 
 type Strategy = (message: string) => string | null;
