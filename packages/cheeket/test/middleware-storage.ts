@@ -1,5 +1,4 @@
-import MiddlewareStorage from '../lib/middleware/middleware-storage';
-import { Middleware } from '../lib';
+import { Middleware, MiddlewareStorage } from '../lib';
 
 class Dummy {}
 
