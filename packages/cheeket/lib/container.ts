@@ -82,7 +82,7 @@ class Container extends AsyncEventEmitter implements Resolver, Register {
     await this.emit(InternalEvents.PostClear, this);
   }
 
-  createChild(): Container {
+  child(): Container {
     return new Container(this);
   }
 }

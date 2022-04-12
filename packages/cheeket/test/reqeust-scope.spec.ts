@@ -26,7 +26,7 @@ describe('requestScope', () => {
 
   test('child', async () => {
     const parent = new Container();
-    const child = parent.createChild();
+    const child = parent.child();
 
     const factory = requestScope(() => new Dummy());
 

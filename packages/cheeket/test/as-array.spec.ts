@@ -58,7 +58,7 @@ describe('asArray', () => {
 
   test('child', async () => {
     const parent = new Container();
-    const child = parent.createChild();
+    const child = parent.child();
 
     const factory1 = containerScope(() => new Dummy());
     const factory2 = containerScope(() => new Dummy());
