@@ -8,11 +8,11 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'cheeket',
   url: 'https:/siyual-park.github.io',
-  baseUrl: process.env.NODE_ENV === 'production' ? '/cheeket/' : '/',
+  baseUrl: process.env.NODE_ENV === 'production' ? '/cheeket.js/' : '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   organizationName: 'siyual-park',
-  projectName: 'cheeket',
+  projectName: 'cheeket.js',
 
   presets: [
     [
