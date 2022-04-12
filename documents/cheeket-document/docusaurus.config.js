@@ -12,7 +12,7 @@ const config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   organizationName: 'siyual-park',
-  projectName: 'cheeket.github.io',
+  projectName: 'cheeket',
 
   presets: [
     [
