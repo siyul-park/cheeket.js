@@ -46,7 +46,7 @@ class ChatBot {
       }
     }
     
-    this.logger(`response: ${message}`);
+    this.logger(`response: ${response}`);
     return response;
   }
 }
