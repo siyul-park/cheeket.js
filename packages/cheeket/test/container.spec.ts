@@ -20,7 +20,7 @@ describe('Container', () => {
 
   test('resolve: chaining', async () => {
     const parent = new Container();
-    const child = parent.createChild();
+    const child = parent.child();
 
     parent.register(Dummy1, (context) => {
       context.response = new Dummy1();
@@ -31,7 +31,7 @@ describe('Container', () => {
 
   test('resolve: multi middleware', async () => {
     const parent = new Container();
-    const child = parent.createChild();
+    const child = parent.child();
 
     child.register(Dummy1, async (context, next) => {
       await next();

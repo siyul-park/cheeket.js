@@ -3,8 +3,7 @@
 import InternalTokens from '../internal-tokens';
 import InternalEvents from '../internal-events';
 import Factory from '../factory';
-import AsyncLock from '../async/async-lock';
-import AsyncEventEmitter from '../async/async-event-emitter';
+import { AsyncEventEmitter, AsyncLock } from '../async';
 
 interface ContainerScope<T> extends Factory<T> {
   get(eventEmitter: AsyncEventEmitter): T | undefined;
