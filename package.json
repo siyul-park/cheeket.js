@@ -3,9 +3,8 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "commons/*",
-    "domains/*",
-    "applications/*"
+    "documents/*",
+    "examples/*"
   ],
   "scripts": {
     "start:document": "lerna run start --scope cheeket-document",
