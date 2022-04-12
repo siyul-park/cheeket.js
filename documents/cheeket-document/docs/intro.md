@@ -84,5 +84,5 @@ container.on(InternalEvents.PostCreate, async (context) => {
 });
 
 
-const chatbot = container.resolve(ChatbotToken);
+const chatbot = await container.resolve(ChatbotToken);
 ```
