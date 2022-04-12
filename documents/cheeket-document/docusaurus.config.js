@@ -7,12 +7,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'cheeket',
-  url: 'https://github.com/siyual-park/cheeket.js',
-  baseUrl: '/',
+  url: 'https:/siyual-park.github.io',
+  baseUrl: process.env.NODE_ENV === 'production' ? '/cheeket/' : '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  organizationName: 'siyual-park', // Usually your GitHub org/user name.
-  projectName: 'cheeket', // Usually your repo name.
+  organizationName: 'siyual-park',
+  projectName: 'cheeket.github.io',
 
   presets: [
     [
