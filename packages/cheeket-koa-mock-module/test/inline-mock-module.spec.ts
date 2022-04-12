@@ -1,19 +1,19 @@
 /* eslint-disable max-classes-per-file */
 
-import { createMockContext } from "@shopify/jest-koa-mocks";
-import { Container } from "cheeket";
-import { Context } from "koa";
-import compose from "koa-compose";
-import { ContainerContext, dependency } from "cheeket-koa";
-import { InlineModule } from "cheeket-koa-module";
+import { createMockContext } from '@shopify/jest-koa-mocks';
+import { Container } from 'cheeket';
+import { Context } from 'koa';
+import compose from 'koa-compose';
+import { ContainerContext, dependency } from 'cheeket-koa';
+import { InlineModule } from 'cheeket-koa-module';
 
-import { InlineMockModule } from "../lib";
+import { InlineMockModule } from '../lib';
 
 class Dummy1 {}
 class Dummy2 {}
 
-describe("InlineMockModule", () => {
-  it("configure: function call", async () => {
+describe('InlineMockModule', () => {
+  it('configure: function call', async () => {
     const container = new Container();
 
     const globalFunc = jest.fn(() => {});
@@ -40,7 +40,7 @@ describe("InlineMockModule", () => {
     expect(localFunc.mock.calls.length).toEqual(1);
   });
 
-  it("configure: register", async () => {
+  it('configure: register', async () => {
     const container = new Container();
 
     const module = new InlineMockModule({
@@ -72,7 +72,7 @@ describe("InlineMockModule", () => {
     });
   });
 
-  it("configure: override", async () => {
+  it('configure: override', async () => {
     const container = new Container();
 
     const mockDummy1 = new Dummy1();

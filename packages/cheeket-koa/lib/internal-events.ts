@@ -1,8 +1,8 @@
-import { InternalEvents as Parent } from "cheeket";
+import { InternalEvents as Parent } from 'cheeket';
 
 const InternalEvents = Object.freeze({
-  Load: "load",
-  LoadAsync: "load:async",
+  Load: 'load',
+  LoadAsync: 'load:async',
   ...Parent,
 });
 

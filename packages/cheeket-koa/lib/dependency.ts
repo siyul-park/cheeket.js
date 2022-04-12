@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-shadow,@typescript-eslint/no-explicit-any */
 
-import Koa, { Context, DefaultContext, DefaultState, Middleware } from "koa";
-import { Container, Middleware as CMiddleware, Token } from "cheeket";
+import Koa, { Context, DefaultContext, DefaultState, Middleware } from 'koa';
+import { Container, Middleware as CMiddleware, Token } from 'cheeket';
 
-import ContainerContext from "./container-context";
-import InternalTokens from "./internal-tokens";
-import Cookies from "cookies";
+import ContainerContext from './container-context';
+import InternalTokens from './internal-tokens';
+import Cookies from 'cookies';
 
 export interface DependencyOptions {
   override?: boolean;
@@ -13,7 +13,7 @@ export interface DependencyOptions {
 
 function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBodyT = any>(
   global?: Container,
-  options?: DependencyOptions
+  options?: DependencyOptions,
 ): Middleware<StateT, ContextT & ContainerContext, ResponseBodyT> {
   function bind<T>(value: T): CMiddleware<T> {
     return async (context, next) => {
@@ -47,7 +47,7 @@ function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBo
     const local =
       !override && localGlobal === originContainers?.global && originContainers?.local != null
         ? originContainers.local
-        : localGlobal.createChild();
+        : localGlobal.child();
 
     if (local !== originContainers?.local) {
       local.register(InternalTokens.Context, bind<Context>(context));
@@ -71,8 +71,8 @@ function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBo
       context.resolve = (token) => {
         return context.containers.local.resolve(token);
       };
-      context.resolveOrDefault = (token, other) => {
-        return context.containers.local.resolveOrDefault(token, other);
+      context.resolveOr = (token, other) => {
+        return context.containers.local.resolveOr(token, other);
       };
 
       context.register = (token, middleware) => {
@@ -98,7 +98,7 @@ function dependency<StateT = DefaultState, ContextT = DefaultContext, ResponseBo
       } else {
         (context as Partial<ContextT & ContainerContext>).containers = undefined;
         (context as Partial<ContextT & ContainerContext>).resolve = undefined;
-        (context as Partial<ContextT & ContainerContext>).resolveOrDefault = undefined;
+        (context as Partial<ContextT & ContainerContext>).resolveOr = undefined;
         (context as Partial<ContextT & ContainerContext>).register = undefined;
         (context as Partial<ContextT & ContainerContext>).unregister = undefined;
         (context as Partial<ContextT & ContainerContext>).isRegister = undefined;

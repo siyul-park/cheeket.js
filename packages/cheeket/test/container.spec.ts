@@ -1,12 +1,12 @@
 /* eslint-disable no-plusplus,@typescript-eslint/no-loop-func,max-classes-per-file */
 
-import { Container } from "../lib";
+import { Container } from '../lib';
 
 class Dummy1 {}
 class Dummy2 {}
 
-describe("Container", () => {
-  test("resolve", async () => {
+describe('Container', () => {
+  test('resolve', async () => {
     const container = new Container();
 
     container.register(Dummy1, (context) => {
@@ -18,9 +18,9 @@ describe("Container", () => {
     expect(await container.resolve(Dummy1)).toBeTruthy();
   });
 
-  test("resolve: chaining", async () => {
+  test('resolve: chaining', async () => {
     const parent = new Container();
-    const child = parent.createChild();
+    const child = parent.child();
 
     parent.register(Dummy1, (context) => {
       context.response = new Dummy1();
@@ -29,9 +29,9 @@ describe("Container", () => {
     expect(await child.resolve(Dummy1)).toBeTruthy();
   });
 
-  test("resolve: multi middleware", async () => {
+  test('resolve: multi middleware', async () => {
     const parent = new Container();
-    const child = parent.createChild();
+    const child = parent.child();
 
     child.register(Dummy1, async (context, next) => {
       await next();
@@ -47,7 +47,7 @@ describe("Container", () => {
     expect(await child.resolve(Dummy1)).toBeTruthy();
   });
 
-  test("resolve: nested", async () => {
+  test('resolve: nested', async () => {
     const container = new Container();
 
     container.register(Dummy1, async (context) => {
@@ -67,23 +67,23 @@ describe("Container", () => {
     expect(await container.resolve(Dummy1)).toBeTruthy();
   });
 
-  test("resolveOrDefault", async () => {
+  test('resolveOr', async () => {
     const container = new Container();
 
     container.register(Dummy1, (context) => {
       context.response = new Dummy1();
     });
 
-    expect(await container.resolveOrDefault(Dummy1, null)).toBeTruthy();
+    expect(await container.resolveOr(Dummy1, null)).toBeTruthy();
   });
 
-  test("resolveOrDefault: not resolved", async () => {
+  test('resolveOr: not resolved', async () => {
     const container = new Container();
 
-    expect(await container.resolveOrDefault(Dummy1, null)).toBe(null);
+    expect(await container.resolveOr(Dummy1, null)).toBe(null);
   });
 
-  test("use", async () => {
+  test('use', async () => {
     const container = new Container();
 
     container.use(async (context, next) => {

@@ -1,12 +1,12 @@
-import { createMockContext } from "@shopify/jest-koa-mocks";
-import { Container, Token } from "cheeket";
-import { Context } from "koa";
-import compose from "koa-compose";
+import { createMockContext } from '@shopify/jest-koa-mocks';
+import { Container, Token } from 'cheeket';
+import { Context } from 'koa';
+import compose from 'koa-compose';
 
-import { ContainerContext, dependency, InternalTokens } from "../lib";
+import { ContainerContext, dependency, InternalTokens } from '../lib';
 
-describe("dependency", () => {
-  it("default", async () => {
+describe('dependency', () => {
+  it('default', async () => {
     const container = new Container();
     const dependencyMiddleware = dependency(container);
 
@@ -25,7 +25,7 @@ describe("dependency", () => {
     expect(ctx.containers).toBeUndefined();
   });
 
-  it("options.override: true, pre initialized: false", async () => {
+  it('options.override: true, pre initialized: false', async () => {
     const container = new Container();
     const dependencyMiddleware = dependency(container, { override: true });
 
@@ -44,7 +44,7 @@ describe("dependency", () => {
     expect(ctx.containers).toBeUndefined();
   });
 
-  it("options.override: true, pre initialized: true", async () => {
+  it('options.override: true, pre initialized: true', async () => {
     const container1 = new Container();
     const container2 = new Container();
 
@@ -79,7 +79,7 @@ describe("dependency", () => {
     expect(ctx.containers).toBeUndefined();
   });
 
-  it("options.override: false, pre initialized: false", async () => {
+  it('options.override: false, pre initialized: false', async () => {
     const container = new Container();
     const dependencyMiddleware = dependency(container, { override: false });
 
@@ -98,7 +98,7 @@ describe("dependency", () => {
     expect(ctx.containers).toBeUndefined();
   });
 
-  it("options.override: false, pre initialized: true", async () => {
+  it('options.override: false, pre initialized: true', async () => {
     const container1 = new Container();
     const container2 = new Container();
 
