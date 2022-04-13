@@ -45,5 +45,8 @@ jobs:
       - name: Deploy to GitHub Pages
         if: steps.verify-changed-files.outputs.files_changed == 'true'
         run:
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor}}@users.noreply.github.com"
+
           GIT_USER=${{ github.actor }} npm run deploy
         working-directory: ${{ env.working-directory }}
