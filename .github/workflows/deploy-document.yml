@@ -14,7 +14,7 @@ jobs:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     env:
-      working-directory: ./documents/cheeket-document
+      working-directory: ./website
     strategy:
       matrix:
         node-version: [ 16 ]
@@ -27,7 +27,7 @@ jobs:
         id: verify-changed-files
         with:
           files: |
-            packages/**/*
+            website/**/*
       - name: Use Node.js ${{ matrix.node-version }}
         if: steps.verify-changed-files.outputs.files_changed == 'true'
         uses: actions/setup-node@v3
