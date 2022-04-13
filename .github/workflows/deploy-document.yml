@@ -6,8 +6,6 @@ on:
       - test
     branches:
       - main
-    paths:
-      - documents/**
     types:
       - completed
 
@@ -24,7 +22,14 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.workflow_run.head_branch }}
+      - name: Verify Changed files
+        uses: tj-actions/verify-changed-files@v9
+        id: verify-changed-files
+        with:
+          files: |
+            packages/**/*
       - name: Use Node.js ${{ matrix.node-version }}
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
@@ -35,8 +40,6 @@ jobs:
       - name: Build website
         run: npm run build
         working-directory: ${{ env.working-directory }}
-      # Popular action to deploy to GitHub Pages:
-      # Docs: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-docusaurus
       - name: Deploy to GitHub Pages
         run:
           GIT_USER=${{ github.actor }} npm run deploy
