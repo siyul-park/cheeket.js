@@ -1,4 +1,4 @@
-name: Test Deploy
+name: Test Deploy Document
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  test-deploy:
+  test-deploy-document:
     name: Test Deploy to GitHub Pages
     runs-on: ubuntu-latest
     env:
