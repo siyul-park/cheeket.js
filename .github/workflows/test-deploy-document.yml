@@ -1,7 +1,7 @@
 name: test-deploy-document
 
 on:
-  push
+  - push
 
 jobs:
   test-deploy-document:
