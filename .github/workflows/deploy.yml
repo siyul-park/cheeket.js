@@ -1,14 +1,21 @@
-name: Deploy
+name: deploy
 
 on:
-  push:
+  workflow_run:
+    workflows:
+      - test
     branches:
       - main
       - release
       - develop
+    paths:
+      - packages/**
+    types:
+      - completed
 
 jobs:
   deploy_package:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Deploy to NPM
     runs-on: ubuntu-latest
     env:
@@ -19,27 +26,39 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+      - name: Verify Changed files
+        uses: tj-actions/verify-changed-files@v9
+        id: verify-changed-files
+        with:
+          files: |
+            packages/**/*
       - name: Use Node.js ${{ matrix.node-version }}
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - name: Install dependencies
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
         run: npm ci
       - name: Build
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
         run: npm run build
         env:
           NODE_ENV: production
       - name: "Version and publish"
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
           
-          if [ ${{ github.base_ref }} = develop ]; then
+          if [ ${{ github.event.workflow_run.head_branch }} = 'develop' ]; then
             npx lerna version --conventional-commits --no-changelog --conventional-prerelease --preid alpha --yes
-          elif [ ${{ github.base_ref }} = release ]; then
+          elif [ ${{ github.event.workflow_run.head_branch }} = 'release' ]; then
             npx lerna version --conventional-commits --no-changelog --conventional-prerelease --preid beta --yes
           else
             npx lerna version --conventional-commits --no-changelog --conventional-graduate --yes
