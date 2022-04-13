@@ -8,6 +8,8 @@ on:
       - main
       - release
       - develop
+    paths:
+      - packages/**
     types:
       - completed
 
