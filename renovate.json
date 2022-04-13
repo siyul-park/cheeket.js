@@ -4,6 +4,7 @@
   ],
   "labels": ["dependencies"],
   "baseBranches": "develop",
+  "branchPrefix": "dependency/",
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "digest"]
