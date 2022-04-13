@@ -41,12 +41,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - name: Install dependencies
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
         run: npm ci
       - name: Build
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
         run: npm run build
         env:
           NODE_ENV: production
       - name: "Version and publish"
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
         run: |
