@@ -45,4 +45,4 @@ jobs:
             npx lerna version --yes
           fi
           
-          npx lerna publish --yes -- --access public
+          npx lerna publish from-git --yes -- --access public
