@@ -35,12 +35,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
       - name: Install dependencies
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
         run: npm ci
         working-directory: ${{ env.working-directory }}
       - name: Build website
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
         run: npm run build
         working-directory: ${{ env.working-directory }}
       - name: Deploy to GitHub Pages
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
         run:
           GIT_USER=${{ github.actor }} npm run deploy
         working-directory: ${{ env.working-directory }}
