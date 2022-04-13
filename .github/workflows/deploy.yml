@@ -1,14 +1,15 @@
-name: Deploy
+name: deploy
 
 on:
-  push:
-    branches:
-      - main
-      - release
-      - develop
+  workflow_run:
+    workflows: [ "test" ]
+    branches: [ main, release, develop ]
+    types:
+      - completed
 
 jobs:
   deploy_package:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Deploy to NPM
     runs-on: ubuntu-latest
     env:
