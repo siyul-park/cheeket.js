@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Checkout source code
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -38,9 +40,9 @@ jobs:
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
           
-          if [ ${{ github.ref }} = 'refs/heads/develop' ]; then
+          if [ ${{ github.event.workflow_run.head_branch }} = 'develop' ]; then
             npx lerna version --conventional-commits --no-changelog --conventional-prerelease --preid alpha --yes
-          elif [ ${{ github.ref }} = 'refs/heads/release' ]; then
+          elif [ ${{ github.event.workflow_run.head_branch }} = 'release' ]; then
             npx lerna version --conventional-commits --no-changelog --conventional-prerelease --preid beta --yes
           else
             npx lerna version --conventional-commits --no-changelog --conventional-graduate --yes
