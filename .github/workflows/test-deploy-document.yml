@@ -8,7 +8,7 @@ jobs:
     name: Test Deploy to GitHub Pages
     runs-on: ubuntu-latest
     env:
-      working-directory: ./documents/cheeket-document
+      working-directory: ./website
     strategy:
       matrix:
         node-version: [16]
