@@ -4,6 +4,8 @@
   "labels": ["dependencies"],
   "baseBranches": ["develop"],
   "branchPrefix": "dependency/",
+  "rangeStrategy": "bump",
+  "lockFileMaintenance": { "enabled": true },
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "digest"]
