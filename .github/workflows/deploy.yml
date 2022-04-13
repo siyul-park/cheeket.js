@@ -38,11 +38,11 @@ jobs:
           git config user.email "${{ github.actor}}@users.noreply.github.com"
           
           if [ ${{ github.base_ref }} = develop ]; then
-            npx lerna version --preid alpha --yes
+            npx lerna version --conventional-commits --no-changelog --conventional-prerelease --preid alpha --yes
           elif [ ${{ github.base_ref }} = release ]; then
-            npx lerna version --preid beta --yes
+            npx lerna version --conventional-commits --no-changelog --conventional-prerelease --preid beta --yes
           else
-            npx lerna version --yes
+            npx lerna version --conventional-commits --no-changelog --conventional-graduate --yes
           fi
           
           npx lerna publish from-git --yes -- --access public
