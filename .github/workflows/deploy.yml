@@ -1,0 +1,48 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - release
+      - develop
+
+jobs:
+  deploy_package:
+    name: Deploy to NPM
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./documents/cheeket-document
+    strategy:
+      matrix:
+        node-version: [16]
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+        env:
+          NODE_ENV: production
+      - name: "Version and publish"
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor}}@users.noreply.github.com"
+          
+          if [ ${{ github.base_ref }} = develop ]; then
+            npx lerna version --conventional-commits --no-changelog --conventional-prerelease --preid alpha --yes
+          elif [ ${{ github.base_ref }} = release ]; then
+            npx lerna version --conventional-commits --no-changelog --conventional-prerelease --preid beta --yes
+          else
+            npx lerna version --conventional-commits --no-changelog --conventional-graduate --yes
+          fi
+          
+          npx lerna publish from-git --yes -- --access public
