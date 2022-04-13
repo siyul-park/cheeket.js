@@ -8,9 +8,10 @@ on:
       - main
       - release
       - develop
+    paths:
+      - packages/**
     types:
       - completed
-
 
 jobs:
   deploy_package:
