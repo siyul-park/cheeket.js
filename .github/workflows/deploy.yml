@@ -38,9 +38,9 @@ jobs:
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
           
-          if [ ${{ github.base_ref }} = develop ]; then
+          if [ ${{ github.ref }} = 'refs/heads/develop' ]; then
             npx lerna version --conventional-commits --no-changelog --conventional-prerelease --preid alpha --yes
-          elif [ ${{ github.base_ref }} = release ]; then
+          elif [ ${{ github.ref }} = 'refs/heads/release' ]; then
             npx lerna version --conventional-commits --no-changelog --conventional-prerelease --preid beta --yes
           else
             npx lerna version --conventional-commits --no-changelog --conventional-graduate --yes
