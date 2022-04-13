@@ -1,9 +1,11 @@
 name: deploy-document
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: [ "test" ]
+    branches: [ main ]
+    types:
+      - completed
 
 jobs:
   deploy-document:
