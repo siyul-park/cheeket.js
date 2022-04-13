@@ -3,6 +3,7 @@
     "config:base"
   ],
   "labels": ["dependencies"],
+  "baseBranches": "develop",
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "digest"]
