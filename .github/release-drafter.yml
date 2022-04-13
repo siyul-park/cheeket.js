@@ -21,11 +21,11 @@ version-resolver:
   minor:
     labels:
       - 'minor'
+      - 'enhancement'
   patch:
     labels:
-      - 'enhancement'
+      - 'patch'
       - 'bug'
       - 'dependencies'
       - 'chore'
-      - 'patch'
   default: patch
