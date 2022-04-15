@@ -1,0 +1,31 @@
+name-template: 'v$RESOLVED_VERSION ✈️'
+tag-template: '$RESOLVED_VERSION'
+
+template: |
+  # v$RESOLVED_VERSION
+  $CHANGES
+categories:
+  - title: '🚀 기능 변경 사항'
+    label: 'enhancement'
+  - title: '🐛 버그 수정 사항'
+    label: 'bug'
+  - title: '🤖 패키지 업데이트 사항'
+    label: 'dependencies'
+  - title: '🧰 기타 사항'
+    label: 'chore'
+
+version-resolver:
+  major:
+    labels:
+      - 'major'
+  minor:
+    labels:
+      - 'minor'
+      - 'enhancement'
+  patch:
+    labels:
+      - 'patch'
+      - 'bug'
+      - 'dependencies'
+      - 'chore'
+  default: patch

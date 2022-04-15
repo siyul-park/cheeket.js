@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import * as Koa from 'koa';
 
 import ContainerContext from './container-context';
