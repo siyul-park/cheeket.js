@@ -56,12 +56,12 @@ jobs:
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor}}@users.noreply.github.com"
           
-          if [ ${{ github.event.workflow_run.head_branch }} = 'develop' ]; then
-            npx lerna version --conventional-commits --no-changelog --conventional-prerelease --preid alpha --yes
-          elif [ ${{ github.event.workflow_run.head_branch }} = 'release' ]; then
-            npx lerna version --conventional-commits --no-changelog --conventional-prerelease --preid beta --yes
-          else
-            npx lerna version --conventional-commits --no-changelog --conventional-graduate --yes
-          fi
-          
-          npx lerna publish from-git --yes -- --access public
+#          if [ ${{ github.event.workflow_run.head_branch }} = 'develop' ]; then
+#            npx lerna version --conventional-commits --no-changelog --conventional-prerelease --preid alpha --yes
+#          elif [ ${{ github.event.workflow_run.head_branch }} = 'release' ]; then
+#            npx lerna version --conventional-commits --no-changelog --conventional-prerelease --preid beta --yes
+#          else
+#            npx lerna version --conventional-commits --no-changelog --conventional-graduate --yes
+#          fi
+#
+#          npx lerna publish from-git --yes -- --access public
