@@ -9,15 +9,13 @@
     "build": "nx run-many --target=build --all",
     "clean": "nx run-many --target=clean --all",
     "postinstall": "husky install",
-    "lint": "nx affected --target=lint",
-    "lint:all": "nx run-many --target=lint --all",
+    "lint": "nx run-many --target=lint --all",
     "lint:fix": "nx run-many --target=lint:fix --all",
     "package:init": "./scripts/init-package.sh",
     "package:sort": "sort-package-json \"**/package.json\"",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable",
-    "test": "nx affected --target=test",
-    "test:all": "nx run-many --target=test --all"
+    "test": "nx run-many --target=test --all"
   },
   "devDependencies": {
     "@nrwl/cli": "13.10.2",
