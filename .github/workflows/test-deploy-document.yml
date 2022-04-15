@@ -1,7 +1,12 @@
 name: test-deploy-document
 
 on:
-  - push
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test-deploy-document:
