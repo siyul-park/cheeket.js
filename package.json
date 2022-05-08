@@ -38,11 +38,11 @@
     "gulp-typescript": "^5.0.1",
     "gulp-uglify": "^3.0.2",
     "husky": "^7.0.4",
-    "jest": "^27.5.1",
+    "jest": "^28.1.0",
     "nx": "14.0.5",
     "pinst": "^3.0.0",
     "sort-package-json": "^1.57.0",
-    "ts-jest": "^27.1.4",
+    "ts-jest": "^28.0.2",
     "typescript": "^4.6.4"
   },
   "engines": {
