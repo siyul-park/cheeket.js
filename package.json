@@ -18,8 +18,8 @@
     "test": "nx run-many --target=test --all"
   },
   "devDependencies": {
-    "@nrwl/cli": "14.1.9",
-    "@nrwl/workspace": "14.1.9",
+    "@nrwl/cli": "14.3.6",
+    "@nrwl/workspace": "14.3.6",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.38",
     "@typescript-eslint/eslint-plugin": "^5.28.0",
@@ -39,7 +39,7 @@
     "gulp-uglify": "^3.0.2",
     "husky": "^8.0.1",
     "jest": "^28.1.1",
-    "nx": "14.1.9",
+    "nx": "14.3.6",
     "pinst": "^3.0.0",
     "sort-package-json": "^1.57.0",
     "ts-jest": "^28.0.5",
