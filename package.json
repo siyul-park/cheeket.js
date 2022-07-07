@@ -18,15 +18,15 @@
     "test": "nx run-many --target=test --all"
   },
   "devDependencies": {
-    "@nrwl/cli": "14.3.6",
-    "@nrwl/workspace": "14.3.6",
-    "@types/jest": "^28.1.3",
-    "@types/node": "^16.11.41",
-    "@typescript-eslint/eslint-plugin": "^5.30.0",
-    "@typescript-eslint/parser": "^5.30.0",
+    "@nrwl/cli": "14.4.2",
+    "@nrwl/workspace": "14.4.2",
+    "@types/jest": "^28.1.4",
+    "@types/node": "^16.11.43",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
     "cross-env": "^7.0.3",
     "deepmerge": "^4.2.2",
-    "eslint": "^8.18.0",
+    "eslint": "^8.19.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-monorepo": "^0.3.2",
@@ -38,8 +38,8 @@
     "gulp-typescript": "^5.0.1",
     "gulp-uglify": "^3.0.2",
     "husky": "^8.0.1",
-    "jest": "^28.1.1",
-    "nx": "14.3.6",
+    "jest": "^28.1.2",
+    "nx": "14.4.2",
     "pinst": "^3.0.0",
     "sort-package-json": "^1.57.0",
     "ts-jest": "^28.0.5",
@@ -47,6 +47,6 @@
   },
   "engines": {
     "node": ">=v16.15.1",
-    "npm": ">=8.13.1"
+    "npm": ">=8.13.2"
   }
 }
