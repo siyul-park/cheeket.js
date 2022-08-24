@@ -20,7 +20,7 @@
   "devDependencies": {
     "@nrwl/cli": "14.5.8",
     "@nrwl/workspace": "14.5.8",
-    "@types/jest": "^28.1.7",
+    "@types/jest": "^28.1.8",
     "@types/node": "^16.11.51",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
