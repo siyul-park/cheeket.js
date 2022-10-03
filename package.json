@@ -21,7 +21,7 @@
     "@nrwl/cli": "14.8.2",
     "@nrwl/workspace": "14.8.2",
     "@types/jest": "^29.1.1",
-    "@types/node": "^16.11.63",
+    "@types/node": "^16.11.64",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
     "cross-env": "^7.0.3",
