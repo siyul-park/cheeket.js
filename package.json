@@ -13,6 +13,9 @@
     "lint:fix": "nx run-many --target=lint:fix --all",
     "package:init": "./scripts/init-package.sh",
     "package:sort": "sort-package-json \"**/package.json\"",
+    "version:major": "nx run-many --target=version:minor --all",
+    "version:minor": "nx run-many --target=version:minor --all",
+    "version:patch": "nx run-many --target=version:minor --all",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable",
     "test": "nx run-many --target=test --all"

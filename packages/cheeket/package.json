@@ -14,7 +14,10 @@
     "compile": "tsc",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "prepublishOnly": "cross-env NODE_ENV=production npm run build",
-    "test": "jest"
+    "test": "jest",
+    "version:major": "npm version major --no-git-tag-version --no-push",
+    "version:minor": "npm version minor --no-git-tag-version --no-push",
+    "version:patch": "npm version patch --no-git-tag-version --no-push",
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build"
   }
 }
