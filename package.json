@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nx run-many --target=build --all",
     "clean": "nx run-many --target=clean --all",
-    "postinstall": "husky install",
+    "_postinstall": "husky install",
     "lint": "nx run-many --target=lint --all",
     "lint:fix": "nx run-many --target=lint:fix --all",
     "package:init": "./scripts/init-package.sh",
