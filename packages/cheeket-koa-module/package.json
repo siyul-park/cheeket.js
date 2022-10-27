@@ -1,6 +1,6 @@
 {
   "name": "cheeket-koa-module",
-  "version": "1.0.0-alpha.19",
+  "version": "1.0.0-alpha.20",
   "description": "",
   "license": "ISC",
   "author": "",
@@ -24,8 +24,8 @@
   "devDependencies": {
     "@shopify/jest-koa-mocks": "^5.0.1",
     "@types/koa": "^2.13.5",
-    "cheeket": "^4.0.1",
-    "cheeket-koa": "^1.0.0-alpha.17",
+    "cheeket": "^4.1.0",
+    "cheeket-koa": "^1.0.0-alpha.18",
     "koa": "^2.13.4"
   },
   "peerDependencies": {
@@ -33,8 +33,8 @@
     "@types/cookies": "^0.7.7",
     "@types/koa-compose": "^3.2.5",
     "accepts": "^1.3.8",
-    "cheeket": "^4.0.1",
-    "cheeket-koa": "^1.0.0-alpha.17",
+    "cheeket": "^4.1.0",
+    "cheeket-koa": "^1.0.0-alpha.18",
     "cookies": "^0.8.0",
     "koa": "^2.13.4"
   }
