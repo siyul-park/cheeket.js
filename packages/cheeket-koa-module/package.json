@@ -26,7 +26,7 @@
     "@types/koa": "^2.13.5",
     "cheeket": "^4.1.0",
     "cheeket-koa": "^1.0.0-alpha.18",
-    "koa": "^2.14.0"
+    "koa": "^2.14.1"
   },
   "peerDependencies": {
     "@types/accepts": "^1.3.5",
@@ -36,6 +36,6 @@
     "cheeket": "^4.1.0",
     "cheeket-koa": "^1.0.0-alpha.18",
     "cookies": "^0.8.0",
-    "koa": "^2.14.0"
+    "koa": "^2.14.1"
   }
 }
