@@ -51,10 +51,10 @@ const LoggerToken = Symbol('Logger') as Token<Logger>;
 const StrategiesToken = Symbol('Strategy[]') as Token<Strategy[]>;
 const ChatbotToken = Symbol('ChatBot') as Token<ChatBot>;
 
-const loggerFactroy = containerScope<Logger>(() => (message) => {
+const loggerFactory = containerScope<Logger>(() => (message) => {
   console.log(message);
 });
-const passStrategyFactroy = containerScope<Strategy>(() => (message) => message);
+const passStrategyFactory = containerScope<Strategy>(() => (message) => message);
 const chatbotFactory = containerScope<ChatBot>(async (context) => {
   const logger = await context.resolve(LoggerToken);
   return new ChatBot(logger);
@@ -63,8 +63,8 @@ const chatbotFactory = containerScope<ChatBot>(async (context) => {
 
 const container = new Container();
 
-container.register(LoggerToken, asObject(loggerFactroy));
-container.register(StrategiesToken, asArray(passStrategyFactroy));
+container.register(LoggerToken, asObject(loggerFactory));
+container.register(StrategiesToken, asArray(passStrategyFactory));
 container.register(ChatbotToken, asObject(chatbotFactory));
 
 container.on(InternalEvents.PostCreate, async (context) => {
