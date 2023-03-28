@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@shopify/jest-koa-mocks": "^5.1.1",
-    "@types/koa": "^2.13.5",
+    "@types/koa": "^2.13.6",
     "cheeket": "^4.1.0",
     "koa": "^2.14.1"
   },
