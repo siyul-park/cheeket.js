@@ -38,6 +38,6 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.4.1",
-    "@tsconfig/docusaurus": "^1.0.7"
+    "@tsconfig/docusaurus": "^2.0.2"
   }
 }
